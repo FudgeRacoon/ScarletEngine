@@ -1,0 +1,39 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: g++.exe build active file",
+			"command": "C:\\MinGW\\bin\\g++.exe",
+			"args": [
+				"-g",
+                "-std=c++17",
+				"${workspaceFolder}/src/manager/*.cpp",
+				"${workspaceFolder}/src/renderer/*.cpp",
+                "${workspaceFolder}/src/*.cpp",
+                "-o",
+                "${workspaceFolder}/build/ScarletEngine.exe",
+                "-I${workspaceFolder}/include",
+                "-I${workspaceFolder}/vendor",
+                "-L${workspaceFolder}/lib",
+                "-lmingw32",
+                "-lSDL2main",
+                "-lSDL2_image",
+                "-lSDL2",
+                "-lopengl32",
+                "-lglew32",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "compiler: C:\\MinGW\\bin\\g++.exe"
+		}
+	]
+}

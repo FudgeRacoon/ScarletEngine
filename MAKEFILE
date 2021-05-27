@@ -1,0 +1,9 @@
+CC = g++
+CC_FLAGS = -std=c++17 -w
+LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2_image -lSDL2 -lopengl32 -lglew32
+BIN_NAME = ScarletEngine.exe
+
+compile:
+	$(CC) $(CC_FLAGS) src/manager/*.cpp src/renderer/*.cpp src/*.cpp -o build/$(BIN_NAME) -Ivendor -Iinclude -Llib  $(LINKER_FLAGS)
+run:
+	build/$(BIN_NAME)
