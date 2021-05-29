@@ -78,6 +78,16 @@ namespace scarlet
         RCTRL = 228,
         RSHIFT = 229,
         RALT = 230,
+
+        HOME = 74,
+        PAGEUP = 75,
+        DELETE = 76,
+        END = 77,
+        PAGEDOWN = 78,
+        RIGHT = 79,
+        LEFT = 80,
+        DOWN = 81,
+        UP = 82,
     };
 
     class InputManager

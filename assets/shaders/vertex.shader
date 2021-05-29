@@ -6,9 +6,10 @@ layout (location = 1) in vec4 aColor;
 out vec4 fColor;
 
 uniform mat4 model;
+uniform mat4 proj;
 
 void main()
 {
-    gl_Position = vec4(aPos, 1.0) * model;
+    gl_Position = vec4(aPos, 1.0) * model * proj;
     fColor = aColor;
 };

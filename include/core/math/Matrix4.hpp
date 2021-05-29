@@ -160,6 +160,32 @@ public:
     {
         return Identity();
     }
+    static Matrix4 Orthographic(float left, float right, float bottom, float top, float near, float far)
+    {   
+        // | xOut   0      0      tx |
+        // | 0      yOut   0      ty |
+        // | 0      0      zOut   tz |
+        // | 0      0      0       1 |
+
+        Matrix4 m = Identity();
+
+        float xOut = 2 / right - left;
+        float yOut = 2 / top - bottom;
+        float zOut = 2 / far - near;
+
+        float tx = -((right + left) / (right - left));
+        float ty = -((top + bottom) / (top - bottom));
+        float tz =  -((far + near) / (far - near));
+
+        m.n[0][0] = xOut;
+        m.n[0][3] = tx;
+        m.n[1][1] = yOut;
+        m.n[1][3] = ty;
+        m.n[2][2] = zOut;
+        m.n[2][3] = tz;
+
+        return m;
+    }
 
 public:
     static float* GetValuePointer(Matrix4 m)

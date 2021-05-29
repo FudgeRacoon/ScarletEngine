@@ -78,7 +78,7 @@ void Application::Setup()
 
     indexBuffer = new IndexBuffer(indices, sizeof(indices));
 
-    shader = new Shader("assets\\shaders\\vertex.shader", "assets\\shaders\\fragment.shader"); 
+    shader = new Shader("assets\\shaders\\vertex.shader", "assets\\shaders\\fragment.shader");
 }
 
 void Application::Update()
@@ -87,13 +87,19 @@ void Application::Update()
     vertexArray->Bind();
     indexBuffer->Bind();
 
-    Matrix4 model = Matrix4::Scale(Vector3(1.0f, 1.0f, 1.0f));
+    //Local space to world space using model matrix
+    Matrix4 model = Matrix4::Scale(Vector3(50.0f, 50.0f, 1.0f));
     model = model * Matrix4::Rotate(0.0f, Vector3::RIGHT());
     model = model * Matrix4::Rotate(0.0f, Vector3::UP());
     model = model * Matrix4::Rotate(0.0f, Vector3::FRONT());
-    model = model * Matrix4::Transalte(Vector3(0.0f, 0.0f, 0.0f));
-
+    model = model * Matrix4::Transalte(Vector3(2.0f, 2.0f, 0.0f));
     shader->SetMat4("model", Matrix4::GetValuePointer(model));
+
+    //World space to view space using view matrix
+
+    //View space to clip space using projection matrix
+    Matrix4 projection = Matrix4::Orthographic(0.0f, Window::Get()->GetWidth(), 0.0f, Window::Get()->GetHeight(), 0.0f, -1000.0f);
+    shader->SetMat4("proj", Matrix4::GetValuePointer(projection));
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
