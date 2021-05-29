@@ -22,13 +22,15 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
+    this->width = width;
+    this->height = height;
     this->window = SDL_CreateWindow
     (
         title.c_str(),
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
-        width,
-        height,
+        this->width, 
+        this->height,
         SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
     );
 
@@ -47,7 +49,7 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
         return EXIT_FAILURE;
     }
 
-    //glViewport(0, 0, this->width, this->height);
+    glViewport(0, 0, this->width, this->height);
 
     this->running = true;
     

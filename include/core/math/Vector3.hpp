@@ -5,6 +5,8 @@
 #include <string>
 #include <math.h>
 
+#include "Vector2.hpp"
+
 class Vector3
 {
 public:
@@ -37,19 +39,19 @@ public:
     }
 
 public:
-    Vector3 operator+(Vector3 v)
+    Vector3 operator +(Vector3 v)
     {
         return Vector3(this->x + v.x, this->y + v.y, this->z + v.z);
     }
-    Vector3 operator-(Vector3 v)
+    Vector3 operator -(Vector3 v)
     {
         return Vector3(this->x - v.x, this->y - v.y, this->z - v.z);
     }
-    Vector3 operator-()
+    Vector3 operator -()
     {
         return Vector3(-this->x, -this->y, -this->z);
     }
-    Vector3 operator*(float value)
+    Vector3 operator *(float value)
     {
         return Vector3(this->x * value, this->y * value, this->z * value);
     }
@@ -60,6 +62,10 @@ public:
     bool operator !=(Vector3 v)
     {
         return this->x != v.x && this->y != v.y && this->z != v.z;
+    }
+    operator Vector2()
+    {
+        return Vector2(this->x, this->y);
     }
 
 public:

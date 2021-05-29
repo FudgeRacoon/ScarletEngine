@@ -1,54 +1,6 @@
 #include "core/ScarletEngine.hpp"
 using namespace scarlet;
 
-float vertices[] = 
-{   
-    //Position      //Color
-    -0.5f, -0.5f,   1.0f, 0.0f, 0.0f, 1.0f,   //0
-     0.5f, -0.5f,   0.0f, 1.0f, 0.0f, 1.0f,   //1
-     0.5f,  0.5f,   0.0f, 0.0f, 1.0f, 1.0f,   //2
-    -0.5f,  0.5f,   1.0f, 1.0f, 1.0f, 1.0f,   //3
-};
-
-uint32_t indices[] = 
-{
-    0, 1, 2,
-    2, 3, 0
-};
-
-VertexArray* vertexArray = nullptr;
-IndexBuffer* indexBuffer = nullptr;
-Shader* shader = nullptr;
-
-void Application::Setup()
-{
-    Window::Get()->Init("Scarlet Engine", 800, 600, false);
-    std::cout << Window::Get()->GetGLVersion() << '\n';
-    
-    vertexArray = new VertexArray();
-
-    VertexBuffer vertexBuffer(vertices, sizeof(vertices));
-
-    VertexBufferLayout layout;
-    layout.Push<float>(2, false);
-    layout.Push<float>(4, false);
-
-    vertexArray->AddBuffer(vertexBuffer, layout);
-
-    indexBuffer = new IndexBuffer(indices, sizeof(indices));
-
-    shader = new Shader("assets\\shaders\\vertex.shader", "assets\\shaders\\fragment.shader");
-}
-
-void Application::Update()
-{
-    shader->Bind();
-    vertexArray->Bind();
-    indexBuffer->Bind();
-
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-}
-
 Application* Application::Get()
 {
     static Application* instance = new Application();
@@ -87,4 +39,61 @@ void Application::Run(int argc, char* argv[])
     }
 
     Window::Get()->Release();
+}
+
+
+float vertices[] = 
+{   
+    //Position            //Color
+    -0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   //0
+     0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   //1
+     0.5f,  0.5f, 0.0f,   0.0f, 0.0f, 1.0f, 1.0f,   //2
+    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   //3
+};
+
+uint32_t indices[] = 
+{
+    0, 1, 2,
+    2, 3, 0
+};
+
+VertexArray* vertexArray = nullptr;
+IndexBuffer* indexBuffer = nullptr;
+Shader* shader = nullptr;
+
+void Application::Setup()
+{
+    Window::Get()->Init("Scarlet Engine", 800, 600, false);
+    std::cout << Window::Get()->GetGLVersion() << '\n';
+    
+    vertexArray = new VertexArray();
+
+    VertexBuffer vertexBuffer(vertices, sizeof(vertices));
+
+    VertexBufferLayout layout;
+    layout.Push<float>(3, false);
+    layout.Push<float>(4, false);
+
+    vertexArray->AddBuffer(vertexBuffer, layout);
+
+    indexBuffer = new IndexBuffer(indices, sizeof(indices));
+
+    shader = new Shader("assets\\shaders\\vertex.shader", "assets\\shaders\\fragment.shader"); 
+}
+
+void Application::Update()
+{
+    shader->Bind();
+    vertexArray->Bind();
+    indexBuffer->Bind();
+
+    Matrix4 model = Matrix4::Scale(Vector3(1.0f, 1.0f, 1.0f));
+    model = model * Matrix4::Rotate(0.0f, Vector3::RIGHT());
+    model = model * Matrix4::Rotate(0.0f, Vector3::UP());
+    model = model * Matrix4::Rotate(0.0f, Vector3::FRONT());
+    model = model * Matrix4::Transalte(Vector3(0.0f, 0.0f, 0.0f));
+
+    shader->SetMat4("model", Matrix4::GetValuePointer(model));
+
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

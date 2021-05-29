@@ -11,6 +11,7 @@
 #include "core/renderer/IndexBuffer.hpp"
 #include "core/renderer/Shader.hpp"
 
+#include "core/math/Math.hpp"
 #include "core/math/Vector2.hpp"
 #include "core/math/Vector3.hpp"
-#include "core/math/Matrix3.hpp"
+#include "core/math/Matrix4.hpp"

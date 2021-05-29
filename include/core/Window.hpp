@@ -13,7 +13,7 @@ namespace scarlet
     {
     private:
         std::string title;
-        int width, height;
+        unsigned int width, height;
         bool running;
 
     private:

@@ -15,15 +15,15 @@ namespace scarlet
         Application() = default;
         Application(const Application& application) = delete;
 
-    private:
-        void Setup();
-        void Update();
-
     public:
         static Application* Get();
 
     public:
         void Run(int argc, char* argv[]);
+
+    private:
+        void Setup();
+        void Update();
     };
 }
 

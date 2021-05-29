@@ -33,19 +33,19 @@ public:
     }
 
 public:
-    Vector2 operator+(Vector2 v)
+    Vector2 operator +(Vector2 v)
     {
         return Vector2(this->x + v.x, this->y + v.y);
     }
-    Vector2 operator-(Vector2 v)
+    Vector2 operator -(Vector2 v)
     {
         return Vector2(this->x - v.x, this->y - v.y);
     }
-    Vector2 operator-()
+    Vector2 operator -()
     {
         return Vector2(-this->x, -this->y);
     }
-    Vector2 operator*(float value)
+    Vector2 operator *(float value)
     {
         return Vector2(this->x * value, this->y * value);
     }
