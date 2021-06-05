@@ -41,14 +41,14 @@ void Application::Run(int argc, char* argv[])
     Window::Get()->Release();
 }
 
-
+float counter = 0.0f;
 float vertices[] = 
 {   
     //Position            //Color
-    -0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   //0
-     0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   //1
-     0.5f,  0.5f, 0.0f,   0.0f, 0.0f, 1.0f, 1.0f,   //2
-    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   //3
+    -100.0f, -100.0f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   //0
+     100.0f, -100.0f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   //1
+     100.0f,  100.0f, 0.0f,   0.0f, 0.0f, 1.0f, 1.0f,   //2
+    -100.0f,  100.0f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   //3
 };
 
 uint32_t indices[] = 
@@ -88,11 +88,11 @@ void Application::Update()
     indexBuffer->Bind();
 
     //Local space to world space using model matrix
-    Matrix4 model = Matrix4::Scale(Vector3(50.0f, 50.0f, 1.0f));
+    Matrix4 model = Matrix4::Scale(Vector3(1.0f, 1.0f, 1.0f));
     model = model * Matrix4::Rotate(0.0f, Vector3::RIGHT());
     model = model * Matrix4::Rotate(0.0f, Vector3::UP());
     model = model * Matrix4::Rotate(0.0f, Vector3::FRONT());
-    model = model * Matrix4::Transalte(Vector3(2.0f, 2.0f, 0.0f));
+    model = model * Matrix4::Transalte(Vector3(400.0f, 300.0f, 0.0f));
     shader->SetMat4("model", Matrix4::GetValuePointer(model));
 
     //World space to view space using view matrix
