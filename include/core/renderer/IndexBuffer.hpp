@@ -16,8 +16,8 @@ namespace scarlet
         ~IndexBuffer();
 
     public:
-        void Bind();
-        void UnBind();
+        void Bind() const;
+        void UnBind() const;
     };
 }
 

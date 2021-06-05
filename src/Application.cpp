@@ -25,12 +25,11 @@ void Application::Run(int argc, char* argv[])
 
             InputManager::Update();
 
-            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            Renderer::Get()->ClearBuffers();
 
             this->Update();
 
-            SDL_GL_SwapWindow(Window::Get()->GetSDLWindow());
+            Renderer::Get()->SwapBuffers();
 
             InputManager::End();
 
@@ -57,9 +56,9 @@ uint32_t indices[] =
     2, 3, 0
 };
 
-VertexArray* vertexArray = nullptr;
-IndexBuffer* indexBuffer = nullptr;
-Shader* shader = nullptr;
+const VertexArray* vertexArray = nullptr;
+const IndexBuffer* indexBuffer = nullptr;
+const Shader* shader = nullptr;
 
 void Application::Setup()
 {
@@ -83,23 +82,5 @@ void Application::Setup()
 
 void Application::Update()
 {
-    shader->Bind();
-    vertexArray->Bind();
-    indexBuffer->Bind();
-
-    //Local space to world space using model matrix
-    Matrix4 model = Matrix4::Scale(Vector3(1.0f, 1.0f, 1.0f));
-    model = model * Matrix4::Rotate(0.0f, Vector3::RIGHT());
-    model = model * Matrix4::Rotate(0.0f, Vector3::UP());
-    model = model * Matrix4::Rotate(0.0f, Vector3::FRONT());
-    model = model * Matrix4::Transalte(Vector3(400.0f, 300.0f, 0.0f));
-    shader->SetMat4("model", Matrix4::GetValuePointer(model));
-
-    //World space to view space using view matrix
-
-    //View space to clip space using projection matrix
-    Matrix4 projection = Matrix4::Orthographic(0.0f, Window::Get()->GetWidth(), 0.0f, Window::Get()->GetHeight(), 0.0f, -1000.0f);
-    shader->SetMat4("proj", Matrix4::GetValuePointer(projection));
-
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    Renderer::Get()->Render(vertexArray, indexBuffer, shader);
 }

@@ -13,11 +13,11 @@ IndexBuffer::~IndexBuffer()
     glDeleteBuffers(1, &this->ID);
 }
 
-void IndexBuffer::Bind()
+void IndexBuffer::Bind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ID);
 }
-void IndexBuffer::UnBind()
+void IndexBuffer::UnBind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

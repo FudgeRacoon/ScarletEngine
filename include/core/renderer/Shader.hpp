@@ -24,18 +24,18 @@ namespace scarlet
         std::string ParseShader(const char* filepath);
 
     public:
-        void SetBool(std::string varName, int value);
-        void SetInt(std::string varName, int value);
-        void SetFloat(std::string varName, float value);
-        void SetVec2i(std::string varName, int x, int y);
-        void SetVec2f(std::string varName, float x, float y);
-        void SetVec4i(std::string varName, int x, int y, int z, int w);
-        void SetVec4f(std::string varName, float x, float y, float z, float w);
-        void SetMat4(std::string varName, float* value);
+        void SetBool(std::string varName, int value) const;
+        void SetInt(std::string varName, int value) const;
+        void SetFloat(std::string varName, float value) const;
+        void SetVec2i(std::string varName, int x, int y) const;
+        void SetVec2f(std::string varName, float x, float y) const;
+        void SetVec4i(std::string varName, int x, int y, int z, int w) const;
+        void SetVec4f(std::string varName, float x, float y, float z, float w) const;
+        void SetMat4(std::string varName, float* value) const;
 
     public:
-        void Bind();
-        void UnBind();
+        void Bind() const;
+        void UnBind() const;
     };
 }
 

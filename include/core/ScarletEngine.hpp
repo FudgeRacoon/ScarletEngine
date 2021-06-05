@@ -5,6 +5,7 @@
 #include "core/manager/InputManager.hpp"
 #include "core/manager/SceneManager.hpp"
 
+#include "core/renderer/Renderer.hpp"
 #include "core/renderer/VertexArray.hpp"
 #include "core/renderer/VertexBuffer.hpp"
 #include "core/renderer/VertexBufferLayout.hpp"

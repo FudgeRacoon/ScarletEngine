@@ -90,52 +90,52 @@ std::string Shader::ParseShader(const char* filepath)
     return ss.str();
 }
 
-void Shader::SetBool(std::string varName, int value)
+void Shader::SetBool(std::string varName, int value) const
 {
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
     glUniform1i(uniformID, value);
 }
-void Shader::SetInt(std::string varName, int value)
+void Shader::SetInt(std::string varName, int value) const
 {
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
     glUniform1i(uniformID, value);
 }
-void Shader::SetFloat(std::string varName, float value)
+void Shader::SetFloat(std::string varName, float value) const
 {
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
     glUniform1f(uniformID, value);
 }
-void Shader::SetVec2i(std::string varName, int x, int y)
+void Shader::SetVec2i(std::string varName, int x, int y) const
 {
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
     glUniform2i(uniformID, x, y);
 }
-void Shader::SetVec2f(std::string varName, float x, float y)
+void Shader::SetVec2f(std::string varName, float x, float y) const
 {
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
     glUniform2f(uniformID, x, y);
 }
-void Shader::SetVec4i(std::string varName, int x, int y, int z, int w)
+void Shader::SetVec4i(std::string varName, int x, int y, int z, int w) const
 {
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
     glUniform4i(uniformID, x, y, z, w);
 }
-void Shader::SetVec4f(std::string varName, float x, float y, float z, float w)
+void Shader::SetVec4f(std::string varName, float x, float y, float z, float w) const
 {
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
     glUniform4i(uniformID, x, y, z, w);
 }
-void Shader::SetMat4(std::string varName, float* value)
+void Shader::SetMat4(std::string varName, float* value) const
 {
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
     glUniformMatrix4fv(uniformID, 1, false, value);
 }
 
-void Shader::Bind()
+void Shader::Bind() const
 {
     glUseProgram(this->programID);
 }
-void Shader::UnBind()
+void Shader::UnBind() const
 {
     glUseProgram(0);
 }

@@ -18,11 +18,11 @@ namespace scarlet
         ~VertexArray();
 
     public:
-        void AddBuffer(VertexBuffer& vertexBuffer, VertexBufferLayout& layout);
+        void AddBuffer(VertexBuffer& vertexBuffer, VertexBufferLayout& layout) const;
 
     public:
-        void Bind();
-        void UnBind();
+        void Bind() const;
+        void UnBind() const;
     };
 }
 

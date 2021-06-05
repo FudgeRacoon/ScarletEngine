@@ -158,7 +158,19 @@ public:
     }
     static Matrix4 LookAt(Vector3 position, Vector3 target, Vector3 up)
     {
-        return Identity();
+        Vector3 z = Vector3::Normalize(target - position);
+        Vector3 x = Vector3::Normalize(Vector3::Cross(z, up));
+        Vector3 y = Vector3::Normalize(Vector3::Cross(x, z));
+
+        z = -z;
+
+        return Matrix4
+        (
+            x.x, x.y, x.z, -Vector3::Dot(x, position),
+            y.x, y.y, y.z, -Vector3::Dot(y, position),
+            z.x, z.y, z.z, -Vector3::Dot(z, position),
+            0  , 0  , 0  , 1
+        );  
     }
     static Matrix4 Orthographic(float left, float right, float bottom, float top, float near, float far)
     {   

@@ -11,7 +11,7 @@ VertexArray::~VertexArray()
     glDeleteVertexArrays(1, &this->ID);
 }
 
-void VertexArray::AddBuffer(VertexBuffer& vertexBuffer, VertexBufferLayout& layout)
+void VertexArray::AddBuffer(VertexBuffer& vertexBuffer, VertexBufferLayout& layout) const
 {
     this->Bind();
     vertexBuffer.Bind();
@@ -40,11 +40,11 @@ void VertexArray::AddBuffer(VertexBuffer& vertexBuffer, VertexBufferLayout& layo
     this->UnBind();
 }
 
-void VertexArray::Bind()
+void VertexArray::Bind() const
 {
     glBindVertexArray(this->ID);
 }
-void VertexArray::UnBind()
+void VertexArray::UnBind() const
 {
     glBindVertexArray(0);
 }
