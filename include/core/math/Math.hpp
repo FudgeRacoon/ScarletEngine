@@ -5,6 +5,8 @@
 #include <limits>
 #include <math.h>
 
+#define FLOAT_EQUALS(a, b) return a - b < Math::Epsilon ? true : false;
+
 namespace scarlet
 {
     typedef unsigned char uint8;
@@ -15,10 +17,12 @@ namespace scarlet
 
     class Math
     {
+    public:
         static constexpr real PI = 3.14159265359;
         static constexpr real Epsilon = std::numeric_limits<real>::epsilon();
         static constexpr uint64 Infinity = std::numeric_limits<uint64>::infinity();
-        
+    
+    public:
         static real RadToDegree(real value)
         {
             return value * (180.0 / PI);
@@ -108,6 +112,5 @@ namespace scarlet
         }
     };
 }
-
 
 #endif

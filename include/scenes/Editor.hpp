@@ -11,13 +11,13 @@ private:
     scarlet::Camera* sceneCamera = nullptr;
 
 private:
-    scarlet::real vertices[28] = 
+    scarlet::real vertices[36] = 
     {   
-        //Position                //Color
-        -100.0f, -100.0f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   //0
-         100.0f, -100.0f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   //1
-         100.0f,  100.0f, 0.0f,   0.0f, 0.0f, 1.0f, 1.0f,   //2
-        -100.0f,  100.0f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f    //3
+        //Position                //Color                   //UV
+        -100.0f, -100.0f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   0.0f, 0.0f,    //0
+         100.0f, -100.0f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   1.0f, 0.0f,    //1
+         100.0f,  100.0f, 0.0f,   0.0f, 0.0f, 1.0f, 1.0f,   1.0f, 1.0f,    //2
+        -100.0f,  100.0f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f     //3
     };
     scarlet::uint32 indices[6] = 
     {
@@ -30,6 +30,7 @@ private:
     const scarlet::IndexBuffer* ib = nullptr;
     const scarlet::VertexArray* va = nullptr;
     const scarlet::Shader* shader = nullptr;
+    const scarlet::Texture* texture = nullptr;
 
 public:
     void OnEnter() override
@@ -42,16 +43,19 @@ public:
         scarlet::VertexBufferLayout layout;
         layout.Push<float>(3, false);
         layout.Push<float>(4, false);
+        layout.Push<float>(2, false);
         
         this->va = new scarlet::VertexArray();
         this->va->AddBuffer(*vb, layout);
 
         this->shader = new scarlet::Shader("assets\\shaders\\vertex.shader", "assets\\shaders\\fragment.shader");
+
+        this->texture = new scarlet::Texture("assets\\textures\\coin.png");
     }
 
     void Update() override
     {
-        scarlet::Renderer::Get()->Render(*this->sceneCamera, this->va, this->ib, this->shader);
+        scarlet::Renderer::Get()->Render(*this->sceneCamera, this->texture, this->va, this->ib, this->shader);
     }
 
     void OnExit() override

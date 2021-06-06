@@ -13,6 +13,7 @@
 #include "core/renderer/VertexBufferLayout.hpp"
 #include "core/renderer/IndexBuffer.hpp"
 #include "core/renderer/Shader.hpp"
+#include "core/renderer/Texture.hpp"
 
 #include "core/math/Math.hpp"
 #include "core/math/Vector2.hpp"
