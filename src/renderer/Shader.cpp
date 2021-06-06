@@ -125,7 +125,7 @@ void Shader::SetVec4f(std::string varName, float x, float y, float z, float w) c
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
     glUniform4i(uniformID, x, y, z, w);
 }
-void Shader::SetMat4(std::string varName, float* value) const
+void Shader::SetMat4(std::string varName, const float* value) const
 {
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
     glUniformMatrix4fv(uniformID, 1, false, value);

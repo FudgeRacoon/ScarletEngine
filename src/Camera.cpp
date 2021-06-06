@@ -5,8 +5,8 @@ Camera::Camera()
 {
     this->direction = Vector3::FRONT();
 
-    this->left = 0.0f, this->right = Window::Get()->GetWidth();
-    this->bottom = 0.0f, this->top = Window::Get()->GetHeight();
+    this->left = -Window::Get()->GetWidth() / 2, this->right = Window::Get()->GetWidth() / 2;
+    this->bottom = -Window::Get()->GetHeight() / 2, this->top = Window::Get()->GetHeight() / 2;
     this->near = 0.0f, this->far = -100.0f;
 }
 Camera::Camera(Vector3 position)
@@ -15,8 +15,8 @@ Camera::Camera(Vector3 position)
 
     this->direction = Vector3::FRONT();
 
-    this->left = 0.0f, this->right = Window::Get()->GetWidth();
-    this->bottom = 0.0f, this->top = Window::Get()->GetHeight();
+    this->left = -Window::Get()->GetWidth() / 2, this->right = Window::Get()->GetWidth() / 2;
+    this->bottom = -Window::Get()->GetHeight() / 2, this->top = Window::Get()->GetHeight() / 2;
     this->near = 0.0f, this->far = -100.0f;
 }
 

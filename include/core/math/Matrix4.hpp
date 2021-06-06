@@ -175,39 +175,39 @@ public:
     static Matrix4 Orthographic(float left, float right, float bottom, float top, float near, float far)
     {   
         // | xOut   0      0      tx |
-        // | 0      yOut   0      ty |
-        // | 0      0      zOut   tz |
+        // | 0     yOut    0      ty |
+        // | 0      0     zOut    tz |
         // | 0      0      0       1 |
 
         Matrix4 m = Identity();
 
-        float xOut = 2 / right - left;
-        float yOut = 2 / top - bottom;
-        float zOut = 2 / far - near;
+        float xOut = 2 / (right - left);
+        float yOut = 2 / (top - bottom);
+        float zOut = 2 / (far - near);
 
-        float tx = -((right + left) / (right - left));
-        float ty = -((top + bottom) / (top - bottom));
-        float tz =  -((far + near) / (far - near));
+        float tx = -(right + left) / (right - left);
+        float ty = -(top + bottom) / (top - bottom);
+        float tz = -(far + near) / (far - near);
 
         m.n[0][0] = xOut;
-        m.n[0][3] = tx;
         m.n[1][1] = yOut;
-        m.n[1][3] = ty;
         m.n[2][2] = zOut;
+        m.n[0][3] = tx;
+        m.n[1][3] = ty;
         m.n[2][3] = tz;
 
         return m;
     }
 
 public:
-    static float* GetValuePointer(Matrix4 m)
+    static const float* GetValuePointer(Matrix4 m)
     {
         float* values = new float[16];
         
-        *(values + 0) = m.n[0][0]; *(values + 1) = m.n[0][1]; *(values + 2) = m.n[0][2]; *(values + 3) = m.n[0][3];
-        *(values + 4) = m.n[1][0]; *(values + 5) = m.n[1][1]; *(values + 6) = m.n[1][2]; *(values + 7) = m.n[1][3];
-        *(values + 8) = m.n[2][0]; *(values + 9) = m.n[2][1]; *(values + 10) = m.n[2][2]; *(values + 11) = m.n[2][3];
-        *(values + 12) = m.n[3][0]; *(values + 13) = m.n[3][1]; *(values + 14) = m.n[3][2]; *(values + 15) = m.n[3][3];
+        *(values + 0) = m.n[0][0]; *(values + 1) = m.n[1][0]; *(values + 2) = m.n[2][0]; *(values + 3) = m.n[3][0];
+        *(values + 4) = m.n[0][1]; *(values + 5) = m.n[1][1]; *(values + 6) = m.n[2][1]; *(values + 7) = m.n[3][1];
+        *(values + 8) = m.n[0][2]; *(values + 9) = m.n[1][2]; *(values + 10) = m.n[2][2]; *(values + 11) = m.n[3][2];
+        *(values + 12) = m.n[0][3]; *(values + 13) = m.n[1][3]; *(values + 14) = m.n[2][3]; *(values + 15) = m.n[3][3];
 
         return values;
     }
