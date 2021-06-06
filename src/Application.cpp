@@ -1,4 +1,5 @@
 #include "core/ScarletEngine.hpp"
+#include "scenes/Editor.hpp"
 using namespace scarlet;
 
 Application* Application::Get()
@@ -40,50 +41,16 @@ void Application::Run(int argc, char* argv[])
     Window::Get()->Release();
 }
 
-real vertices[] = 
-{   
-    //Position            //Color
-    -100.0f, -100.0f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   //0
-     100.0f, -100.0f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   //1
-     100.0f,  100.0f, 0.0f,   0.0f, 0.0f, 1.0f, 1.0f,   //2
-    -100.0f,  100.0f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   //3
-};
-
-uint32 indices[] = 
-{
-    0, 1, 2,
-    2, 3, 0
-};
-
-Camera* camera = nullptr;
-
-const VertexArray* vertexArray = nullptr;
-const IndexBuffer* indexBuffer = nullptr;
-const Shader* shader = nullptr;
-
 void Application::Setup()
 {
     Window::Get()->Init("Scarlet Engine", 800, 600, false);
     std::cout << Window::Get()->GetGLVersion() << '\n';
     
-    camera = new Camera();
-
-    vertexArray = new VertexArray();
-
-    VertexBuffer vertexBuffer(vertices, sizeof(vertices));
-
-    VertexBufferLayout layout;
-    layout.Push<real>(3, false);
-    layout.Push<real>(4, false);
-
-    vertexArray->AddBuffer(vertexBuffer, layout);
-
-    indexBuffer = new IndexBuffer(indices, sizeof(indices));
-
-    shader = new Shader("assets\\shaders\\vertex.shader", "assets\\shaders\\fragment.shader");
+    SceneManager::AddScene("Editor", new Editor());
+    SceneManager::ChangeScene("Editor");
 }
 
 void Application::Update()
 {
-    Renderer::Get()->Render(*camera, vertexArray, indexBuffer, shader);
+    SceneManager::UpdateScene();
 }
