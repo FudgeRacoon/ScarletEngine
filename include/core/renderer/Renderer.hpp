@@ -4,6 +4,7 @@
 #include "GL/glew.h"
 
 #include "core/Window.hpp"
+#include "core/Camera.hpp"
 #include "core/renderer/VertexArray.hpp"
 #include "core/renderer/IndexBuffer.hpp"
 #include "core/renderer/Shader.hpp"
@@ -26,7 +27,7 @@ namespace scarlet
         void SwapBuffers();
 
     public: 
-        void Render(const VertexArray*& va, const IndexBuffer* ib, const Shader*& shader);
+        void Render(Camera& camera, const VertexArray*& va, const IndexBuffer* ib, const Shader*& shader);
     };
 }
 

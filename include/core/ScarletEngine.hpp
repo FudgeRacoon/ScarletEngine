@@ -2,6 +2,8 @@
 #include "core/Window.hpp"
 #include "core/Time.hpp"
 
+#include "core/Camera.hpp"
+
 #include "core/manager/InputManager.hpp"
 #include "core/manager/SceneManager.hpp"
 
