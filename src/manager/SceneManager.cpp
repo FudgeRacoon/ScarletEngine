@@ -1,5 +1,5 @@
 #include "core/manager/SceneManager.hpp"
-#include <windows.h>
+#include "core/Logger.hpp"
 using namespace scarlet;
 
 std::map<std::string,IScene*> SceneManager::scenes;
@@ -16,10 +16,12 @@ void SceneManager::RemoveScene(std::string name)
 
     if(it == scenes.end())
     {
-        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(hConsole, 4);
-        std::cout << "[ERROR]: No scene exists with that name." << '\n';
-        SetConsoleTextAttribute(hConsole, 7);
+        Logger::LogError("No scene exists with that name.");
+        return;
+    }
+    if(it->second == currentScene)
+    {
+        Logger::LogFatal("Cannot remove currently active scene.");
         return;
     }
 
@@ -36,10 +38,7 @@ void SceneManager::ChangeScene(std::string name)
 
     if(it == scenes.end())
     {
-        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(hConsole, 4);
-        std::cout << "[ERROR]: No scene exists with that name." << '\n';
-        SetConsoleTextAttribute(hConsole, 7);
+        Logger::LogError("No scene exists with that name.");
         return;
     }
 

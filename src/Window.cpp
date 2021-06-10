@@ -1,6 +1,7 @@
 #include "core/Window.hpp"
-#include <windows.h>
 using namespace scarlet;
+
+#include "core/Logger.hpp"
 
 Window* Window::Get()
 {
@@ -11,10 +12,7 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
 {
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(hConsole, 4);
-        std::cerr << "[ERROR]: Failed to initialize SDL2" << '\n';
-        SetConsoleTextAttribute(hConsole, 7);
+        Logger::LogFatal("Cannot initialize SDL2 window");
         return EXIT_FAILURE;
     }
 
@@ -40,10 +38,7 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
     glewExperimental = true;
     if(glewInit() != 0)
     {
-        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(hConsole, 4);
-        std::cerr << "[ERROR]: Failed to initialize SDL2" << '\n';
-        SetConsoleTextAttribute(hConsole, 7);
+        Logger::LogFatal("Cannot initialize Glew");
         SDL_DestroyWindow(this->window);
         SDL_Quit();
         return EXIT_FAILURE;

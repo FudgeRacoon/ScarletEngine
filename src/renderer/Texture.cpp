@@ -1,8 +1,7 @@
 #include "core/renderer/Texture.hpp"
 using namespace scarlet;
 
-#include <windows.h>
-
+#include "core/Logger.hpp"
 #include "GL/glew.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
@@ -12,10 +11,7 @@ Texture::Texture(const char* filepath)
     SDL_Surface* data = IMG_Load(filepath);
     if(!data)
     {
-        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(hConsole, 4);
-        std::cerr << "[ERROR]: Failed to open texture file" << '\n';
-        SetConsoleTextAttribute(hConsole, 7);
+        Logger::LogError("Texture file does not exist.");
         return;
     }   
     

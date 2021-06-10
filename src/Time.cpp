@@ -1,5 +1,5 @@
 #include "core/Time.hpp"
-#include <windows.h>
+#include "core/Logger.hpp"
 using namespace scarlet;
 
 float Time::currentTime  = 0.0f;
@@ -22,12 +22,7 @@ void Time::CalculateLag()
     lag = lag * 1000.0f;
 
     if(lag >= 4.0f)
-    {
-        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(hConsole, 4);
-        std::cout << "[WARNING]: " << lag << "ms lag has occured." << '\n';
-        SetConsoleTextAttribute(hConsole, 7);
-    }
+        Logger::LogWarning("%.2fms lag has occured.", lag);
 }
 
 float Time::GetTime()

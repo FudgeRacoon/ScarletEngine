@@ -1,6 +1,7 @@
 #include "core/renderer/VertexArray.hpp"
-#include <windows.h>
 using namespace scarlet;
+
+#include "core/Logger.hpp"
 
 VertexArray::VertexArray()
 {
@@ -22,10 +23,7 @@ void VertexArray::AddBuffer(VertexBuffer& vertexBuffer, VertexBufferLayout& layo
 
     if(elements.empty())
     {
-        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(hConsole, 4);
-        std::cerr << "[WARNING]: Failed to add buffer. Must specify a layout." << '\n';
-        SetConsoleTextAttribute(hConsole, 7);
+        Logger::LogError("Failed to add buffer. Must specify a layout.");
     } 
     else
         for(uint32_t index = 0; index < elements.size(); index++)

@@ -2,6 +2,8 @@
 #define EDITOR_HPP
 
 #include <iostream>
+#include <chrono>
+#include <time.h>
 
 #include "../core/ScarletEngine.hpp"
 
