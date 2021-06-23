@@ -16,10 +16,10 @@ private:
     scarlet::real vertices[36] = 
     {   
         //Position                //Color                   //UV
-        -100.0f, -100.0f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   0.0f, 0.0f,    //0
-         100.0f, -100.0f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   1.0f, 0.0f,    //1
-         100.0f,  100.0f, 0.0f,   0.0f, 0.0f, 1.0f, 1.0f,   1.0f, 1.0f,    //2
-        -100.0f,  100.0f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f     //3
+        -32.0f, -32.0f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   0.0f, 0.0f,    //0
+         32.0f, -32.0f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   1.0f, 0.0f,    //1
+         32.0f,  32.0f, 0.0f,   0.0f, 0.0f, 1.0f, 1.0f,   1.0f, 1.0f,    //2
+        -32.0f,  32.0f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f     //3
     };
     scarlet::uint32 indices[6] = 
     {
@@ -46,7 +46,7 @@ public:
         layout.Push<float>(3, false);
         layout.Push<float>(4, false);
         layout.Push<float>(2, false);
-        
+
         this->va = new scarlet::VertexArray();
         this->va->AddBuffer(*vb, layout);
 

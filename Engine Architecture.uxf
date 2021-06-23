@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>16</x>
+      <y>8</y>
+      <w>312</w>
+      <h>304</h>
+    </coordinates>
+    <panel_attributes>scarlet::Window
+--
+-title: std::string
+-width: int
+-height: int
+-running: bool
+-window: SDL_Window*
+-context: SDL_GLContext
+--
+Window() = default
+Window(Window window) = delete
+--
+_+Get(): Window*_
++Init(std::string title, int width, int height, bool fullscreen): int
+--
++GetTitle(): std::string 
++SetTitle(std::string value)
++GetWidth(): int 
++GetHeight(): int 
+--
++GetSDLWindow(): SDL_Window* 
++GetSDLWindowContext(): SDL_GLContext
++GetGLVersion(): std::string 
+--
++Running(): bool 
++Quit()
++Release()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>344</x>
+      <y>8</y>
+      <w>232</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Application
+--
+Application() = default
+Application(Application application) = delete
+--
+_+Get(): Application_
++Run(int argc, char* argv[])
+--
++Setup();
++Update();</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
