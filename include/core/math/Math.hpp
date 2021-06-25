@@ -5,7 +5,7 @@
 #include <limits>
 #include <math.h>
 
-#define FLOAT_EQUALS(a, b) return a - b < Math::Epsilon ? true : false;
+#define FLOAT_EQUAL(a, b) return a - b < Math::Epsilon ? true : false;
 
 namespace scarlet
 {

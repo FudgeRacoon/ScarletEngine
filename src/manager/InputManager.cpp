@@ -33,8 +33,7 @@ void InputManager::Update()
                     mouseScrollDelta = 1;
                 else if(event.wheel.y < 0)
                     mouseScrollDelta = -1;
-            }
-            break;
+            } break;
         }    
     }
 
@@ -98,13 +97,9 @@ bool InputManager::GetMouseButtonUp(int button)
 
     return (mask & prevMouseState) && !(mask && mouseState);
 }
-int* InputManager::GetMousePosition()
+Vector2 InputManager::GetMousePosition()
 {
-    int* mousePos = new int[2];
-    *(mousePos) = mousePosX;
-    *(mousePos + 1) = mousePosY;
-
-    return mousePos;
+    return Vector2(mousePosX, mousePosY);
 }
 int InputManager::GetMouseScrollDelta()
 {

@@ -4,6 +4,7 @@
 #include <string.h>
 #include "SDL2/SDL.h"
 #include "core/Window.hpp"
+#include "core/math/Vector2.hpp"
 
 namespace scarlet
 {
@@ -81,7 +82,7 @@ namespace scarlet
 
         HOME = 74,
         PAGEUP = 75,
-        DELETE = 76,
+        DELETEYY = 76,
         END = 77,
         PAGEDOWN = 78,
         RIGHT = 79,
@@ -124,7 +125,7 @@ namespace scarlet
         static bool GetMouseButton(int button);
         static bool GetMouseButtonDown(int button);
         static bool GetMouseButtonUp(int button);
-        static int* GetMousePosition();
+        static Vector2 GetMousePosition();
         static int GetMouseScrollDelta();
     };
 }

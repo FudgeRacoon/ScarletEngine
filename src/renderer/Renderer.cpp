@@ -20,6 +20,26 @@ void Renderer::SwapBuffers()
     SDL_GL_SwapWindow(Window::Get()->GetSDLWindow());
 }
 
+void Renderer::Render(Camera* camera, Shader*& shader, GameObject* gameObject)
+{
+
+}
+void Renderer::Render(Camera* camera, Shader*& shader, Rect* rect)
+{
+    shader->Bind();
+
+    rect->EnableBuffers();
+    
+    shader->SetMat4("proj", Matrix4::GetValuePointer(camera->GetProjectionMatrix()));
+    shader->SetMat4("view", Matrix4::GetValuePointer(camera->GetViewMatrix()));
+    shader->SetVec4f("u_color", 1.0f, 0.0f, 0.0f, 0.0f);
+
+    glDrawElements(GL_LINE_LOOP, 6, GL_UNSIGNED_INT, 0);
+
+    rect->DisbaleBuffers();
+
+    shader->UnBind();
+}
 void Renderer::Render(Camera& camera, const Texture*& texture, const VertexArray*& va, const IndexBuffer* ib, const Shader*& shader)
 {
     va->Bind();

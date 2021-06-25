@@ -123,7 +123,7 @@ void Shader::SetVec4i(std::string varName, int x, int y, int z, int w) const
 void Shader::SetVec4f(std::string varName, float x, float y, float z, float w) const
 {
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
-    glUniform4i(uniformID, x, y, z, w);
+    glUniform4f(uniformID, x, y, z, w);
 }
 void Shader::SetMat4(std::string varName, const float* value) const
 {

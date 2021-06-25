@@ -7,6 +7,12 @@
 #include "core/manager/InputManager.hpp"
 #include "core/manager/SceneManager.hpp"
 
+#include "core/manager/GameObjectManager.hpp"
+#include "core/GameObject.hpp"
+#include "core/Component.hpp"
+
+#include "core/components/SpriteRenderer.hpp"
+
 #include "core/renderer/Renderer.hpp"
 #include "core/renderer/VertexArray.hpp"
 #include "core/renderer/VertexBuffer.hpp"
@@ -14,6 +20,8 @@
 #include "core/renderer/IndexBuffer.hpp"
 #include "core/renderer/Shader.hpp"
 #include "core/renderer/Texture.hpp"
+
+#include "core/primitives/Rect.hpp"
 
 #include "core/math/Math.hpp"
 #include "core/math/Vector2.hpp"
