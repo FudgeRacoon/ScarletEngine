@@ -14,6 +14,8 @@ Rect::Rect(real x, real y, real width, real height)
     *(this->dataBuffer + 0) = this->x;
     *(this->dataBuffer + 1) = this->y;
     *(this->dataBuffer + 2) = 0.0f;
+    
+    //UV (0,1)
     *(this->dataBuffer + 3) = 0.0f;
     *(this->dataBuffer + 4) = 1.0f;
 
@@ -21,6 +23,8 @@ Rect::Rect(real x, real y, real width, real height)
     *(this->dataBuffer + 5) = this->x;
     *(this->dataBuffer + 6) = this->yMax;
     *(this->dataBuffer + 7) = 0.0f;
+    
+    //UV (0,0)
     *(this->dataBuffer + 8) = 0.0f;
     *(this->dataBuffer + 9) = 0.0f;
 
@@ -28,6 +32,8 @@ Rect::Rect(real x, real y, real width, real height)
     *(this->dataBuffer + 10) = this->xMax;
     *(this->dataBuffer + 11) = this->yMax;
     *(this->dataBuffer + 12) = 0.0f;
+    
+    //UV (1,0)
     *(this->dataBuffer + 13) = 1.0f;
     *(this->dataBuffer + 14) = 0.0f;
 
@@ -35,6 +41,8 @@ Rect::Rect(real x, real y, real width, real height)
     *(this->dataBuffer + 15) = this->xMax;
     *(this->dataBuffer + 16) = this->y;
     *(this->dataBuffer + 17) = 0.0f;
+    
+    //UV (1,1)
     *(this->dataBuffer + 18) = 1.0f;
     *(this->dataBuffer + 19) = 1.0f;
 

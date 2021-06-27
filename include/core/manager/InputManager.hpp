@@ -111,6 +111,7 @@ namespace scarlet
 
     private:
         static int mousePosX, mousePosY;
+        static int prevMousePosX, prevMousePosY;
         static int mouseScrollDelta;
 
     public:
@@ -127,6 +128,7 @@ namespace scarlet
         static bool GetMouseButtonUp(int button);
         static Vector2 GetMousePosition();
         static int GetMouseScrollDelta();
+        static bool MouseMoved();
     };
 }
 

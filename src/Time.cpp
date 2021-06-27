@@ -25,10 +25,29 @@ void Time::CalculateLag()
         Logger::LogWarning("%.2fms lag has occured.", lag);
 }
 
-float Time::GetTime()
+TimePoint Time::GetSystemTime()
+{
+    std::chrono::system_clock::time_point chronoTimePoint = std::chrono::system_clock::now();
+    time_t cTime = std::chrono::system_clock::to_time_t(chronoTimePoint);
+    tm* cTimeStruct = localtime(&cTime);
+
+    TimePoint timePoint
+    {
+        .second = cTimeStruct->tm_sec,
+        .minute = cTimeStruct->tm_min,
+        .hour = cTimeStruct->tm_hour - 12,
+        .day = cTimeStruct->tm_mday,
+        .month = cTimeStruct->tm_mon,
+        .year = cTimeStruct->tm_year + 1900
+    };
+
+    return timePoint;
+} 
+
+float Time::GetTicks()
 {
     return SDL_GetTicks() * 0.001f;
-}
+} 
 float Time::GetDeltaTime()
 {
     return deltaTime;

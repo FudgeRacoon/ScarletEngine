@@ -12,6 +12,8 @@ uint32_t InputManager::prevMouseState;
 
 int InputManager::mousePosX;
 int InputManager::mousePosY;
+int InputManager::prevMousePosX;
+int InputManager::prevMousePosY;
 int InputManager::mouseScrollDelta;
 
 void InputManager::Init()
@@ -41,9 +43,13 @@ void InputManager::Update()
 }
 void InputManager::End()
 {
-    mouseScrollDelta = 0;
     memcpy(prevKeyboardStates, keyboardStates, keyboardStatesLength);
+
+    mouseScrollDelta = 0;
+    prevMousePosX = mousePosX;
+    prevMousePosY = mousePosY;
     prevMouseState = mouseState;
+
 }
 
 bool InputManager::GetKey(KeyCode code)
@@ -104,4 +110,11 @@ Vector2 InputManager::GetMousePosition()
 int InputManager::GetMouseScrollDelta()
 {
     return mouseScrollDelta;
+}
+bool InputManager::MouseMoved()
+{
+    if(prevMousePosX != mousePosX || prevMousePosY != mousePosY)
+        return true;
+    else    
+        return false;
 }

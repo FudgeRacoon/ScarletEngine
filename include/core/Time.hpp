@@ -2,10 +2,22 @@
 #define TIME_HPP
 
 #include <iostream>
+#include <chrono>
 #include "SDL2/SDL.h"
+#include "core/math/Math.hpp"
 
 namespace scarlet
-{
+{   
+    struct TimePoint
+    {
+        uint32 second;
+        uint32 minute;
+        uint32 hour;
+        uint32 day;
+        uint32 month;
+        uint32 year;
+    };
+
     class Time
     {
     private:
@@ -28,7 +40,10 @@ namespace scarlet
         static void CalculateLag();
 
     public:
-        static float GetTime();
+        static TimePoint GetSystemTime();
+
+    public:
+        static float GetTicks();
         static float GetDeltaTime();
         static float GetFrameRate();
     };

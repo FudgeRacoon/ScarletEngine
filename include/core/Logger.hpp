@@ -2,10 +2,8 @@
 #define LOGGER_HPP
 
 #include <stdio.h>
-#include <chrono>
-#include <time.h>
 #include <windows.h>
-using std::chrono::system_clock;
+#include "core/Time.hpp"
 
 namespace scarlet
 {   
@@ -28,11 +26,9 @@ namespace scarlet
             HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
             SetConsoleTextAttribute(hConsole, (int)LogPriority::SCARLET_INFO);
 
-            system_clock::time_point currentTime = system_clock::now();
-            time_t tt = system_clock::to_time_t(currentTime);
-            struct tm* timeInfo = localtime(&tt);
+            TimePoint timePoint = Time::GetSystemTime();
 
-            printf("[INFO][%d:%d:%d]: ", timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
+            printf("[INFO][%02d:%02d:%02d]: ", timePoint.hour, timePoint.minute, timePoint.second);
             printf(message, args...);
             printf("\n");
             
@@ -44,11 +40,9 @@ namespace scarlet
             HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
             SetConsoleTextAttribute(hConsole, (int)LogPriority::SCARLET_DEBUG);
 
-            system_clock::time_point currentTime = system_clock::now();
-            time_t tt = system_clock::to_time_t(currentTime);
-            struct tm* timeInfo = localtime(&tt);
+            TimePoint timePoint = Time::GetSystemTime();
 
-            printf("[DEBUG][%d:%d:%d]: ", timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
+            printf("[DEBUG][%02d:%02d:%02d]: ", timePoint.hour, timePoint.minute, timePoint.second);
             printf(message, args...);
             printf("\n");
             
@@ -60,11 +54,9 @@ namespace scarlet
             HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
             SetConsoleTextAttribute(hConsole, (int)LogPriority::SCARLET_WARNING);
 
-            system_clock::time_point currentTime = system_clock::now();
-            time_t tt = system_clock::to_time_t(currentTime);
-            struct tm* timeInfo = localtime(&tt);
+            TimePoint timePoint = Time::GetSystemTime();
 
-            printf("[WARNING][%d:%d:%d]: ", timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
+            printf("[WARNING][%02d:%02d:%02d]: ", timePoint.hour, timePoint.minute, timePoint.second);
             printf(message, args...);
             printf("\n");
             
@@ -76,11 +68,9 @@ namespace scarlet
             HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
             SetConsoleTextAttribute(hConsole, (int)LogPriority::SCARLET_ERROR);
 
-            system_clock::time_point currentTime = system_clock::now();
-            time_t tt = system_clock::to_time_t(currentTime);
-            struct tm* timeInfo = localtime(&tt);
+            TimePoint timePoint = Time::GetSystemTime();
 
-            printf("[ERROR][%d:%d:%d]: ", timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
+            printf("[ERROR][%02d:%02d:%02d]: ", timePoint.hour, timePoint.minute, timePoint.second);
             printf(message, args...);
             printf("\n");
             
@@ -92,11 +82,9 @@ namespace scarlet
             HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
             SetConsoleTextAttribute(hConsole, (int)LogPriority::SCARLET_FATEL);
 
-            system_clock::time_point currentTime = system_clock::now();
-            time_t tt = system_clock::to_time_t(currentTime);
-            struct tm* timeInfo = localtime(&tt);
+            TimePoint timePoint = Time::GetSystemTime();
 
-            printf("[FATAL][%d:%d:%d]: ", timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
+            printf("[FATAL][%02d:%02d:%02d]: ", timePoint.hour, timePoint.minute, timePoint.second);
             printf(message, args...);
             printf("\n");
             

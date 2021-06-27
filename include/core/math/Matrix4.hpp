@@ -172,7 +172,7 @@ public:
             0  , 0  , 0  , 1
         );  
     }
-    static Matrix4 Orthographic(float left, float right, float bottom, float top, float near, float far)
+    static Matrix4 Orthographic(float left, float right, float bottom, float top, float nearr, float farr)
     {   
         // | xOut   0      0      tx |
         // | 0     yOut    0      ty |
@@ -183,11 +183,11 @@ public:
 
         float xOut = 2 / (right - left);
         float yOut = 2 / (top - bottom);
-        float zOut = 2 / (far - near);
+        float zOut = 2 / (farr - nearr);
 
         float tx = -(right + left) / (right - left);
         float ty = -(top + bottom) / (top - bottom);
-        float tz = -(far + near) / (far - near);
+        float tz = -(farr + nearr) / (farr - nearr);
 
         m.n[0][0] = xOut;
         m.n[1][1] = yOut;

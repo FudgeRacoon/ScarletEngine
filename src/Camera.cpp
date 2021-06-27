@@ -7,7 +7,7 @@ Camera::Camera()
 
     this->left = -Window::Get()->GetWidth() / 2; this->right = Window::Get()->GetWidth() / 2;
     this->bottom = -Window::Get()->GetHeight() / 2; this->top = Window::Get()->GetHeight() / 2;
-    this->near = 0.0f; this->far = -100.0f;
+    this->nearr = 0.0f; this->farr = -100.0f;
 }
 Camera::Camera(Vector3 position)
 {
@@ -17,7 +17,30 @@ Camera::Camera(Vector3 position)
 
     this->left = -Window::Get()->GetWidth() / 2, this->right = Window::Get()->GetWidth() / 2;
     this->bottom = -Window::Get()->GetHeight() / 2, this->top = Window::Get()->GetHeight() / 2;
-    this->near = 0.0f, this->far = -100.0f;
+    this->nearr = 0.0f, this->farr = -100.0f;
+}
+
+void Camera::ProcessMouseMovement()
+{
+    if(InputManager::GetMouseButton(0))
+    {
+        if(this->mouseClickedFlag == true)
+        {
+            this->mousePositionBuffer = InputManager::GetMousePosition();
+            this->mouseClickedFlag = false;
+        }
+
+        Vector2 newPos = InputManager::GetMousePosition();
+        real offsetX = this->mousePositionBuffer.x - newPos.x;
+        real offsetY = this->mousePositionBuffer.y - newPos.y;
+        
+        this->mousePositionBuffer = newPos;
+    
+        this->position = this->position + Vector3(offsetX, -offsetY, 0.0f);        
+    }
+
+    if(InputManager::GetMouseButtonUp(0))
+        this->mouseClickedFlag = true;
 }
 
 Matrix4 Camera::GetViewMatrix()
@@ -32,5 +55,5 @@ Matrix4 Camera::GetViewMatrix()
 }
 Matrix4 Camera::GetProjectionMatrix()
 {
-    return Matrix4::Orthographic(this->left, this->right, this->bottom, this->top, this->near, this->far);
+    return Matrix4::Orthographic(this->left, this->right, this->bottom, this->top, this->nearr, this->farr);
 }
