@@ -2,9 +2,9 @@
 #include "core/Logger.hpp"
 using namespace scarlet;
 
-float Time::currentTime  = 0.0f;
-float Time::previousTime = 0.0f;
-float Time::deltaTime = 0.0f;
+double Time::currentTime  = 0.0;
+double Time::previousTime = 0.0;
+double Time::deltaTime = 0.0;
 
 void Time::Reset()
 {
@@ -13,15 +13,15 @@ void Time::Reset()
 void Time::Update()
 {
     currentTime = SDL_GetTicks();
-    deltaTime = (currentTime - previousTime) * 0.001f;
+    deltaTime = (currentTime - previousTime) * 0.001;
 }
 
 void Time::CalculateLag()
 {
-    float lag = deltaTime - (1.0f / FRAME_RATE_TARGET);
-    lag = lag * 1000.0f;
+    double lag = deltaTime - (1.0 / FRAME_RATE_TARGET);
+    lag = lag * 1000.0;
 
-    if(lag >= 4.0f)
+    if(lag >= 4.0)
         Logger::LogWarning("%.2fms lag has occured.", lag);
 }
 
@@ -35,7 +35,7 @@ TimePoint Time::GetSystemTime()
     {
         .second = cTimeStruct->tm_sec,
         .minute = cTimeStruct->tm_min,
-        .hour = cTimeStruct->tm_hour - 12,
+        .hour = cTimeStruct->tm_hour,
         .day = cTimeStruct->tm_mday,
         .month = cTimeStruct->tm_mon,
         .year = cTimeStruct->tm_year + 1900
@@ -44,15 +44,15 @@ TimePoint Time::GetSystemTime()
     return timePoint;
 } 
 
-float Time::GetTicks()
+double Time::GetTicks()
 {
     return SDL_GetTicks() * 0.001f;
 } 
-float Time::GetDeltaTime()
+double Time::GetDeltaTime()
 {
     return deltaTime;
 }
-float Time::GetFrameRate()
+double Time::GetFrameRate()
 {
-    return 1.0f / deltaTime;
+    return 1.0 / deltaTime;
 }

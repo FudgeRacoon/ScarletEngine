@@ -9,10 +9,13 @@ namespace scarlet
     {
     private:
         uint32 ID;
-        uint32* buffer;
+        uint8* buffer;
 
     private:
         int width, height;
+
+    private:
+        void FlipTexture(uint8* pixels, int width, int height, int bytesPerPixel);
 
     public:
         Texture(const char* filepath);

@@ -14,9 +14,6 @@ private:
     scarlet::Shader* shader = nullptr;
     scarlet::Rect* rect = nullptr;
     scarlet::Sprite* s = nullptr;
-
-    float c = 0.0f;
-
 public:
     void OnEnter() override
     {
@@ -24,19 +21,16 @@ public:
         this->shader = new scarlet::Shader("assets\\shaders\\defaultVertex.shader", "assets\\shaders\\defaultFragment.shader");
         this->rect = new scarlet::Rect(0.0f, 0.0f, 100.0f, 100.0f);
 
-        s = new scarlet::Sprite();
-        s->SetTexture(new scarlet::Texture("assets\\textures\\coin.png"));
+        s = new scarlet::Sprite(new scarlet::Texture("assets\\textures\\coin.png"), new scarlet::Rect(-16.0f, 16.0f, 256.0f, 256.0f));
     }
 
     void Update() override
     {
-        //scarlet::Renderer::Get()->Render(this->sceneCamera, shader, this->rect);
+        sceneCamera->ProcessMouseMovement();
 
         shader->Bind();
         s->GetRect()->EnableBuffers();
         s->GetTexture()->Bind();
-
-        sceneCamera->ProcessMouseMovement();
 
         shader->SetMat4("view", Matrix4::GetValuePointer(sceneCamera->GetViewMatrix()));
         shader->SetMat4("proj", Matrix4::GetValuePointer(sceneCamera->GetProjectionMatrix()));

@@ -77,10 +77,12 @@ void Rect::SetX(real x)
     this->xMax = this->x + this->width;
 
     this->vbo->Bind();
+
     this->vbo->UpdateBufferData(0, sizeof(real), &this->x);
     this->vbo->UpdateBufferData(sizeof(real) * 5, sizeof(real), &this->x);
     this->vbo->UpdateBufferData(sizeof(real) * 10, sizeof(real), &this->xMax);
     this->vbo->UpdateBufferData(sizeof(real) * 15, sizeof(real), &this->xMax);
+
     this->vbo->UnBind();
 }
 void Rect::SetY(real y)
@@ -89,10 +91,12 @@ void Rect::SetY(real y)
     this->yMax = this->y - this->height;
 
     this->vbo->Bind();
+
     this->vbo->UpdateBufferData(sizeof(real), sizeof(real), &this->y);
     this->vbo->UpdateBufferData(sizeof(real) * 6, sizeof(real), &this->yMax);
     this->vbo->UpdateBufferData(sizeof(real) * 11, sizeof(real), &this->yMax);
     this->vbo->UpdateBufferData(sizeof(real) * 16, sizeof(real), &this->y);
+
     this->vbo->UnBind();
 }
 void Rect::SetWidth(real width)
@@ -101,8 +105,10 @@ void Rect::SetWidth(real width)
     this->xMax = this->x + this->width;
 
     this->vbo->Bind();
+
     this->vbo->UpdateBufferData(sizeof(real) * 10, sizeof(real), &this->xMax);
     this->vbo->UpdateBufferData(sizeof(real) * 15, sizeof(real), &this->xMax);
+
     this->vbo->UnBind();
 }
 void Rect::SetHeight(real height)
@@ -111,14 +117,46 @@ void Rect::SetHeight(real height)
     this->yMax = this->y - this->height;
 
     this->vbo->Bind();
+
     this->vbo->UpdateBufferData(sizeof(real) * 11, sizeof(real), &this->yMax);
     this->vbo->UpdateBufferData(sizeof(real) * 16, sizeof(real), &this->yMax);
+
     this->vbo->UnBind();
 }
-void Rect::SetCenter(Vector2 center)
+void Rect::SetUV(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
 {
-    this->x = center.x - (this->width / 2);
-    this->y = center.y - (this->height / 2);
+    this->vbo->Bind();
+
+    //UV (0,0)
+    real* v1Data = new real[2];
+    *(v1Data + 0) = v1.x;
+    *(v1Data + 1) = v1.y;
+    this->vbo->UpdateBufferData(8 * sizeof(real), 2 * sizeof(real), v1Data);
+
+    //UV (1,0)
+    real* v2Data = new real[2];
+    *(v2Data + 0) = v2.x;
+    *(v2Data + 1) = v2.y;
+    this->vbo->UpdateBufferData(13 * sizeof(real), 2 * sizeof(real), v2Data);
+
+    //UV (1,1)
+    real* v3Data = new real[2];
+    *(v3Data + 0) = v3.x;
+    *(v3Data + 1) = v3.y;
+    this->vbo->UpdateBufferData(18 * sizeof(real), 2 * sizeof(real), v3Data);
+
+    //UV (0,1)
+    real* v4Data = new real[2];
+    *(v4Data + 0) = v4.x;
+    *(v4Data + 1) = v4.y;
+    this->vbo->UpdateBufferData(3 * sizeof(real), 2 * sizeof(real), v4Data);
+
+    this->vbo->UnBind();
+
+    delete[] v1Data;
+    delete[] v2Data;
+    delete[] v3Data;
+    delete[] v4Data;
 }
 
 real Rect::GetX()

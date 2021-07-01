@@ -14,6 +14,7 @@ namespace scarlet
         
     public:
         Sprite();
+        Sprite(Texture* texture);
         Sprite(Texture* texture, Rect* rect);
         ~Sprite();
 

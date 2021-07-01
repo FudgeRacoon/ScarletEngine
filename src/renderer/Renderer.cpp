@@ -29,6 +29,8 @@ void Renderer::Render(Camera* camera, Shader*& shader, Rect* rect)
     shader->Bind();
     rect->EnableBuffers();
     
+    camera->ProcessMouseMovement();
+
     shader->SetMat4("proj", Matrix4::GetValuePointer(camera->GetProjectionMatrix()));
     shader->SetMat4("view", Matrix4::GetValuePointer(camera->GetViewMatrix()));
     shader->SetVec4f("u_color", 0.0f, 0.0f, 0.0f, 1.0f);

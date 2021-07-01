@@ -21,7 +21,7 @@ void Application::Run(int argc, char* argv[])
         Time::Update();
 
         //Check if dt is larger than or equal the target frame rate dt
-        if(Time::GetDeltaTime() >= 1.0f / Time::FRAME_RATE_TARGET)
+        if(Time::GetDeltaTime() >= 1.0 / Time::FRAME_RATE_TARGET)
         {
             Time::CalculateLag();
 

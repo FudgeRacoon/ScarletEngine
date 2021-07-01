@@ -5,6 +5,11 @@ Sprite::Sprite()
 {
     this->rect = new Rect(-16.0f, 16.0f, 32.0f, 32.0f);
 }
+Sprite::Sprite(Texture* texture)
+{
+    this->texture = texture;
+    this->rect = new Rect(-16.0f, 16.0f, 32.0f, 32.0f);
+}
 Sprite::Sprite(Texture* texture, Rect* rect)
 {
     this->texture = texture;

@@ -23,7 +23,7 @@ Camera::Camera(Vector3 position)
 void Camera::ProcessMouseMovement()
 {
     if(InputManager::GetMouseButton(0))
-    {
+    {   
         if(this->mouseClickedFlag == true)
         {
             this->mousePositionBuffer = InputManager::GetMousePosition();

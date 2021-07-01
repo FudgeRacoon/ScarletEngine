@@ -21,12 +21,12 @@ namespace scarlet
     class Time
     {
     private:
-        static float currentTime;
-        static float previousTime;
-        static float deltaTime;
+        static double currentTime;
+        static double previousTime;
+        static double deltaTime;
 
     public:
-        static constexpr float FRAME_RATE_TARGET = 60.0f;
+        static constexpr double FRAME_RATE_TARGET = 240.0;
 
     private:
         Time() = delete;
@@ -43,9 +43,9 @@ namespace scarlet
         static TimePoint GetSystemTime();
 
     public:
-        static float GetTicks();
-        static float GetDeltaTime();
-        static float GetFrameRate();
+        static double GetTicks();
+        static double GetDeltaTime();
+        static double GetFrameRate();
     };
 }
 

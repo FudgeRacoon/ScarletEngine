@@ -35,7 +35,7 @@ namespace scarlet
         void SetY(real y);
         void SetWidth(real width);
         void SetHeight(real height);
-        void SetCenter(Vector2 center);
+        void SetUV(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4);
 
         real GetX();
         real GetY();
