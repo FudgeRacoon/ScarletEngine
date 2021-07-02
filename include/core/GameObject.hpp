@@ -60,6 +60,7 @@ namespace scarlet
                 if(dynamic_cast<T*>(*it) != nullptr)
                 {
                     this->components.erase(it);
+                    delete it;
                     return;
                 }
         }

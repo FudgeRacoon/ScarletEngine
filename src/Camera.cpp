@@ -3,6 +3,8 @@ using namespace scarlet;
 
 Camera::Camera()
 {
+    this->size = 1.0f;
+
     this->direction = Vector3::FRONT();
 
     this->left = -Window::Get()->GetWidth() / 2; this->right = Window::Get()->GetWidth() / 2;
@@ -12,6 +14,8 @@ Camera::Camera()
 Camera::Camera(Vector3 position)
 {
     this->position = position;
+
+    this->size = 1.0f;
 
     this->direction = Vector3::FRONT();
 
@@ -41,6 +45,13 @@ void Camera::ProcessMouseMovement()
 
     if(InputManager::GetMouseButtonUp(0))
         this->mouseClickedFlag = true;
+
+    if(InputManager::GetMouseScrollDelta() > 0)
+        this->size -= 0.05f;
+    else if(InputManager::GetMouseScrollDelta() < 0)
+        this->size += 0.05f;
+
+    this->size = Math::Clamp(this->size, 0.0f, 100.0f);
 }
 
 Matrix4 Camera::GetViewMatrix()
@@ -55,5 +66,13 @@ Matrix4 Camera::GetViewMatrix()
 }
 Matrix4 Camera::GetProjectionMatrix()
 {
-    return Matrix4::Orthographic(this->left, this->right, this->bottom, this->top, this->nearr, this->farr);
+    return Matrix4::Orthographic
+    (
+        this->left * this->size, 
+        this->right * this->size, 
+        this->bottom * this->size, 
+        this->top * this->size, 
+        this->nearr, 
+        this->farr
+    );
 }

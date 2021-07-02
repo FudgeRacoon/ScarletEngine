@@ -6,13 +6,15 @@
 
 namespace scarlet
 {
+    class AssetPool;
+
     class Sprite
     {
     private:
         Texture* texture = nullptr;
         Rect* rect = nullptr;
         
-    public:
+    private:
         Sprite();
         Sprite(Texture* texture);
         Sprite(Texture* texture, Rect* rect);
@@ -23,6 +25,8 @@ namespace scarlet
         Texture* GetTexture();
 
         Rect* GetRect();
+
+        friend AssetPool;
     };
 }
 

@@ -9,6 +9,5 @@ uniform sampler2D uTexSampler;
 
 void main()
 {
-    vec4 c = u_color;
-    color = texture(uTexSampler, fTexCoord) * c;
+    color = texture(uTexSampler, fTexCoord) * u_color;
 }

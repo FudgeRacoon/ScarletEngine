@@ -6,6 +6,7 @@ using namespace scarlet;
 VertexArray::VertexArray()
 {
     glGenVertexArrays(1, &this->ID);
+    glBindVertexArray(0);
 }
 VertexArray::~VertexArray()
 {

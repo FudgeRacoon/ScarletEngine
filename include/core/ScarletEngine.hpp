@@ -7,11 +7,12 @@
 #include "core/Camera.hpp"
 
 //Managers
+#include "core/manager/AssetPool.hpp"
+#include "core/manager/GameObjectManager.hpp"
 #include "core/manager/InputManager.hpp"
 #include "core/manager/SceneManager.hpp"
 
 //ECS
-#include "core/manager/GameObjectManager.hpp"
 #include "core/GameObject.hpp"
 #include "core/Component.hpp"
 
@@ -37,3 +38,6 @@
 #include "core/math/Vector3.hpp"
 #include "core/math/Vector4.hpp"
 #include "core/math/Matrix4.hpp"
+
+//Utils
+#include "core/utils/SpriteUtils.hpp"

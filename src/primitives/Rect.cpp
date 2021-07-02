@@ -125,8 +125,6 @@ void Rect::SetHeight(real height)
 }
 void Rect::SetUV(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
 {
-    this->vbo->Bind();
-
     //UV (0,0)
     real* v1Data = new real[2];
     *(v1Data + 0) = v1.x;
@@ -150,8 +148,6 @@ void Rect::SetUV(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
     *(v4Data + 0) = v4.x;
     *(v4Data + 1) = v4.y;
     this->vbo->UpdateBufferData(3 * sizeof(real), 2 * sizeof(real), v4Data);
-
-    this->vbo->UnBind();
 
     delete[] v1Data;
     delete[] v2Data;

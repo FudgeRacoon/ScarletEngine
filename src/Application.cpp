@@ -1,5 +1,6 @@
 #include "core/ScarletEngine.hpp"
 #include "scenes/Editor.hpp"
+#include "scenes/Game.hpp"
 using namespace scarlet;
 
 Application* Application::Get()
@@ -54,6 +55,8 @@ void Application::Setup()
     std::cout << Window::Get()->GetGLVersion() << '\n';
     
     SceneManager::AddScene("Editor", new Editor());
+    SceneManager::AddScene("Game", new Game());
+
     SceneManager::ChangeScene("Editor");
 }
 

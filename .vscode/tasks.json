@@ -11,6 +11,7 @@
 				"${workspaceFolder}/src/manager/*.cpp",
 				"${workspaceFolder}/src/primitives/*.cpp",
 				"${workspaceFolder}/src/renderer/*.cpp",
+				"${workspaceFolder}/src/utils/*.cpp",,
                 "${workspaceFolder}/src/*.cpp",
                 "-o",
                 "${workspaceFolder}/build/ScarletEngine.exe",

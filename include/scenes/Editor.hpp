@@ -12,28 +12,27 @@ class Editor : public IScene
 private:
     scarlet::Camera* sceneCamera = nullptr;
     scarlet::Shader* shader = nullptr;
-    scarlet::Rect* rect = nullptr;
-    scarlet::Sprite* s = nullptr;
+    scarlet::Sprite* sprite = nullptr;
+    scarlet::Sprite* sprite_1 = nullptr;
 public:
     void OnEnter() override
     {
         this->sceneCamera = new scarlet::Camera();
         this->shader = new scarlet::Shader("assets\\shaders\\defaultVertex.shader", "assets\\shaders\\defaultFragment.shader");
-        this->rect = new scarlet::Rect(0.0f, 0.0f, 100.0f, 100.0f);
 
-        s = new scarlet::Sprite(new scarlet::Texture("assets\\textures\\coin.png"), new scarlet::Rect(-16.0f, 16.0f, 256.0f, 256.0f));
+        sprite = scarlet::AssetPool::AddSprite("coin", new scarlet::Texture("assets\\textures\\coin.png"));
     }
 
     void Update() override
     {
-        sceneCamera->ProcessMouseMovement();
-
         shader->Bind();
-        s->GetRect()->EnableBuffers();
-        s->GetTexture()->Bind();
+        sprite->GetRect()->EnableBuffers();
+        sprite->GetTexture()->Bind();
 
-        shader->SetMat4("view", Matrix4::GetValuePointer(sceneCamera->GetViewMatrix()));
-        shader->SetMat4("proj", Matrix4::GetValuePointer(sceneCamera->GetProjectionMatrix()));
+        this->sceneCamera->ProcessMouseMovement();
+
+        shader->SetMat4("view", Matrix4::GetValuePointer(this->sceneCamera->GetViewMatrix()));
+        shader->SetMat4("proj", Matrix4::GetValuePointer(this->sceneCamera->GetProjectionMatrix()));
         shader->SetVec4f("u_color", 1.0f, 1.0f, 1.0f, 1.0f);
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

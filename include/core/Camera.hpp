@@ -19,6 +19,9 @@ namespace scarlet
         Vector3 direction;
 
     public:
+        real size;
+
+    public:
         real right, left;
         real bottom, top;
         real nearr, farr;

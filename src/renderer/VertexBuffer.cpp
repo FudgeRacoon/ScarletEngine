@@ -15,7 +15,11 @@ VertexBuffer::~VertexBuffer()
 
 void VertexBuffer::UpdateBufferData(size_t offset, size_t size, const void* data)
 {
+    Bind();
+
     glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);
+    
+    UnBind();
 }
 
 void VertexBuffer::Bind()
