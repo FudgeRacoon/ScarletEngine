@@ -76,52 +76,36 @@ void Rect::SetX(real x)
     this->x = x;
     this->xMax = this->x + this->width;
 
-    this->vbo->Bind();
-
     this->vbo->UpdateBufferData(0, sizeof(real), &this->x);
     this->vbo->UpdateBufferData(sizeof(real) * 5, sizeof(real), &this->x);
     this->vbo->UpdateBufferData(sizeof(real) * 10, sizeof(real), &this->xMax);
     this->vbo->UpdateBufferData(sizeof(real) * 15, sizeof(real), &this->xMax);
-
-    this->vbo->UnBind();
 }
 void Rect::SetY(real y)
 {
     this->y = y;
     this->yMax = this->y - this->height;
 
-    this->vbo->Bind();
-
     this->vbo->UpdateBufferData(sizeof(real), sizeof(real), &this->y);
     this->vbo->UpdateBufferData(sizeof(real) * 6, sizeof(real), &this->yMax);
     this->vbo->UpdateBufferData(sizeof(real) * 11, sizeof(real), &this->yMax);
     this->vbo->UpdateBufferData(sizeof(real) * 16, sizeof(real), &this->y);
-
-    this->vbo->UnBind();
 }
 void Rect::SetWidth(real width)
 {
     this->width = width;
     this->xMax = this->x + this->width;
 
-    this->vbo->Bind();
-
     this->vbo->UpdateBufferData(sizeof(real) * 10, sizeof(real), &this->xMax);
     this->vbo->UpdateBufferData(sizeof(real) * 15, sizeof(real), &this->xMax);
-
-    this->vbo->UnBind();
 }
 void Rect::SetHeight(real height)
 {
     this->height = height;
     this->yMax = this->y - this->height;
 
-    this->vbo->Bind();
-
     this->vbo->UpdateBufferData(sizeof(real) * 11, sizeof(real), &this->yMax);
     this->vbo->UpdateBufferData(sizeof(real) * 16, sizeof(real), &this->yMax);
-
-    this->vbo->UnBind();
 }
 void Rect::SetUV(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
 {
@@ -185,12 +169,12 @@ bool Rect::Contains(Vector2 point)
         return false;
 }
 
-void Rect::EnableBuffers()
+void Rect::Bind()
 {
     this->vao->Bind();
     this->ibo->Bind();
 }
-void Rect::DisbaleBuffers()
+void Rect::UnBind()
 {
     this->vao->UnBind();
     this->ibo->UnBind();

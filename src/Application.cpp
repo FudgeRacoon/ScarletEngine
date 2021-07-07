@@ -16,6 +16,8 @@ void Application::Run(int argc, char* argv[])
     //Create window and set up scenes
     this->Setup();
 
+    ImGuiLayer::Init();
+
     while(Window::Get()->Running())
     {
         //Calculate dt between current and previous frame
@@ -35,6 +37,8 @@ void Application::Run(int argc, char* argv[])
             //Update the current scene
             this->Update();
 
+            ImGuiLayer::Render();
+
             //Display the back buffer
             Renderer::Get()->SwapBuffers();
 
@@ -46,6 +50,7 @@ void Application::Run(int argc, char* argv[])
         }
     }
 
+    ImGuiLayer::Release();
     Window::Get()->Release();
 }
 

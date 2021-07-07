@@ -47,8 +47,8 @@ namespace scarlet
         bool Contains(Vector2 point);
 
     public:
-        void EnableBuffers();
-        void DisbaleBuffers();
+        void Bind();
+        void UnBind();
     };
 }
 

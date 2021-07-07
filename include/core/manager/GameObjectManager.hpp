@@ -14,7 +14,7 @@ namespace scarlet
         static std::map<std::string, GameObject*> gameObjects;
 
     public:
-        static void AddGameObject(std::string name);
+        static GameObject* AddGameObject(std::string name);
         static GameObject* GetGameObject(std::string name);
         
     public:

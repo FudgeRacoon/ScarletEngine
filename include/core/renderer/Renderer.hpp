@@ -6,6 +6,8 @@
 #include "core/Window.hpp"
 #include "core/Camera.hpp"
 #include "core/GameObject.hpp"
+#include "core/components/Transform.hpp"
+#include "core/components/SpriteRenderer.hpp"
 #include "core/renderer/VertexArray.hpp"
 #include "core/renderer/IndexBuffer.hpp"
 #include "core/renderer/Shader.hpp"
@@ -30,8 +32,8 @@ namespace scarlet
         void SwapBuffers();
 
     public:
-        void Render(Camera* camera, Shader*& shader, GameObject* gameObject);
-        void Render(Camera* camera, Shader*& shader, Rect* rect); 
+        void Render(Camera*& camera, Shader*& shader, GameObject* gameObject);
+        void Render(Camera*& camera, Shader*& shader, Rect* rect); 
     };
 }
 

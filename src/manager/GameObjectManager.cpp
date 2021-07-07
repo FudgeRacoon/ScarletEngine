@@ -5,10 +5,11 @@ using namespace scarlet;
 
 std::map<std::string, GameObject*> GameObjectManager::gameObjects;
 
-void GameObjectManager::AddGameObject(std::string name)
+GameObject* GameObjectManager::AddGameObject(std::string name)
 {
     GameObject* gameObject = new GameObject(name);
     gameObjects.insert(std::make_pair(name, gameObject));
+    return gameObject;
 }
 GameObject* GameObjectManager::GetGameObject(std::string name)
 {

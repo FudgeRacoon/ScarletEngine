@@ -5,13 +5,13 @@ std::map<std::string, Sprite*> AssetPool::sprites;
 
 Sprite* AssetPool::AddSprite(std::string name, Texture* texture)
 {
-    Sprite* sprite = new Sprite(texture);
+    Sprite* sprite = new Sprite(name, texture);
     sprites.insert(std::make_pair(name, sprite));
     return sprite;
 }
 Sprite* AssetPool::AddSprite(std::string name, Texture* texture, Rect* rect)
 {
-    Sprite* sprite = new Sprite(texture, rect);
+    Sprite* sprite = new Sprite(name, texture, rect);
     sprites.insert(std::make_pair(name, sprite));
     return sprite;
 }

@@ -1,17 +1,20 @@
 #include "core/Sprite.hpp"
 using namespace scarlet;
 
-Sprite::Sprite()
+Sprite::Sprite(std::string name)
 {
-    this->rect = new Rect(-16.0f, 16.0f, 32.0f, 32.0f);
+    this->name = name;
+    this->rect = new Rect(-32.0f, 32.0f, 64.0f, 64.0f);
 }
-Sprite::Sprite(Texture* texture)
+Sprite::Sprite(std::string name, Texture* texture)
 {
+    this->name = name;
     this->texture = texture;
-    this->rect = new Rect(-16.0f, 16.0f, 32.0f, 32.0f);
+    this->rect = new Rect(-32.0f, 32.0f, 64.0f, 64.0f);
 }
-Sprite::Sprite(Texture* texture, Rect* rect)
+Sprite::Sprite(std::string name, Texture* texture, Rect* rect)
 {
+    this->name = name;
     this->texture = texture;
     this->rect = rect;
 }
@@ -28,6 +31,15 @@ void Sprite::SetTexture(Texture* texture)
 Texture* Sprite::GetTexture()
 {
     return this->texture;
+}
+
+void Sprite::SetName(std::string name)
+{
+    this->name = name;
+}
+std::string Sprite::GetName()
+{
+    return this->name;
 }
 
 Rect* Sprite::GetRect()

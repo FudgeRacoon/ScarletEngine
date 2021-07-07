@@ -9,10 +9,12 @@
 				"-g",
                 "-std=c++17",
 				"${workspaceFolder}/src/manager/*.cpp",
+				"${workspaceFolder}/src/layers/*.cpp",
 				"${workspaceFolder}/src/primitives/*.cpp",
 				"${workspaceFolder}/src/renderer/*.cpp",
-				"${workspaceFolder}/src/utils/*.cpp",,
+				"${workspaceFolder}/src/utils/*.cpp",
                 "${workspaceFolder}/src/*.cpp",
+				"${workspaceFolder}/vendor/Imgui/*.cpp",
                 "-o",
                 "${workspaceFolder}/build/ScarletEngine.exe",
                 "-I${workspaceFolder}/include",
@@ -24,6 +26,7 @@
                 "-lSDL2",
                 "-lopengl32",
                 "-lglew32",
+				"-lImm32"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

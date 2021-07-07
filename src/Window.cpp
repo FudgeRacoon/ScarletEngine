@@ -22,6 +22,7 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
 
     this->width = width;
     this->height = height;
+    
     this->window = SDL_CreateWindow
     (
         title.c_str(),
@@ -32,8 +33,8 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
         SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
     );
 
-    SDL_GL_SetSwapInterval(1);
     this->context = SDL_GL_CreateContext(this->window);
+    SDL_GL_SetSwapInterval(1);
 
     glewExperimental = true;
     if(glewInit() != 0)
@@ -45,6 +46,8 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
     }
 
     glViewport(0, 0, this->width, this->height);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     this->running = true;
     
@@ -100,6 +103,7 @@ void Window::Quit()
 }
 void Window::Release()
 {
+    SDL_GL_DeleteContext(this->context);
     SDL_DestroyWindow(this->window);
     SDL_Quit();
 }

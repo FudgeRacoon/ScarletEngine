@@ -6,6 +6,7 @@
 #include <type_traits>
 
 #include "core/Component.hpp"
+#include "core/components/Transform.hpp"
 #include "core/Logger.hpp"
 
 namespace scarlet
@@ -16,12 +17,18 @@ namespace scarlet
     {
     private:
         std::string name;
+        bool active;
 
     private:
         std::vector<Component*> components;
 
     private:
-        GameObject(std::string name) : name(name) {}
+        GameObject(std::string name)
+        {
+            this->name = name;
+            this->active = true;
+            this->AddComponent<Transform>();
+        }
         ~GameObject() = default;
 
     public:
@@ -66,15 +73,31 @@ namespace scarlet
         }
     
     public:
+        bool GetActive()
+        {
+            return this->active;
+        }
+        void SetActive(bool value)
+        {
+            this->active = value;
+        }
+
+    public:
         void Setup()
         {
-            for(Component* component : this->components)
+            if(this->active)
+            {
+                for(Component* component : this->components)
                 component->Setup();
+            }
         }
         void Update()
         {
-            for(Component* component : this->components)
+            if(this->active)
+            {
+                for(Component* component : this->components)
                 component->Update();
+            }
         }
     
         friend GameObjectManager;

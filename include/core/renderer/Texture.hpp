@@ -1,6 +1,7 @@
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
 
+#include "core/utils/Utilites.hpp"
 #include "core/math/Math.hpp"
 
 namespace scarlet
@@ -13,9 +14,7 @@ namespace scarlet
 
     private:
         int width, height;
-
-    private:
-        void FlipTexture(uint8* pixels, int width, int height, int bytesPerPixel);
+        int bytesPerPixel;
 
     public:
         Texture(const char* filepath);
@@ -24,6 +23,8 @@ namespace scarlet
     public:
         int GetWidth();
         int GetHeight();
+        int GetBytesPerPixel();
+        uint8* GetPixels();
 
     public:
         void Bind(uint32 slot = 0) const;
