@@ -4,16 +4,22 @@
 #include <iostream>
 #include "GL/glew.h"
 
+#include "core/math/Math.hpp"
+
 namespace scarlet
 {
     class IndexBuffer
     {
     private:
-        uint32_t ID;
+        uint32 ID;
+        uint32 count;
 
     public:
-        IndexBuffer(const uint32_t* data, size_t size);
+        IndexBuffer(const uint32* data, size_t size);
         ~IndexBuffer();
+
+    public:
+        uint32 GetCount();
 
     public:
         void Bind() const;

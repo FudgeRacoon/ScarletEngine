@@ -8,24 +8,24 @@ ImGuiWindow::ImGuiWindow(std::string title)
 
 std::map<std::string, ImGuiWindow*> ImGuiLayer::imguiWindows;
 
-void ImGuiLayer::Init()
+void ImGuiLayer::OnAttach()
 {
-    //Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-    //Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; 
 
-    //Setup Dear ImGui style
     ImGui::StyleColorsDark();
 
-    //Setup Platform/Renderer backends
     ImGui_ImplSDL2_InitForOpenGL(Window::Get()->GetSDLWindow(), Window::Get()->GetSDLWindowContext());
     ImGui_ImplOpenGL3_Init("#version 330 core");
 }
-void ImGuiLayer::Release()
+void ImGuiLayer::OnEvent(SDL_Event* event)
+{
+    ImGui_ImplSDL2_ProcessEvent(event);
+}
+void ImGuiLayer::OnDetach()
 {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
@@ -34,7 +34,7 @@ void ImGuiLayer::Release()
 
 ImGuiWindow* ImGuiLayer::AddWindow(ImGuiWindow* window)
 {
-    imguiWindows.insert(std::make_pair(window->title, window));
+    imguiWindows.insert(std::make_pair(window->GetTitle(), window));
     return window;
 }
 void ImGuiLayer::RemoveWindow(std::string title)
@@ -52,9 +52,8 @@ void ImGuiLayer::RemoveWindow(std::string title)
     delete it->second;
 }
 
-void ImGuiLayer::Render()
+void ImGuiLayer::OnRender()
 {
-    //Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();

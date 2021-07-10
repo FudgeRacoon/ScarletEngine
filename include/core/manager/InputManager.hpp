@@ -120,6 +120,9 @@ namespace scarlet
         static void End();
 
     public:
+        static SDL_Event* GetSDLEvent(); 
+
+    public:
         static bool GetKey(KeyCode code);
         static bool GetKeyDown(KeyCode code);
         static bool GetKeyUp(KeyCode code);

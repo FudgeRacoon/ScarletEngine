@@ -2,9 +2,9 @@
 #define GAME_HPP
 
 #include <iostream>
-#include "core/IScene.hpp"
+#include "core/IState.hpp"
 
-class Game : public IScene
+class Game : public IState
 {
 public:
     void OnEnter() override

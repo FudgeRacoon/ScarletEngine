@@ -1,7 +1,7 @@
-#ifndef ISCENE_H
-#define ISCENE_H
+#ifndef ISTATE_HPP
+#define ISTATE_HPP
 
-class IScene
+class IState
 {
 public:
     virtual void OnEnter() = 0;

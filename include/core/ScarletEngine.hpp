@@ -9,7 +9,7 @@
 #include "core/manager/AssetPool.hpp"
 #include "core/manager/GameObjectManager.hpp"
 #include "core/manager/InputManager.hpp"
-#include "core/manager/SceneManager.hpp"
+#include "core/manager/StateManager.hpp"
 
 //Layers
 #include "core/layers/ImGuiLayer.hpp"

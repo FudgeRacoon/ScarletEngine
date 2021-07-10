@@ -1,34 +1,28 @@
 #ifndef SPRITERENDERER_HPP
 #define SPRITERENDERER_HPP
 
-#include "core/Component.hpp"
+//Core Headers
 #include "core/Sprite.hpp"
+#include "core/Component.hpp"
+
+//Math Headers
 #include "core/math/Color.hpp"
-#include "core/Logger.hpp" 
 
 namespace scarlet
 {
+    class Sprite;
+
     class SpriteRenderer : public Component
     {
     public:
         Sprite* sprite;
-        Color color;
-        bool flipX, flipY;
-        int sortingOrder;
+        Color   color;
+        bool    flipX, flipY;
+        uint16  sortingOrder;
 
     public:
-        void Setup() override
-        {
-            this->sprite = nullptr;
-            this->flipX = false;
-            this->flipY = false;
-            this->sortingOrder = 0;
-        }
-
-        void Update() override
-        {
-            
-        }
+        void Setup() override;
+        void Update() override;
     };
 }
 

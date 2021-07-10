@@ -66,8 +66,8 @@ namespace scarlet
             for(auto it = this->components.begin(); it != this->components.end(); it++)
                 if(dynamic_cast<T*>(*it) != nullptr)
                 {
-                    this->components.erase(it);
                     delete it;
+                    this->components.erase(it);
                     return;
                 }
         }

@@ -1,6 +1,6 @@
 #include "core/ScarletEngine.hpp"
-#include "scenes/Editor.hpp"
-#include "scenes/Game.hpp"
+#include "states/Editor.hpp"
+#include "states/Game.hpp"
 using namespace scarlet;
 
 Application* Application::Get()
@@ -13,39 +13,31 @@ void Application::Run(int argc, char* argv[])
 {
     InputManager::Init();
 
-    //Create window and set up scenes
     this->Setup();
 
     ImGuiLayer::Init();
 
     while(Window::Get()->Running())
     {
-        //Calculate dt between current and previous frame
         Time::Update();
 
-        //Check if dt is larger than or equal the target frame rate dt
         if(Time::GetDeltaTime() >= 1.0 / Time::FRAME_RATE_TARGET)
         {
             Time::CalculateLag();
 
-            //Poll events
             InputManager::Update();
+            ImGuiLayer::OnEvent(InputManager::GetSDLEvent());
 
-            //Clear opengl buffers
             Renderer::Get()->ClearBuffers();
 
-            //Update the current scene
             this->Update();
 
             ImGuiLayer::Render();
 
-            //Display the back buffer
             Renderer::Get()->SwapBuffers();
 
-            //Store previous key and mouse states for next frame
             InputManager::End();
 
-            //Save the duration of current of frame
             Time::Reset();
         }
     }
@@ -59,13 +51,13 @@ void Application::Setup()
     Window::Get()->Init("Scarlet Engine", 800, 600, false);
     std::cout << Window::Get()->GetGLVersion() << '\n';
     
-    SceneManager::AddScene("Editor", new Editor());
-    SceneManager::AddScene("Game", new Game());
+    StateManager::AddState("Editor", new Editor());
+    StateManager::AddState("Game", new Game());
 
-    SceneManager::ChangeScene("Editor");
+    StateManager::ChangeState("Editor");
 }
 
 void Application::Update()
 {
-    SceneManager::UpdateScene();
+    StateManager::UpdateState();
 }

@@ -1,11 +1,6 @@
 #include "core/renderer/Texture.hpp"
 using namespace scarlet;
 
-#include "core/Logger.hpp"
-#include "GL/glew.h"
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
-
 Texture::Texture(const char* filepath)
 {
     SDL_Surface* data = IMG_Load(filepath);
@@ -49,6 +44,15 @@ Texture::~Texture()
     glDeleteTextures(1, &this->ID);
 }
 
+uint32 Texture::GetID()
+{
+    return this->ID;
+}
+uint8* Texture::GetPixels()
+{
+    return this->buffer;
+}
+
 int Texture::GetWidth()
 {
     return this->width;
@@ -60,10 +64,6 @@ int Texture::GetHeight()
 int Texture::GetBytesPerPixel()
 {
     return this->bytesPerPixel;
-}
-uint8* Texture::GetPixels()
-{
-    return this->buffer;
 }
 
 void Texture::Bind(uint32 slot) const

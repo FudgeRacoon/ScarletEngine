@@ -1,7 +1,9 @@
 #ifndef UTILITES_HPP
 #define UTILITES_HPP
 
+#include <vector>
 #include <string>
+
 #include "core/math/Vector2.hpp"
 
 namespace scarlet
@@ -17,7 +19,7 @@ namespace scarlet
         static void FlipTextureY(Texture* texture);
     
     public:
-        static Sprite** SliceSprite(Sprite* sprite, int spriteWidth, int spriteHeight);
+        static std::vector<Sprite*> SliceSprite(Sprite* sprite, int spriteWidth, int spriteHeight);
     };
 };
 

@@ -27,9 +27,12 @@ void InputManager::Update()
     {
         switch(event.type)
         {
-            case SDL_QUIT: Window::Get()->Quit(); break;
-            
-            case SDL_MOUSEWHEEL: 
+        case SDL_QUIT: 
+            {
+                Window::Get()->Quit();
+            } break;
+        
+        case SDL_MOUSEWHEEL: 
             {
                 if(event.wheel.y > 0)
                     mouseScrollDelta = 1;
@@ -50,6 +53,11 @@ void InputManager::End()
     prevMousePosY = mousePosY;
     prevMouseState = mouseState;
 
+}
+
+SDL_Event* InputManager::GetSDLEvent()
+{
+    return &event;
 }
 
 bool InputManager::GetKey(KeyCode code)

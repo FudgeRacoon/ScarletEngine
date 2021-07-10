@@ -8,6 +8,8 @@
 			"args": [
 				"-g",
                 "-std=c++17",
+				"-w",
+				"${workspaceFolder}/src/components/*.cpp",
 				"${workspaceFolder}/src/manager/*.cpp",
 				"${workspaceFolder}/src/layers/*.cpp",
 				"${workspaceFolder}/src/primitives/*.cpp",

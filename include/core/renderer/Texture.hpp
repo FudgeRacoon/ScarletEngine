@@ -1,11 +1,20 @@
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
 
+#include <vector>
+
+#include "GL/glew.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
+
+#include "core/Logger.hpp"
+
 #include "core/utils/Utilites.hpp"
-#include "core/math/Math.hpp"
 
 namespace scarlet
-{
+{   
+    class AssetPool;
+
     class Texture
     {
     private:
@@ -16,19 +25,24 @@ namespace scarlet
         int width, height;
         int bytesPerPixel;
 
-    public:
+    private:
         Texture(const char* filepath);
         ~Texture();
+
+    public:
+        uint32 GetID();
+        uint8* GetPixels();
 
     public:
         int GetWidth();
         int GetHeight();
         int GetBytesPerPixel();
-        uint8* GetPixels();
-
+        
     public:
         void Bind(uint32 slot = 0) const;
         void UnBind() const;
+
+    friend AssetPool;
     };
 }
 

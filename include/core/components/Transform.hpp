@@ -12,7 +12,7 @@ namespace scarlet
         Vector3 position;
         Vector3 rotation;
         Vector3 scale;
-
+    
     public:
         void Setup() override
         {

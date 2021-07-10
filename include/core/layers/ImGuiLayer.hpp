@@ -11,18 +11,30 @@
 #include "core/Window.hpp"
 #include "core/Logger.hpp"
 
+#include "core/manager/InputManager.hpp"
+
 namespace scarlet
 {
     class ImGuiWindow
     {
-    public:
+    protected:
         std::string title;
 
     public:
         ImGuiWindow(std::string title);
 
     public:
-        virtual void Update() = 0;
+        virtual void OnUpdate() = 0;
+
+    public:
+        std::string GetTitle()
+        {
+            return this->title;
+        }
+        void SetTitle(std::string title)
+        {
+            this->title = title;
+        }
     };
 
     class ImGuiLayer
@@ -31,15 +43,16 @@ namespace scarlet
         static std::map<std::string, ImGuiWindow*> imguiWindows;
 
     public:
-        static void Init();
-        static void Release();
+        static void OnAttach();
+        static void OnEvent(SDL_Event* event);
+        static void OnDetach();
 
     public:
         static ImGuiWindow* AddWindow(ImGuiWindow* window);
         static void RemoveWindow(std::string title);
 
     public:
-        static void Render();
+        static void OnRender();
     };
 }
 

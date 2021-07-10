@@ -39,7 +39,7 @@ void Utilites::FlipTextureY(Texture* texture)
     
 }
 
-Sprite** Utilites::SliceSprite(Sprite* sprite, int spriteWidth, int spriteHeight)
+std::vector<Sprite*> Utilites::SliceSprite(Sprite* sprite, int spriteWidth, int spriteHeight)
 {
     int counter = 0;
 
@@ -49,7 +49,7 @@ Sprite** Utilites::SliceSprite(Sprite* sprite, int spriteWidth, int spriteHeight
     int horzintalNumOfSprites = width / spriteWidth;
     int verticalNumOfSprites = height / spriteHeight;
 
-    Sprite** spritesArray = new Sprite*[horzintalNumOfSprites * verticalNumOfSprites];
+    std::vector<Sprite*> sprites(horzintalNumOfSprites * verticalNumOfSprites);
 
     for(int y = 1; y <= verticalNumOfSprites; y++)
         for(int x = 0; x < horzintalNumOfSprites; x++)
@@ -74,8 +74,8 @@ Sprite** Utilites::SliceSprite(Sprite* sprite, int spriteWidth, int spriteHeight
             Sprite* newSprite = AssetPool::AddSprite(name, sprite->GetTexture());
             newSprite->GetRect()->SetUV(v1, v2, v3, v4);
 
-            spritesArray[counter++] = newSprite;
+            sprites[counter++] = newSprite;
         }
 
-    return spritesArray;
+    return sprites;
 }

@@ -1,6 +1,6 @@
 CC = g++
 CC_FLAGS = -std=c++17 -w
-SRC_DIR = src/layers/*.cpp src/manager/*.cpp src/primitives/*.cpp src/renderer/*.cpp src/utils/*.cpp src/*.cpp vendor/Imgui/*.cpp
+SRC_DIR = src/components/*.cpp src/layers/*.cpp src/manager/*.cpp src/primitives/*.cpp src/renderer/*.cpp src/utils/*.cpp src/*.cpp vendor/Imgui/*.cpp
 LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2_image -lSDL2 -lopengl32 -lglew32 -lImm32
 BIN_NAME = ScarletEngine.exe
 

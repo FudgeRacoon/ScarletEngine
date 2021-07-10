@@ -16,12 +16,24 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
         return EXIT_FAILURE;
     }
 
+    //Set OpenGL version and compatibility options
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-    this->width = width;
-    this->height = height;
+    //Set up window for fullscreen or windowed mode
+    if(fullscreen)
+    {
+        SDL_DisplayMode displayMode;
+        SDL_GetCurrentDisplayMode(0, &displayMode);
+        this->width = displayMode.w;
+        this->height = displayMode.h;
+    }
+    else
+    {
+        this->width = width;
+        this->height = height;
+    }
     
     this->window = SDL_CreateWindow
     (
@@ -30,9 +42,11 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
         SDL_WINDOWPOS_CENTERED,
         this->width, 
         this->height,
-        SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
+        fullscreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN : SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
     );
 
+    //Create OpenGL rendering context for current this window
+    //and Set the swap interval
     this->context = SDL_GL_CreateContext(this->window);
     SDL_GL_SetSwapInterval(1);
 
@@ -44,7 +58,7 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
         SDL_Quit();
         return EXIT_FAILURE;
     }
-
+    
     glViewport(0, 0, this->width, this->height);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

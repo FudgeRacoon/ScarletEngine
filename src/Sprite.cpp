@@ -1,4 +1,5 @@
 #include "core/Sprite.hpp"
+#include "core/renderer/Texture.hpp"
 using namespace scarlet;
 
 Sprite::Sprite(std::string name)
@@ -12,15 +13,8 @@ Sprite::Sprite(std::string name, Texture* texture)
     this->texture = texture;
     this->rect = new Rect(-32.0f, 32.0f, 64.0f, 64.0f);
 }
-Sprite::Sprite(std::string name, Texture* texture, Rect* rect)
-{
-    this->name = name;
-    this->texture = texture;
-    this->rect = rect;
-}
 Sprite::~Sprite()
 {
-    delete this->texture;
     delete this->rect;
 }
 
