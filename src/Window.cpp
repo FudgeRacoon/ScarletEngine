@@ -42,13 +42,12 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
         SDL_WINDOWPOS_CENTERED,
         this->width, 
         this->height,
-        fullscreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN : SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
+        fullscreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_MAXIMIZED : SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
     );
 
     //Create OpenGL rendering context for current this window
     //and Set the swap interval
     this->context = SDL_GL_CreateContext(this->window);
-    SDL_GL_SetSwapInterval(1);
 
     glewExperimental = true;
     if(glewInit() != 0)
@@ -66,6 +65,15 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
     this->running = true;
     
     return EXIT_SUCCESS;
+}
+
+void Window::EnableVSync(bool value)
+{
+    switch(value)
+    {
+        case true:  SDL_GL_SetSwapInterval(1); break;
+        case false: SDL_GL_SetSwapInterval(0); break;
+    }
 }
 
 std::string Window::GetTitle()
@@ -94,16 +102,6 @@ SDL_Window* Window::GetSDLWindow()
 SDL_GLContext Window::GetSDLWindowContext()
 {
     return this->context;
-}
-std::string Window::GetGLVersion()
-{
-    std::string title = "";
-    const unsigned char* version = glGetString(GL_VERSION);
-
-    for(int i = 0; version[i] != '\0'; i++)
-        title.push_back(version[i]);
-
-    return title;
 }
 
 bool Window::Running()

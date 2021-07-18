@@ -110,24 +110,36 @@ void Rect::SetHeight(real height)
 void Rect::SetUV(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
 {
     //UV (0,0)
+    *(this->dataBuffer + 8) = v1.x;
+    *(this->dataBuffer + 9) = v1.y;
+
     real* v1Data = new real[2];
     *(v1Data + 0) = v1.x;
     *(v1Data + 1) = v1.y;
     this->vbo->UpdateBufferData(8 * sizeof(real), 2 * sizeof(real), v1Data);
 
     //UV (1,0)
+    *(this->dataBuffer + 13) = v2.x;
+    *(this->dataBuffer + 14) = v2.y;
+
     real* v2Data = new real[2];
     *(v2Data + 0) = v2.x;
     *(v2Data + 1) = v2.y;
     this->vbo->UpdateBufferData(13 * sizeof(real), 2 * sizeof(real), v2Data);
 
     //UV (1,1)
+    *(this->dataBuffer + 18) = v3.x;
+    *(this->dataBuffer + 19) = v3.y;
+
     real* v3Data = new real[2];
     *(v3Data + 0) = v3.x;
     *(v3Data + 1) = v3.y;
     this->vbo->UpdateBufferData(18 * sizeof(real), 2 * sizeof(real), v3Data);
 
     //UV (0,1)
+    *(this->dataBuffer + 3) = v4.x;
+    *(this->dataBuffer + 4) = v4.y;
+
     real* v4Data = new real[2];
     *(v4Data + 0) = v4.x;
     *(v4Data + 1) = v4.y;
@@ -154,6 +166,22 @@ real Rect::GetWidth()
 real Rect::GetHeight()
 {
     return this->height;
+}
+std::vector<Vector2> Rect::GetUV()
+{
+    std::vector<Vector2> uvCoords;
+
+    Vector2 uv00(this->dataBuffer[8], this->dataBuffer[9]);
+    Vector2 uv10(this->dataBuffer[13], this->dataBuffer[14]);
+    Vector2 uv11(this->dataBuffer[18], this->dataBuffer[19]);
+    Vector2 uv01(this->dataBuffer[3], this->dataBuffer[4]);
+
+    uvCoords.push_back(uv00);
+    uvCoords.push_back(uv10);
+    uvCoords.push_back(uv11);
+    uvCoords.push_back(uv01);
+
+    return uvCoords;
 }
 Vector2 Rect::GetCenter()
 {

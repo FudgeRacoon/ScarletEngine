@@ -11,6 +11,13 @@ uniform mat4 u_proj;
 
 void main()
 {
-    gl_Position = u_proj * u_view * u_model * vec4(aPos, 1.0);
+    vec4 transformedVertex = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    
+    transformedVertex = u_model * transformedVertex;
+    transformedVertex = u_view * transformedVertex;
+    transformedVertex = u_proj * transformedVertex;
+
+    gl_Position = transformedVertex;
+
     fTexCoord = aTexCoord;
 };

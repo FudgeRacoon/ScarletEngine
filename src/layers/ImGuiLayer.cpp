@@ -59,7 +59,7 @@ void ImGuiLayer::OnRender()
     ImGui::NewFrame();
 
     for(std::pair<std::string, ImGuiWindow*> imguiWindow : imguiWindows)
-        imguiWindow.second->Update();
+        imguiWindow.second->OnUpdate();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -57,7 +57,7 @@ public:
     {
         return this->x != v.x && this->y != v.y;
     }
-
+    
 public:
     static float Magnitude(Vector2 v)
     {

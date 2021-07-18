@@ -7,9 +7,9 @@ Camera::Camera()
 
     this->direction = Vector3::FRONT();
 
-    this->left = -Window::Get()->GetWidth() / 2; this->right = Window::Get()->GetWidth() / 2;
-    this->bottom = -Window::Get()->GetHeight() / 2; this->top = Window::Get()->GetHeight() / 2;
-    this->nearr = 0.0f; this->farr = -100.0f;
+    this->leftPlane = -Window::Get()->GetWidth() / 2; this->rightPlane = Window::Get()->GetWidth() / 2;
+    this->bottomPlane = -Window::Get()->GetHeight() / 2; this->topPlane = Window::Get()->GetHeight() / 2;
+    this->nearPlane = 0.0f; this->farPlane = -100.0f;
 }
 Camera::Camera(Vector3 position)
 {
@@ -19,14 +19,14 @@ Camera::Camera(Vector3 position)
 
     this->direction = Vector3::FRONT();
 
-    this->left = -Window::Get()->GetWidth() / 2, this->right = Window::Get()->GetWidth() / 2;
-    this->bottom = -Window::Get()->GetHeight() / 2, this->top = Window::Get()->GetHeight() / 2;
-    this->nearr = 0.0f, this->farr = -100.0f;
+    this->leftPlane = -Window::Get()->GetWidth() / 2, this->rightPlane = Window::Get()->GetWidth() / 2;
+    this->bottomPlane = -Window::Get()->GetHeight() / 2, this->topPlane = Window::Get()->GetHeight() / 2;
+    this->nearPlane = 0.0f, this->farPlane = -100.0f;
 }
 
 void Camera::ProcessMouseMovement()
 {
-    if(InputManager::GetMouseButton(0))
+    if(InputManager::GetMouseButton(1))
     {   
         if(this->mouseClickedFlag == true)
         {
@@ -43,17 +43,42 @@ void Camera::ProcessMouseMovement()
         this->position = this->position + Vector3(offsetX, -offsetY, 0.0f);        
     }
 
-    if(InputManager::GetMouseButtonUp(0))
+    if(InputManager::GetMouseButtonUp(1))
         this->mouseClickedFlag = true;
 
     if(InputManager::GetMouseScrollDelta() > 0)
         this->size -= 0.05f;
     else if(InputManager::GetMouseScrollDelta() < 0)
         this->size += 0.05f;
-
-    this->size = Math::Clamp(this->size, 0.0f, 100.0f);
 }
 
+Vector3 Camera::ScreenToWorldPoint(Vector3 point)
+{
+    int width = Window::Get()->GetWidth();
+    int height = Window::Get()->GetHeight();
+    
+    float x = point.x / width;
+    float y = (height - point.y) / height;
+
+    Vector4 normalizedPoint;
+    normalizedPoint.x = (x * 2) - 1;
+    normalizedPoint.y = (y * 2) - 1;
+
+    Matrix4 invProj = Matrix4::Inverse(this->GetProjectionMatrix());
+    Matrix4 invView = Matrix4::Inverse(this->GetViewMatrix());
+    Matrix4 invWorld = invView * invProj;
+
+    return invWorld * normalizedPoint;
+}
+
+float Camera::GetSize()
+{
+    return this->size;
+}
+Vector3 Camera::GetDirection()
+{
+    return this->direction;
+}
 Matrix4 Camera::GetViewMatrix()
 {   
     Matrix4 yaw = Matrix4::Rotate(this->rotation.x, Vector3::RIGHT());
@@ -68,11 +93,16 @@ Matrix4 Camera::GetProjectionMatrix()
 {
     return Matrix4::Orthographic
     (
-        this->left * this->size, 
-        this->right * this->size, 
-        this->bottom * this->size, 
-        this->top * this->size, 
-        this->nearr, 
-        this->farr
+        this->leftPlane * this->size, 
+        this->rightPlane * this->size, 
+        this->bottomPlane * this->size, 
+        this->topPlane * this->size, 
+        this->nearPlane, 
+        this->farPlane
     );
+}
+
+void Camera::SetSize(float size)
+{
+    this->size = size;
 }

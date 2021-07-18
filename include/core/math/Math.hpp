@@ -107,7 +107,7 @@ namespace scarlet
         static void Swap(T* a, T* b)
         {
             T temp = *a;
-            a = *b;
+            *a = *b;
             *b = temp;
         }
     };

@@ -1,10 +1,6 @@
 #ifndef APPLICATION_HPP
 #define APPLICATION_HPP
 
-#include "core/Window.hpp"
-#include "core/Time.hpp"
-#include "core/manager/InputManager.hpp"
-
 #define APP scarlet::Application::Get()
 
 namespace scarlet

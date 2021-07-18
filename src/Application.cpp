@@ -11,19 +11,23 @@ Application* Application::Get()
 
 void Application::Run(int argc, char* argv[])
 {
-    InputManager::Init();
+    Time::Init();
 
     this->Setup();
-
-    ImGuiLayer::Init();
+    
+    InputManager::Init();
+    
+    ImGuiLayer::OnAttach();
 
     while(Window::Get()->Running())
     {
         Time::Update();
 
-        if(Time::GetDeltaTime() >= 1.0 / Time::FRAME_RATE_TARGET)
+        if(Time::GetDeltaTime() >= (1000.0 / Time::FRAME_RATE_TARGET))
         {
-            Time::CalculateLag();
+            double lag = Time::GetDeltaTime() - (1000.0 / Time::FRAME_RATE_TARGET);
+            if(lag >= 4.0)
+                Logger::LogWarning("%.2fms lag has occured.", lag);
 
             InputManager::Update();
             ImGuiLayer::OnEvent(InputManager::GetSDLEvent());
@@ -32,7 +36,7 @@ void Application::Run(int argc, char* argv[])
 
             this->Update();
 
-            ImGuiLayer::Render();
+            ImGuiLayer::OnRender();
 
             Renderer::Get()->SwapBuffers();
 
@@ -42,14 +46,16 @@ void Application::Run(int argc, char* argv[])
         }
     }
 
-    ImGuiLayer::Release();
+    Logger::CreateLogFile();
+
+    ImGuiLayer::OnDetach();
     Window::Get()->Release();
 }
 
 void Application::Setup()
 {
-    Window::Get()->Init("Scarlet Engine", 800, 600, false);
-    std::cout << Window::Get()->GetGLVersion() << '\n';
+    Window::Get()->Init("Scarlet Engine", 800, 600, true);
+    Window::Get()->EnableVSync(true);
     
     StateManager::AddState("Editor", new Editor());
     StateManager::AddState("Game", new Game());

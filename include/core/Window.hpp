@@ -27,6 +27,9 @@ namespace scarlet
     public:
         static Window* Get();
         int Init(std::string title, int width, int height, bool fullscreen);
+    
+    public:
+        void EnableVSync(bool value);
 
     public:
         std::string GetTitle();
@@ -39,7 +42,6 @@ namespace scarlet
     public:
         SDL_Window* GetSDLWindow();
         SDL_GLContext GetSDLWindowContext();
-        std::string GetGLVersion();
 
     public:
         bool Running();

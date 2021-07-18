@@ -27,15 +27,15 @@ namespace scarlet
         ~Sprite();
 
     public:
-        void SetTexture(Texture* texture);
         Texture* GetTexture();
-
-    public:
-        void SetName(std::string name);
-        std::string GetName();
+        void SetTexture(Texture* texture);
 
     public:
         Rect* GetRect();
+
+    public:
+        std::string GetName();
+        void SetName(std::string name);
 
     friend AssetPool;
     };

@@ -2,51 +2,33 @@
 #include "core/Logger.hpp"
 using namespace scarlet;
 
+high_resolution_clock::time_point Time::startTime;
+
 double Time::currentTime  = 0.0;
 double Time::previousTime = 0.0;
 double Time::deltaTime = 0.0;
 
+void Time::Init()
+{
+    startTime = high_resolution_clock::now();
+}
+void Time::Update()
+{
+    currentTime = GetTicks();
+    deltaTime = currentTime - previousTime;
+}
 void Time::Reset()
 {
     previousTime = currentTime;
 }
-void Time::Update()
-{
-    currentTime = SDL_GetTicks();
-    deltaTime = (currentTime - previousTime) * 0.001;
-}
-
-void Time::CalculateLag()
-{
-    double lag = deltaTime - (1.0 / FRAME_RATE_TARGET);
-    lag = lag * 1000.0;
-
-    if(lag >= 4.0)
-        Logger::LogWarning("%.2fms lag has occured.", lag);
-}
-
-TimePoint Time::GetSystemTime()
-{
-    std::chrono::system_clock::time_point chronoTimePoint = std::chrono::system_clock::now();
-    time_t cTime = std::chrono::system_clock::to_time_t(chronoTimePoint);
-    tm* cTimeStruct = localtime(&cTime);
-
-    TimePoint timePoint
-    {
-        .second = cTimeStruct->tm_sec,
-        .minute = cTimeStruct->tm_min,
-        .hour = cTimeStruct->tm_hour,
-        .day = cTimeStruct->tm_mday,
-        .month = cTimeStruct->tm_mon,
-        .year = cTimeStruct->tm_year + 1900
-    };
-
-    return timePoint;
-} 
 
 double Time::GetTicks()
 {
-    return SDL_GetTicks() * 0.001f;
+    duration<double, std::milli> elapsed = duration_cast<milliseconds>(
+        high_resolution_clock::now() - startTime
+    );
+    
+    return elapsed.count();
 } 
 double Time::GetDeltaTime()
 {
@@ -54,5 +36,23 @@ double Time::GetDeltaTime()
 }
 double Time::GetFrameRate()
 {
-    return 1.0 / deltaTime;
+    return 1000.0 / deltaTime;
 }
+TimePoint Time::GetSystemTime()
+{
+    system_clock::time_point currentSystemTime = system_clock::now();
+    time_t c_currentSystemTime = system_clock::to_time_t(currentSystemTime);
+    tm* timeStruct = localtime(&c_currentSystemTime);
+
+    TimePoint timePoint
+    {
+        .second = timeStruct->tm_sec,
+        .minute = timeStruct->tm_min,
+        .hour   = timeStruct->tm_hour,
+        .day    = timeStruct->tm_mday,
+        .month  = timeStruct->tm_mon,
+        .year   = timeStruct->tm_year + 1900
+    };
+
+    return timePoint;
+} 

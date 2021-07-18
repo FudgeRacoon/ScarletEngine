@@ -4,19 +4,19 @@ using namespace scarlet;
 
 #include "core/components/SpriteRenderer.hpp"
 
-#include "core/manager/GameObjectManager.hpp"
+#include "core/manager/EditorSceneManager.hpp"
 
-AssetPool::SpritesArray AssetPool::sprites;
-AssetPool::TexturesArray AssetPool::textures;
+AssetPool::SpritesTreeMap AssetPool::sprites;
+AssetPool::TexturesTreeMap AssetPool::textures;
 
-AssetPool::TextureUsersArray AssetPool::textureUsers;
+AssetPool::TextureUsersHashMap AssetPool::textureUsers;
 
 Sprite* AssetPool::AddSprite(std::string name, Texture* texture)
 {   
     auto spritesIterator = sprites.find(name);
     if(spritesIterator != sprites.end())
     {
-        Logger::LogWarning("Sprite already exists.");
+        Logger::LogWarning("Sprite name already exists.");
         return nullptr;
     }
 
@@ -38,7 +38,7 @@ Texture* AssetPool::AddTexture(std::string name, const char* filepath)
     auto it = textures.find(name);
     if(it != textures.end())
     {
-        Logger::LogWarning("Texture already exists.");
+        Logger::LogWarning("Texture name already exists.");
         return nullptr;
     }
 
@@ -65,7 +65,7 @@ void AssetPool::RemoveSprite(std::string name)
     auto it = sprites.find(name);
     if(it != sprites.end())
     {
-        std::vector<GameObject*> gameObjects = GameObjectManager::GetGameObjectsOfType<SpriteRenderer>();
+        std::vector<GameObject*> gameObjects = EditorSceneManager::Get()->GetActiveScene()->GetGameObjectsOfType<SpriteRenderer>();
         
         for(GameObject* gameObject : gameObjects)
         {
@@ -116,4 +116,13 @@ Texture* AssetPool::GetTexture(std::string name)
 
     Logger::LogWarning("Texture does not exist.");
     return nullptr;
+}
+
+AssetPool::SpritesTreeMap AssetPool::GetSprites()
+{
+    return sprites;
+}
+AssetPool::TexturesTreeMap AssetPool::GetTextures()
+{
+    return textures;
 }

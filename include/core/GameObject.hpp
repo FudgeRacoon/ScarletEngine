@@ -29,7 +29,13 @@ namespace scarlet
             this->active = true;
             this->AddComponent<Transform>();
         }
-        ~GameObject() = default;
+        ~GameObject()
+        {
+            for(Component* component : this->components)
+                delete component;
+
+            this->components.clear();
+        }
 
     public:
         template <typename T>
@@ -88,7 +94,7 @@ namespace scarlet
             if(this->active)
             {
                 for(Component* component : this->components)
-                component->Setup();
+                    component->Setup();
             }
         }
         void Update()
@@ -96,7 +102,7 @@ namespace scarlet
             if(this->active)
             {
                 for(Component* component : this->components)
-                component->Update();
+                    component->Update();
             }
         }
     

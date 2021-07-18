@@ -3,7 +3,9 @@
 
 #include <math.h>
 
+#include "Math.hpp"
 #include "Vector4.hpp"
+using namespace scarlet;
 
 class Matrix4
 {
@@ -45,45 +47,45 @@ public:
     {
         return Matrix4
         (
-            this->n[0][0] + m(0,0), this->n[0][1] + m(0,1), this->n[0][2] + m(0,2), this->n[0][3] + m(0,3),
-            this->n[1][0] + m(1,0), this->n[1][1] + m(1,1), this->n[1][2] + m(1,2), this->n[1][3] + m(1,3),
-            this->n[2][0] + m(2,0), this->n[2][1] + m(2,1), this->n[2][2] + m(2,2), this->n[2][3] + m(2,3),
-            this->n[3][0] + m(3,0), this->n[3][1] + m(3,1), this->n[3][2] + m(3,2), this->n[3][3] + m(3,3)
+            this->n[0][0] + m.n[0][0], this->n[0][1] + m.n[0][1], this->n[0][2] + m.n[0][2], this->n[0][3] + m.n[0][3],
+            this->n[1][0] + m.n[1][0], this->n[1][1] + m.n[1][1], this->n[1][2] + m.n[1][2], this->n[1][3] + m.n[1][3],
+            this->n[2][0] + m.n[2][0], this->n[2][1] + m.n[2][1], this->n[2][2] + m.n[2][2], this->n[2][3] + m.n[2][3],
+            this->n[3][0] + m.n[3][0], this->n[3][1] + m.n[3][1], this->n[3][2] + m.n[3][2], this->n[3][3] + m.n[3][3]
         );
     }
     Matrix4 operator -(Matrix4 m)
     {
         return Matrix4
         (
-            this->n[0][0] - m(0,0), this->n[0][1] - m(0,1), this->n[0][2] - m(0,2), this->n[0][3] - m(0,3),
-            this->n[1][0] - m(1,0), this->n[1][1] - m(1,1), this->n[1][2] - m(1,2), this->n[1][3] - m(1,3),
-            this->n[2][0] - m(2,0), this->n[2][1] - m(2,1), this->n[2][2] - m(2,2), this->n[2][3] - m(2,3),
-            this->n[3][0] - m(3,0), this->n[3][1] - m(3,1), this->n[3][2] - m(3,2), this->n[3][3] - m(3,3)
+            this->n[0][0] - m.n[0][0], this->n[0][1] - m.n[0][1], this->n[0][2] - m.n[0][2], this->n[0][3] - m.n[0][3],
+            this->n[1][0] - m.n[1][0], this->n[1][1] - m.n[1][1], this->n[1][2] - m.n[1][2], this->n[1][3] - m.n[1][3],
+            this->n[2][0] - m.n[2][0], this->n[2][1] - m.n[2][1], this->n[2][2] - m.n[2][2], this->n[2][3] - m.n[2][3],
+            this->n[3][0] - m.n[3][0], this->n[3][1] - m.n[3][1], this->n[3][2] - m.n[3][2], this->n[3][3] - m.n[3][3]
         );
     }
     Matrix4 operator *(Matrix4 m)
     {
         return Matrix4
         (
-            this->n[0][0] * m(0,0) + this->n[0][1] * m(1,0) + this->n[0][2] * m(2,0) + this->n[0][3] * m(3,0),
-            this->n[0][0] * m(0,1) + this->n[0][1] * m(1,1) + this->n[0][2] * m(2,1) + this->n[0][3] * m(3,1),
-            this->n[0][0] * m(0,2) + this->n[0][1] * m(1,2) + this->n[0][2] * m(2,2) + this->n[0][3] * m(3,2),
-            this->n[0][0] * m(0,3) + this->n[0][1] * m(1,3) + this->n[0][2] * m(2,3) + this->n[0][3] * m(3,3),
+            this->n[0][0] * m.n[0][0] + this->n[0][1] * m.n[1][0] + this->n[0][2] * m.n[2][0] + this->n[0][3] * m.n[3][0],
+            this->n[0][0] * m.n[0][1] + this->n[0][1] * m.n[1][1] + this->n[0][2] * m.n[2][1] + this->n[0][3] * m.n[3][1],
+            this->n[0][0] * m.n[0][2] + this->n[0][1] * m.n[1][2] + this->n[0][2] * m.n[2][2] + this->n[0][3] * m.n[3][2],
+            this->n[0][0] * m.n[0][3] + this->n[0][1] * m.n[1][3] + this->n[0][2] * m.n[2][3] + this->n[0][3] * m.n[3][3],
 
-            this->n[1][0] * m(0,0) + this->n[1][1] * m(1,0) + this->n[1][2] * m(2,0) + this->n[1][3] * m(3,0),
-            this->n[1][0] * m(0,1) + this->n[1][1] * m(1,1) + this->n[1][2] * m(2,1) + this->n[1][3] * m(3,1),
-            this->n[1][0] * m(0,2) + this->n[1][1] * m(1,2) + this->n[1][2] * m(2,2) + this->n[1][3] * m(3,2),
-            this->n[1][0] * m(0,3) + this->n[1][1] * m(1,3) + this->n[1][2] * m(2,3) + this->n[1][3] * m(3,3),
+            this->n[1][0] * m.n[0][0] + this->n[1][1] * m.n[1][0] + this->n[1][2] * m.n[2][0] + this->n[1][3] * m.n[3][0],
+            this->n[1][0] * m.n[0][1] + this->n[1][1] * m.n[1][1] + this->n[1][2] * m.n[2][1] + this->n[1][3] * m.n[3][1],
+            this->n[1][0] * m.n[0][2] + this->n[1][1] * m.n[1][2] + this->n[1][2] * m.n[2][2] + this->n[1][3] * m.n[3][2],
+            this->n[1][0] * m.n[0][3] + this->n[1][1] * m.n[1][3] + this->n[1][2] * m.n[2][3] + this->n[1][3] * m.n[3][3],
 
-            this->n[2][0] * m(0,0) + this->n[2][1] * m(1,0) + this->n[2][2] * m(2,0) + this->n[2][3] * m(3,0),
-            this->n[2][0] * m(0,1) + this->n[2][1] * m(1,1) + this->n[2][2] * m(2,1) + this->n[2][3] * m(3,1),
-            this->n[2][0] * m(0,2) + this->n[2][1] * m(1,2) + this->n[2][2] * m(2,2) + this->n[2][3] * m(3,2),
-            this->n[2][0] * m(0,3) + this->n[2][1] * m(1,3) + this->n[2][2] * m(2,3) + this->n[2][3] * m(3,3),
+            this->n[2][0] * m.n[0][0] + this->n[2][1] * m.n[1][0] + this->n[2][2] * m.n[2][0] + this->n[2][3] * m.n[3][0],
+            this->n[2][0] * m.n[0][1] + this->n[2][1] * m.n[1][1] + this->n[2][2] * m.n[2][1] + this->n[2][3] * m.n[3][1],
+            this->n[2][0] * m.n[0][2] + this->n[2][1] * m.n[1][2] + this->n[2][2] * m.n[2][2] + this->n[2][3] * m.n[3][2],
+            this->n[2][0] * m.n[0][3] + this->n[2][1] * m.n[1][3] + this->n[2][2] * m.n[2][3] + this->n[2][3] * m.n[3][3],
 
-            this->n[3][0] * m(0,0) + this->n[3][1] * m(1,0) + this->n[3][2] * m(2,0) + this->n[3][3] * m(3,0),
-            this->n[3][0] * m(0,1) + this->n[3][1] * m(1,1) + this->n[3][2] * m(2,1) + this->n[3][3] * m(3,1),
-            this->n[3][0] * m(0,2) + this->n[3][1] * m(1,2) + this->n[3][2] * m(2,2) + this->n[3][3] * m(3,2),
-            this->n[3][0] * m(0,3) + this->n[3][1] * m(1,3) + this->n[3][2] * m(2,3) + this->n[3][3] * m(3,3)
+            this->n[3][0] * m.n[0][0] + this->n[3][1] * m.n[1][0] + this->n[3][2] * m.n[2][0] + this->n[3][3] * m.n[3][0],
+            this->n[3][0] * m.n[0][1] + this->n[3][1] * m.n[1][1] + this->n[3][2] * m.n[2][1] + this->n[3][3] * m.n[3][1],
+            this->n[3][0] * m.n[0][2] + this->n[3][1] * m.n[1][2] + this->n[3][2] * m.n[2][2] + this->n[3][3] * m.n[3][2],
+            this->n[3][0] * m.n[0][3] + this->n[3][1] * m.n[1][3] + this->n[3][2] * m.n[2][3] + this->n[3][3] * m.n[3][3]
         );
     }
     Vector4 operator * (Vector4 v)
@@ -197,6 +199,56 @@ public:
         m.n[2][3] = tz;
 
         return m;
+    }
+
+public:
+    static Matrix4 Inverse(Matrix4 m)
+    {
+        Matrix4 mat = Identity();
+
+        for(uint32 column = 0; column < 4; column++) 
+        { 
+            if(m(column,column) == 0) 
+            { 
+                uint32 big = column; 
+
+                for(uint32 row = 0; row < 4; row++)
+                    if(Math::Abs(m(row,column)) > Math::Abs(m(big,column))) 
+                        big = row;
+                
+                if(big != column)
+                    for(unsigned j = 0; j < N; ++j)
+                    {
+                        Math::Swap<float>(&m.n[column][j], &m.n[big][j]); 
+                        Math::Swap<float>(&mat.n[column][j], &mat.n[big][j]);
+                    } 
+            }  
+        
+            for (uint32 row = 0; row < 4; row++) 
+            { 
+                if(row != column) 
+                { 
+                    float coeff = m(row,column) / m(column,column); 
+
+                    if (coeff != 0) 
+                    { 
+                        for (uint32 j = 0; j < 4; j++) 
+                        { 
+                            m.n[row][j] -= coeff * m(column,j); 
+                            mat.n[row][j] -= coeff * mat(column,j); 
+                        } 
+                        
+                        m.n[row][column] = 0; 
+                    } 
+                } 
+            }
+        } 
+    
+        for(uint32 row = 0; row < 4; row++) 
+            for(uint32 column = 0; column < 4; column++) 
+                mat.n[row][column] /= m(row,row);
+
+        return mat;          
     }
 
 public:

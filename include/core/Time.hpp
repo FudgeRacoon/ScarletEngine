@@ -3,8 +3,15 @@
 
 #include <iostream>
 #include <chrono>
+
 #include "SDL2/SDL.h"
+
+#include "core/Application.hpp"
+
 #include "core/math/Math.hpp"
+
+using namespace std::chrono;
+
 
 namespace scarlet
 {   
@@ -21,6 +28,9 @@ namespace scarlet
     class Time
     {
     private:
+        static high_resolution_clock::time_point startTime;
+
+    private:
         static double currentTime;
         static double previousTime;
         static double deltaTime;
@@ -32,20 +42,18 @@ namespace scarlet
         Time() = delete;
         ~Time() = delete;
 
-    public:
-        static void Reset();
+    private:
+        static void Init();
         static void Update();
-
-    public:
-        static void CalculateLag();
-
-    public:
-        static TimePoint GetSystemTime();
+        static void Reset();
 
     public:
         static double GetTicks();
         static double GetDeltaTime();
         static double GetFrameRate();
+        static TimePoint GetSystemTime();
+
+    friend Application;
     };
 }
 

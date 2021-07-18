@@ -42,7 +42,7 @@ namespace scarlet
         void OnUpdate() override
         {
             ImGui::Begin(this->title.c_str()); 
-                
+            
             for(std::pair<std::string, IComponentMenu*> componentMenu : componentMenus)
             {
                 if(componentMenu.second->GetActive())

@@ -36,6 +36,7 @@ namespace scarlet
         void SwapBuffers();
 
     public:
+        void Render(Camera*& camera, Shader*& shader, int x1, int y1, int x2, int y2, float width);
         void Render(Camera*& camera, Shader*& shader, Rect* rect); 
         void Render(Camera*& camera, Shader*& shader, GameObject* gameObject);
     };

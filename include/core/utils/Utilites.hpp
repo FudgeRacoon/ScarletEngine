@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <cstring>
 
 #include "core/math/Vector2.hpp"
 

@@ -1,8 +1,11 @@
 #ifndef RECT_HPP
 #define RECT_HPP
 
+#include <vector>
+
 #include "core/math/Math.hpp"
 #include "core/math/Vector2.hpp"
+
 #include "core/renderer/VertexArray.hpp"
 #include "core/renderer/VertexBuffer.hpp"
 #include "core/renderer/IndexBuffer.hpp"
@@ -41,6 +44,7 @@ namespace scarlet
         real GetY();
         real GetWidth();
         real GetHeight();
+        std::vector<Vector2> GetUV();
         Vector2 GetCenter();
 
     public:
