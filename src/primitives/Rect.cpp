@@ -1,4 +1,4 @@
-#include "core/primitives/Rect.hpp"
+#include "scarlet/primitives/Rect.hpp"
 using namespace scarlet;
 
 Rect::Rect(real x, real y, real width, real height)

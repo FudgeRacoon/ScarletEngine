@@ -2,7 +2,7 @@
 #define GAME_HPP
 
 #include <iostream>
-#include "core/IState.hpp"
+#include "scarlet/core/IState.hpp"
 
 class Game : public IState
 {
@@ -12,7 +12,7 @@ public:
         std::cout << "Entered the game scene" << '\n';
     }
 
-    void Update() override
+    void OnUpdate() override
     {
         std::cout << "Game scene is being updated" << '\n';
     }

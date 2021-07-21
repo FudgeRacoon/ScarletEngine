@@ -1,11 +1,11 @@
 #ifndef EDITOR_HPP
 #define EDITOR_HPP
 
-#include "../core/ScarletEngine.hpp"
-#include "../core/layers/AssetViewWindow.hpp"
-#include "../core/layers/InspectorWindow.hpp"
-#include "../core/layers/TransformMenu.hpp"
-#include "../core/layers/SpriteRendererMenu.hpp"
+#include "../scarlet/ScarletEngine.hpp"
+#include "../scarlet/imgui/AssetViewWindow.hpp"
+#include "../scarlet/imgui/InspectorWindow.hpp"
+#include "../scarlet/imgui/TransformMenu.hpp"
+#include "../scarlet/imgui/SpriteRendererMenu.hpp"
 
 class Editor : public IState
 {
@@ -22,16 +22,16 @@ public:
 
         scarlet::AssetPool::AddTexture("mario_sprite_sheet_texture", "assets\\textures\\MarioSpriteSheet.png");
         scarlet::AssetPool::AddSprite("mairo_sprite_sheet", scarlet::AssetPool::GetTexture("mario_sprite_sheet_texture"));
-        scarlet::Utilites::SliceSprite(scarlet::AssetPool::GetSprite("mairo_sprite_sheet"), 64, 64);
+        scarlet::TextureUtils::SliceSprite(scarlet::AssetPool::GetSprite("mairo_sprite_sheet"), 64, 64);
 
-        scarlet::ImGuiLayer::AddWindow(new scarlet::AssetViewWindow());
+        scarlet::ImGuiManager::AddWindow(new scarlet::AssetViewWindow());
 
-        inspector = (scarlet::InspectorWindow*)scarlet::ImGuiLayer::AddWindow(new scarlet::InspectorWindow());
+        inspector = (scarlet::InspectorWindow*)scarlet::ImGuiManager::AddWindow(new scarlet::InspectorWindow());
         inspector->AddComponentMenu(new scarlet::TransformMenu());
         inspector->AddComponentMenu(new scarlet::SpriteRendererMenu());
     }
 
-    void Update() override
+    void OnUpdate() override
     {   
         editorCamera->ProcessMouseMovement();
     }   

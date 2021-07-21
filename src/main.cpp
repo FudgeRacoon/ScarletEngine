@@ -1,5 +1,5 @@
 #include <iostream>
-#include "core/ScarletEngine.hpp"
+#include "scarlet/ScarletEngine.hpp"
 
 int main(int argc, char* argv[])
 {
