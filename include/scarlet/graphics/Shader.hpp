@@ -8,6 +8,8 @@
 
 #include "GL/glew.h"
 
+#include "scarlet/utils/Logger.hpp"
+
 namespace scarlet
 {
     class Shader
@@ -15,13 +17,17 @@ namespace scarlet
     private:
         uint32_t programID;
 
+    private:
+        static const char* defaultVertexShaderSource;
+
     public:
-        Shader(const char* vertexShader, const char* fragmentShader);
+        Shader(const char* fragmentShader);
         ~Shader();
 
     private:
-        void CreateShader(const char* filepath, int shaderType);
-        std::string ParseShader(const char* filepath);
+        void CreateShaderWithFileInternal(const char* filepath, int shaderType);
+        void CreateShaderWithSourceInternal(const char* source, int shaderType);
+        std::string ParseShaderInternal(const char* filepath);
 
     public:
         void SetBool(std::string varName, int value) const;

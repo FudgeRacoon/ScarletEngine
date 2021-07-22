@@ -11,7 +11,6 @@
 #include "scarlet/utils/Logger.hpp"
 
 #include "scarlet/graphics/Renderer.hpp"
-#include "scarlet/graphics/Shader.hpp"
 #include "scarlet/graphics/camera/Camera.hpp"
 
 namespace scarlet
@@ -60,7 +59,7 @@ namespace scarlet
         
     public:
         void UpdateGameObjects();
-        void RenderGameObjects(Camera*& camera, Shader*& shader);
+        void RenderGameObjects(Camera* camera);
     };
 }
 

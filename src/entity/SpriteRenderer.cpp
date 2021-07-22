@@ -1,19 +1,24 @@
 #include "scarlet/entity/SpriteRenderer.hpp"
 using namespace scarlet;
 
-void SpriteRenderer::Setup()
+SpriteRenderer::SpriteRenderer()
 {
     this->sprite = nullptr;
-    this->flipX = false;
-    this->flipY = false;
+    this->material = new Shader("assets\\shaders\\defaultFragment.shader");
+
+    this->color = Color();
+    this->flipX = false; this->flipY = false;
     this->sortingOrder = 0;
 }
 
+void SpriteRenderer::Setup()
+{
+    
+}
 void SpriteRenderer::Update()
 {
     
 }
-
 void SpriteRenderer::GUI()
 {
     

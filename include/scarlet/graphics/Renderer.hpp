@@ -15,6 +15,7 @@
 #include "scarlet/graphics/Texture.hpp"
 #include "scarlet/graphics/camera/Camera.hpp"
 
+#include "scarlet/math/Color.hpp"
 #include "scarlet/math/Vector3.hpp"
 #include "scarlet/math/Matrix4.hpp"
 
@@ -22,19 +23,80 @@
 
 namespace scarlet
 {
+    enum EntityRenderingWarnings
+    {
+        MISSING_SPRITERENDERER = 0,
+        MISSING_SPRITE,
+        MISSING_TEXTURE,
+        MISSING_MATERIAL,
+        MISSING_CAMERA
+    };
+
+    enum RendererBufferType
+    {
+        RENDERER_BUFFER_DEPTH = 0x00000100,
+        RENDERER_BUFFER_STENCIL = 0x00000400,
+        RENDERER_BUFFER_COLOR = 0x00004000
+    };
+
+    enum RendererBlendFunc
+    {
+        RENDERER_SRC_ALPHA = 0x0302,
+        RENDERER_ONE_MINUS_SRC_ALPHA = 0x0303,
+    };
+
+    struct RendererData
+    {
+        Color clearColor;
+        Camera* rendererCamera;
+        Shader* defualtShader;
+
+        RendererData()
+        {
+            this->clearColor = Color();
+            this->rendererCamera = nullptr;
+            this->defualtShader = nullptr;
+        }
+    };
+
     class Renderer
     {
+    private:
+        static RendererData rendererData;
+
     public:
         Renderer() = delete;
 
     public:
-        static void ClearBuffers();
+        static void Init();
+
+    public:
+        static void EnableBlending(bool enable);
+
+    public:
+        static void SetViewport(uint32 x, uint32 y, uint32 width, uint32 height);
+        static void SetBlendingFunction(uint32 sFactor, uint32 dFactor);
+        static void SetClearColor(Color color);
+    
+    public:
+        static void ClearBuffers(uint32 buffers);
         static void SwapBuffers();
 
     public:
-        static void Render(Camera*& camera, Shader*& shader, int x1, int y1, int x2, int y2, float width);
-        static void Render(Camera*& camera, Shader*& shader, Rect* rect); 
-        static void Render(Camera*& camera, Shader*& shader, GameObject* gameObject);
+        static void BeginScene(Camera* camera);
+        static void EndScene();
+
+    public:
+        static void DrawLine(Vector2 start, Vector2 end, float width, Color color, const Shader* shader = nullptr);
+        static void DrawLine(float x1, float y1, float x2, float y2, float width, Color color, const Shader* shader = nullptr);
+    
+    public:
+        static void DrawRect(float x, float y, float width, float height, Color color, const Shader* shader = nullptr);
+        static void DrawRect(Vector2 position, Vector2 size, Color color, const Shader* shader = nullptr);
+        static void DrawRect(Rect* rect, Color color, const Shader* shader = nullptr);
+
+    public:
+        static void DrawEntity(GameObject* gameObject);
     };
 }
 

@@ -11,14 +11,12 @@ class Editor : public IState
 {
 private:
     scarlet::Camera* editorCamera = nullptr;
-    scarlet::Shader* shader = nullptr;
     scarlet::InspectorWindow* inspector = nullptr;
     
 public:
     void OnEnter() override
     {
         this->editorCamera = new scarlet::Camera();
-        this->shader = new scarlet::Shader("assets\\shaders\\defaultVertex.shader", "assets\\shaders\\defaultFragment.shader");
 
         scarlet::AssetPool::AddTexture("mario_sprite_sheet_texture", "assets\\textures\\MarioSpriteSheet.png");
         scarlet::AssetPool::AddSprite("mairo_sprite_sheet", scarlet::AssetPool::GetTexture("mario_sprite_sheet_texture"));

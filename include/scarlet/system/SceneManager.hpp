@@ -36,7 +36,7 @@ namespace scarlet
         virtual void SetActiveScene(int buildIndex);
 
     public:
-        virtual void UpdateActiveScene(Camera*& camera, Shader*& shader);
+        virtual void UpdateActiveScene();
     };
 }
 

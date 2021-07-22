@@ -59,12 +59,12 @@ void EditorSceneManager::SetActiveScene(int buildIndex)
     activeScene = scene;
 }
 
-void EditorSceneManager::UpdateActiveScene(Camera*& camera, Shader*& shader)
+void EditorSceneManager::UpdateActiveScene()
 {
     if(this->activeScene == nullptr)
         Logger::LogWarning("No active scene.");
 
-    activeScene->OnRender(camera, shader);
+    activeScene->OnRender();
 }
 
 void EditorSceneManager::LoadScenes()

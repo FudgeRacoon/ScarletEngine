@@ -4,6 +4,7 @@ using namespace scarlet;
 Scene::Scene(std::string name, uint32 buildIndex) : name(name), buildIndex(buildIndex)
 {
     this->gameObjectManager = new GameObjectManager();
+    this->sceneCamera = new Camera();
 }
 Scene::~Scene()
 {
@@ -18,6 +19,10 @@ uint32 Scene::GetBuildIndex()
 {
     return this->buildIndex;
 }
+Camera* Scene::GetCamera()
+{
+    return this->sceneCamera;
+}
 
 void Scene::SetName(std::string name)
 {
@@ -26,6 +31,25 @@ void Scene::SetName(std::string name)
 void Scene::SetBuildIndex(uint32 buildIndex)
 {
     this->buildIndex = buildIndex;
+}
+void Scene::SetCamera(Camera* camera)
+{
+    delete this->sceneCamera;
+    this->sceneCamera = camera;
+}
+
+void Scene::OnEnter()
+{
+    this->gameObjectManager->PollSetupQueue();
+}
+void Scene::OnUpdate()
+{
+    this->gameObjectManager->UpdateGameObjects();
+    this->gameObjectManager->PollDestroyQueue();
+}
+void Scene::OnRender()
+{
+    this->gameObjectManager->RenderGameObjects(this->sceneCamera);
 }
 
 GameObject* Scene::AddGameObject()
@@ -41,16 +65,3 @@ void Scene::DestroyGameObject(std::string name)
     this->gameObjectManager->DestroyGameObject(name);
 }
 
-void Scene::OnEnter()
-{
-    this->gameObjectManager->PollSetupQueue();
-}
-void Scene::OnUpdate()
-{
-    this->gameObjectManager->UpdateGameObjects();
-    this->gameObjectManager->PollDestroyQueue();
-}
-void Scene::OnRender(Camera*& camera, Shader*& shader)
-{
-    this->gameObjectManager->RenderGameObjects(camera, shader);
-}

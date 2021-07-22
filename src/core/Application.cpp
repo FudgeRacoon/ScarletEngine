@@ -13,7 +13,7 @@ void Application::Run(int argc, char* argv[])
 {
     Time::OnInit();
 
-    this->Setup();
+    this->OnInit();
     
     InputManager::Init();
     
@@ -32,9 +32,9 @@ void Application::Run(int argc, char* argv[])
             InputManager::Update();
             ImGuiManager::OnEvent(InputManager::GetSDLEvent());
 
-            Renderer::ClearBuffers();
+            Renderer::ClearBuffers(RendererBufferType::RENDERER_BUFFER_COLOR);
 
-            this->Update();
+            this->OnUpdate();
 
             ImGuiManager::OnRender();
 
@@ -52,18 +52,26 @@ void Application::Run(int argc, char* argv[])
     Window::Get()->Release();
 }
 
-void Application::Setup()
+void Application::OnInit()
 {
     Window::Get()->Init("Scarlet Engine", 800, 600, true);
     Window::Get()->EnableVSync(true);
     
+    Renderer::Init();
+
+    Renderer::SetViewport(0, 0, Window::Get()->GetWidth(), Window::Get()->GetHeight());
+    Renderer::SetBlendingFunction(RendererBlendFunc::RENDERER_SRC_ALPHA, RendererBlendFunc::RENDERER_ONE_MINUS_SRC_ALPHA);
+    Renderer::SetClearColor(Color(100, 100, 100));
+
+    Renderer::EnableBlending(true);
+
     StateManager::AddState("Editor", new Editor());
     StateManager::AddState("Game", new Game());
 
     StateManager::ChangeState("Editor");
 }
 
-void Application::Update()
+void Application::OnUpdate()
 {
     StateManager::UpdateState();
 }

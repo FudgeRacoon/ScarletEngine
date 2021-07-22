@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "scarlet/entity/GameObject.hpp"
+
 #include "scarlet/system/GameObjectManager.hpp"
 
 #include "scarlet/math/Math.hpp"
@@ -11,7 +13,6 @@
 #include "scarlet/graphics/Shader.hpp"
 #include "scarlet/graphics/camera/Camera.hpp"
 
-#include "scarlet/entity/GameObject.hpp"
 
 namespace scarlet
 {   
@@ -28,21 +29,26 @@ namespace scarlet
         GameObjectManager* gameObjectManager;
 
     private:
+        Camera* sceneCamera;
+
+    private:
         Scene(std::string name, uint32 buildIndex);
         ~Scene();
 
     public:
         std::string GetName();
         uint32 GetBuildIndex();
+        Camera* GetCamera();
         
     public:
         void SetName(std::string name);
         void SetBuildIndex(uint32 buildIndex);
+        void SetCamera(Camera* camera);
 
     private:
         void OnEnter();
         void OnUpdate();
-        void OnRender(Camera*& camera, Shader*& shader);
+        void OnRender();
 
     public:
         GameObject* AddGameObject();

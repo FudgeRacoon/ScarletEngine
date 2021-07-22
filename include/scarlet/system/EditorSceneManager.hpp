@@ -33,7 +33,7 @@ namespace scarlet
         void SetActiveScene(int buildIndex) override;        
 
     public:
-        void UpdateActiveScene(Camera*& camera, Shader*& shader) override;
+        void UpdateActiveScene() override;
     
     public:
         void LoadScenes();

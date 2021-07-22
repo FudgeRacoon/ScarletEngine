@@ -1,18 +1,36 @@
 #include "scarlet/graphics/Shader.hpp"
 using namespace scarlet;
 
-Shader::Shader(const char* vertexShader, const char* fragmentShader)
+const char* Shader::defaultVertexShaderSource =
+"#version 330 core\n"
+"layout (location = 0) in vec3 aPos;\n"
+"layout (location = 1) in vec2 aTexCoord;\n"
+"out vec2 fTexCoord;\n"
+"uniform mat4 u_model;\n"
+"uniform mat4 u_view;\n"
+"uniform mat4 u_proj;\n"
+"void main()\n"
+"{\n"
+"   vec4 transformedVertex = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"   transformedVertex = u_model * transformedVertex;\n"
+"   transformedVertex = u_view * transformedVertex;\n"
+"   transformedVertex = u_proj * transformedVertex;\n"
+"   gl_Position = transformedVertex;\n"
+"   fTexCoord = aTexCoord;\n"
+"}\0";
+
+Shader::Shader(const char* fragmentShader)
 {
     this->programID = glCreateProgram();
 
     if(this->programID == 0)
     {
-        std::cerr << "[WARNING]: Failed to create shader program" << '\n';
+        Logger::LogError("Failed to create shader program.");
         return;
     }
 
-    CreateShader(vertexShader, GL_VERTEX_SHADER);
-    CreateShader(fragmentShader, GL_FRAGMENT_SHADER);
+    CreateShaderWithSourceInternal(defaultVertexShaderSource, GL_VERTEX_SHADER);
+    CreateShaderWithFileInternal(fragmentShader, GL_FRAGMENT_SHADER);
 
     glLinkProgram(this->programID);
     glValidateProgram(this->programID);
@@ -24,8 +42,8 @@ Shader::Shader(const char* vertexShader, const char* fragmentShader)
     if(result == 0)
     {
         glGetProgramInfoLog(this->programID, 512, nullptr, buffer);
-        std::cerr << "[WARNING]: Failed to link shaders\n" << buffer << '\n';
-        return; 
+        Logger::LogError("Failed to link Shader\n%s", buffer);
+        return;
     }
 }
 Shader::~Shader()
@@ -33,9 +51,9 @@ Shader::~Shader()
     glDeleteProgram(this->programID);
 }
 
-void Shader::CreateShader(const char* filepath, int shaderType)
+void Shader::CreateShaderWithFileInternal(const char* filepath, int shaderType)
 {
-    std::string source = ParseShader(filepath);
+    std::string source = ParseShaderInternal(filepath);
     if(source.empty())
         return;
 
@@ -52,32 +70,40 @@ void Shader::CreateShader(const char* filepath, int shaderType)
     if(result == 0)
     {
         glGetShaderInfoLog(shader, 512, nullptr, buffer);
-
-        switch(shaderType)
-        {
-            case GL_VERTEX_SHADER: 
-            {
-                std::cerr << "[WARNING]: Failed to compile vertex shader\n" << buffer << '\n';
-                return;
-            }
-            case GL_FRAGMENT_SHADER:
-            {
-                std::cerr << "[WARNING]: Failed to compile fragment shader\n" << buffer << '\n';
-                return;
-            }
-        }
+        Logger::LogError("Failed to compile Fragment Shader.\n%s", buffer);
+        return;
     }
 
     glAttachShader(this->programID, shader);
     glDeleteShader(shader);
 }
-std::string Shader::ParseShader(const char* filepath)
+void Shader::CreateShaderWithSourceInternal(const char* source, int shaderType)
+{
+    int shader = glCreateShader(shaderType);
+    glShaderSource(shader, 1, &source, nullptr);
+    glCompileShader(shader);
+
+    int result;
+    char buffer[512];
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
+
+    if(result == 0)
+    {
+        glGetShaderInfoLog(shader, 512, nullptr, buffer);
+        Logger::LogError("Failed to compile Vertex Shader.\n%s", buffer);
+        return;
+    }
+
+    glAttachShader(this->programID, shader);
+    glDeleteShader(shader);
+}
+std::string Shader::ParseShaderInternal(const char* filepath)
 {
     std::fstream file(filepath, std::ios::in);
 
     if(!file)
     {
-        std::cerr << "[WARNING]: Failed to open shader file" << '\n';
+        Logger::LogError("Failed to open shader file.");
         return "";
     }
 

@@ -57,12 +57,12 @@ void SceneManager::SetActiveScene(int buildIndex)
     activeScene->OnEnter();
 }
 
-void SceneManager::UpdateActiveScene(Camera*& camera, Shader*& shader)
+void SceneManager::UpdateActiveScene()
 {
     if(activeScene == nullptr)
         Logger::LogWarning("No active scene.");
 
     activeScene->OnUpdate();
-    activeScene->OnRender(camera, shader);
+    activeScene->OnRender();
 }
 

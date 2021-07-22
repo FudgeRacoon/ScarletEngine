@@ -3,25 +3,35 @@ using namespace scarlet;
 
 Camera::Camera()
 {
-    this->size = 1.0f;
+    this->size        =  1.0f;
+    
+    this->direction   =  Vector3::FRONT();
 
-    this->direction = Vector3::FRONT();
-
-    this->leftPlane = -Window::Get()->GetWidth() / 2; this->rightPlane = Window::Get()->GetWidth() / 2;
-    this->bottomPlane = -Window::Get()->GetHeight() / 2; this->topPlane = Window::Get()->GetHeight() / 2;
-    this->nearPlane = 0.0f; this->farPlane = -100.0f;
+    this->leftPlane   = -Window::Get()->GetWidth() / 2; 
+    this->rightPlane  =  Window::Get()->GetWidth() / 2;
+    
+    this->bottomPlane = -Window::Get()->GetHeight() / 2; 
+    this->topPlane    =  Window::Get()->GetHeight() / 2;
+    
+    this->nearPlane   =  0.0f; 
+    this->farPlane    = -100.0f;
 }
 Camera::Camera(Vector3 position)
 {
-    this->position = position;
+    this->position    =  position;
 
-    this->size = 1.0f;
+    this->size        =  1.0f;
+    
+    this->direction   =  Vector3::FRONT();
 
-    this->direction = Vector3::FRONT();
-
-    this->leftPlane = -Window::Get()->GetWidth() / 2, this->rightPlane = Window::Get()->GetWidth() / 2;
-    this->bottomPlane = -Window::Get()->GetHeight() / 2, this->topPlane = Window::Get()->GetHeight() / 2;
-    this->nearPlane = 0.0f, this->farPlane = -100.0f;
+    this->leftPlane   = -Window::Get()->GetWidth() / 2; 
+    this->rightPlane  =  Window::Get()->GetWidth() / 2;
+    
+    this->bottomPlane = -Window::Get()->GetHeight() / 2; 
+    this->topPlane    =  Window::Get()->GetHeight() / 2;
+    
+    this->nearPlane   =  0.0f; 
+    this->farPlane    = -100.0f;
 }
 
 void Camera::ProcessMouseMovement()

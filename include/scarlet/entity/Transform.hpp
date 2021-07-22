@@ -15,20 +15,12 @@ namespace scarlet
         Vector3 scale;
     
     public:
-        void Setup() override
-        {
+        Transform();
 
-        }
-
-        void Update() override
-        {
-
-        }
-
-        void GUI() override
-        {
-            
-        }
+    public:
+        void Setup() override;
+        void Update() override;
+        void GUI() override;
     };
 }
 

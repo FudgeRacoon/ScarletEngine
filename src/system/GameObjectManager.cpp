@@ -75,8 +75,12 @@ void GameObjectManager::UpdateGameObjects()
     for(std::pair<std::string, GameObject*> gameObject : this->gameObjects)
         gameObject.second->Update();
 }
-void GameObjectManager::RenderGameObjects(Camera*& camera, Shader*& shader)
+void GameObjectManager::RenderGameObjects(Camera* camera)
 {
     for(std::pair<std::string, GameObject*> gameObject : this->gameObjects)
-        Renderer::Render(camera, shader, gameObject.second);
+    {
+        Renderer::BeginScene(camera);
+            Renderer::DrawEntity(gameObject.second);
+        Renderer::EndScene();
+    }
 }

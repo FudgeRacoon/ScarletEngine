@@ -3,6 +3,33 @@ using namespace scarlet;
 
 #include "scarlet/utils/Logger.hpp"
 
+std::string Window::GetTitle()
+{
+    return this->title;
+}
+int Window::GetWidth()
+{
+    return this->width;
+}
+int Window::GetHeight()
+{
+    return this->height;
+}
+SDL_Window* Window::GetSDLWindow()
+{
+    return this->window;
+}
+SDL_GLContext Window::GetSDLWindowContext()
+{
+    return this->context;
+}
+
+void Window::SetTitle(std::string value)
+{
+    this->title = value;
+    SDL_SetWindowTitle(this->window, value.c_str());
+}
+
 Window* Window::Get()
 {
     static Window* instance  = new Window();
@@ -58,10 +85,6 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
         return EXIT_FAILURE;
     }
     
-    glViewport(0, 0, this->width, this->height);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
     this->running = true;
     
     return EXIT_SUCCESS;
@@ -74,34 +97,6 @@ void Window::EnableVSync(bool value)
         case true:  SDL_GL_SetSwapInterval(1); break;
         case false: SDL_GL_SetSwapInterval(0); break;
     }
-}
-
-std::string Window::GetTitle()
-{
-    return this->title;
-}
-void Window::SetTitle(std::string value)
-{
-    this->title = value;
-    SDL_SetWindowTitle(this->window, value.c_str());
-}
-
-int Window::GetWidth()
-{
-    return this->width;
-}
-int Window::GetHeight()
-{
-    return this->height;
-}
-
-SDL_Window* Window::GetSDLWindow()
-{
-    return this->window;
-}
-SDL_GLContext Window::GetSDLWindowContext()
-{
-    return this->context;
 }
 
 bool Window::Running()

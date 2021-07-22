@@ -18,25 +18,24 @@ Sprite::~Sprite()
     delete this->rect;
 }
 
-void Sprite::SetTexture(Texture* texture)
+std::string Sprite::GetName()
 {
-    this->texture = texture;
+    return this->name;
 }
 Texture* Sprite::GetTexture()
 {
     return this->texture;
+}
+Rect* Sprite::GetRect()
+{
+    return this->rect;
 }
 
 void Sprite::SetName(std::string name)
 {
     this->name = name;
 }
-std::string Sprite::GetName()
+void Sprite::SetTexture(Texture* texture)
 {
-    return this->name;
-}
-
-Rect* Sprite::GetRect()
-{
-    return this->rect;
+    this->texture = texture;
 }

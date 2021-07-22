@@ -18,8 +18,8 @@ namespace scarlet
         void Run(int argc, char* argv[]);
 
     private:
-        void Setup();
-        void Update();
+        void OnInit();
+        void OnUpdate();
     };
 }
 
