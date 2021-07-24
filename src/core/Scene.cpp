@@ -19,6 +19,10 @@ uint32 Scene::GetBuildIndex()
 {
     return this->buildIndex;
 }
+uint32 Scene::GetGameObjectCount()
+{
+    return this->gameObjectManager->GetGameObjectCount();
+}
 Camera* Scene::GetCamera()
 {
     return this->sceneCamera;
@@ -47,9 +51,9 @@ void Scene::OnUpdate()
     this->gameObjectManager->UpdateGameObjects();
     this->gameObjectManager->PollDestroyQueue();
 }
-void Scene::OnRender()
+void Scene::OnRender(Camera* editorCamera)
 {
-    this->gameObjectManager->RenderGameObjects(this->sceneCamera);
+    this->gameObjectManager->RenderGameObjects(editorCamera ? editorCamera : this->sceneCamera);
 }
 
 GameObject* Scene::AddGameObject()

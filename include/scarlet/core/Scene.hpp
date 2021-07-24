@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "scarlet/common/Types.hpp"
+
 #include "scarlet/entity/GameObject.hpp"
 
 #include "scarlet/system/GameObjectManager.hpp"
@@ -38,6 +40,7 @@ namespace scarlet
     public:
         std::string GetName();
         uint32 GetBuildIndex();
+        uint32 GetGameObjectCount();
         Camera* GetCamera();
         
     public:
@@ -48,7 +51,7 @@ namespace scarlet
     private:
         void OnEnter();
         void OnUpdate();
-        void OnRender();
+        void OnRender(Camera* editorCamera = nullptr);
 
     public:
         GameObject* AddGameObject();

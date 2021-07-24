@@ -61,97 +61,8 @@ void Renderer::EndScene()
     rendererData.rendererCamera = nullptr;
 }
 
-void Renderer::DrawLine(Vector2 start, Vector2 end, float width, Color color, const Shader* shader)
-{
-
-}
-void Renderer::DrawLine(float x1, float y1, float x2, float y2, float width, Color color, const Shader* shader)
-{
-
-}
-
-void Renderer::DrawRect(float x, float y, float width, float height, Color color, const Shader* shader)
-{
-    if(rendererData.rendererCamera == nullptr)
-    {
-        Logger::LogWarning("Camera is missing. Did you call Renderer::Begin(Camera* camera)?"); 
-        return;
-    }
-
-    const Shader* tempShader;
-    if(shader == nullptr)
-        tempShader = rendererData.defualtShader;
-    else
-        tempShader = shader;
-
-    Rect* rect = new Rect(x, y, width, height);
-
-    rect->Bind();
-    tempShader->Bind();
-
-    tempShader->SetMat4("u_model", Matrix4::GetValuePointer(Matrix4::Identity()));
-    tempShader->SetMat4("u_view", Matrix4::GetValuePointer(rendererData.rendererCamera->GetViewMatrix()));
-    tempShader->SetMat4("u_proj", Matrix4::GetValuePointer(rendererData.rendererCamera->GetProjectionMatrix()));
-    tempShader->SetVec4f(
-        "u_color", 
-        color.r / 255.0f,
-        color.g / 255.0f,
-        color.b / 255.0f,
-        color.a / 255.0f
-    );
-
-    glDrawElements(GL_LINE_LOOP, 6, GL_UNSIGNED_INT, 0);
-
-    tempShader->UnBind();
-    rect->UnBind();
-
-    delete rect;
-}
-void Renderer::DrawRect(Vector2 position, Vector2 size, Color color, const Shader* shader)
-{   
-    if(rendererData.rendererCamera == nullptr)
-    {
-        Logger::LogWarning("Camera is missing. Did you call Renderer::Begin(Camera* camera)?"); 
-        return;
-    }
-
-    const Shader* tempShader;
-    if(shader == nullptr)
-        tempShader = rendererData.defualtShader;
-    else
-        tempShader = shader;
-
-    Rect* rect = new Rect(position.x, position.y, size.x, size.y);
-
-    rect->Bind();
-    tempShader->Bind();
-
-    tempShader->SetMat4("u_model", Matrix4::GetValuePointer(Matrix4::Identity()));
-    tempShader->SetMat4("u_view", Matrix4::GetValuePointer(rendererData.rendererCamera->GetViewMatrix()));
-    tempShader->SetMat4("u_proj", Matrix4::GetValuePointer(rendererData.rendererCamera->GetProjectionMatrix()));
-    tempShader->SetVec4f(
-        "u_color", 
-        color.r / 255.0f,
-        color.g / 255.0f,
-        color.b / 255.0f,
-        color.a / 255.0f
-    );
-
-    glDrawElements(GL_LINE_LOOP, 6, GL_UNSIGNED_INT, 0);
-
-    tempShader->UnBind();
-    rect->UnBind();
-
-    delete rect;
-}
 void Renderer::DrawRect(Rect* rect, Color color, const Shader* shader)
 {   
-    if(rendererData.rendererCamera == nullptr)
-    {
-        Logger::LogWarning("Camera is missing. Did you call Renderer::Begin(Camera* camera)?"); 
-        return;
-    }
-
     const Shader* tempShader;
     if(shader == nullptr)
         tempShader = rendererData.defualtShader;
@@ -161,9 +72,9 @@ void Renderer::DrawRect(Rect* rect, Color color, const Shader* shader)
     rect->Bind();
     tempShader->Bind();
 
-    tempShader->SetMat4("u_model", Matrix4::GetValuePointer(Matrix4::Identity()));
-    tempShader->SetMat4("u_view", Matrix4::GetValuePointer(rendererData.rendererCamera->GetViewMatrix()));
-    tempShader->SetMat4("u_proj", Matrix4::GetValuePointer(rendererData.rendererCamera->GetProjectionMatrix()));
+    tempShader->SetMat4("u_model", Matrix4::Identity());
+    tempShader->SetMat4("u_view", rendererData.rendererCamera->GetViewMatrix());
+    tempShader->SetMat4("u_proj", rendererData.rendererCamera->GetProjectionMatrix());
     tempShader->SetVec4f(
         "u_color", 
         color.r / 255.0f,
@@ -177,7 +88,6 @@ void Renderer::DrawRect(Rect* rect, Color color, const Shader* shader)
     tempShader->UnBind();
     rect->UnBind();
 }
-
 void Renderer::DrawEntity(GameObject* gameObject)
 {
     Transform* transform = gameObject->GetComponent<Transform>();
@@ -237,9 +147,9 @@ void Renderer::DrawEntity(GameObject* gameObject)
     model = model * Matrix4::Rotate(transform->rotation.z, Vector3::FRONT());
     model = model * Matrix4::Transalte(transform->position);
     
-    rendererData.defualtShader->SetMat4("u_model", Matrix4::GetValuePointer(model));
-    rendererData.defualtShader->SetMat4("u_view", Matrix4::GetValuePointer(rendererData.rendererCamera->GetViewMatrix()));
-    rendererData.defualtShader->SetMat4("u_proj", Matrix4::GetValuePointer(rendererData.rendererCamera->GetProjectionMatrix()));
+    rendererData.defualtShader->SetMat4("u_model", model);
+    rendererData.defualtShader->SetMat4("u_view", rendererData.rendererCamera->GetViewMatrix());
+    rendererData.defualtShader->SetMat4("u_proj", rendererData.rendererCamera->GetProjectionMatrix());
     rendererData.defualtShader->SetVec4f
     (
         "u_color", 

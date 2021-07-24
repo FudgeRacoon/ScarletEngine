@@ -53,6 +53,11 @@ void GameObjectManager::DestroyGameObject(std::string name)
     return;
 }
 
+uint32 GameObjectManager::GetGameObjectCount()
+{
+    return this->gameObjectCount;
+}
+
 void GameObjectManager::PollSetupQueue()
 {
     while(!this->setupQueue.empty())

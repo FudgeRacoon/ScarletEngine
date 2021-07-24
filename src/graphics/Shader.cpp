@@ -12,9 +12,9 @@ const char* Shader::defaultVertexShaderSource =
 "void main()\n"
 "{\n"
 "   vec4 transformedVertex = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"   transformedVertex = u_model * transformedVertex;\n"
-"   transformedVertex = u_view * transformedVertex;\n"
-"   transformedVertex = u_proj * transformedVertex;\n"
+"   transformedVertex = transformedVertex * u_model;\n"
+"   transformedVertex = transformedVertex * u_view;\n"
+"   transformedVertex = transformedVertex * u_proj;\n"
 "   gl_Position = transformedVertex;\n"
 "   fTexCoord = aTexCoord;\n"
 "}\0";
@@ -151,10 +151,10 @@ void Shader::SetVec4f(std::string varName, float x, float y, float z, float w) c
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
     glUniform4f(uniformID, x, y, z, w);
 }
-void Shader::SetMat4(std::string varName, const float* value) const
+void Shader::SetMat4(std::string varName, Matrix4 m) const
 {
     int uniformID = glGetUniformLocation(this->programID, varName.c_str());
-    glUniformMatrix4fv(uniformID, 1, false, value);
+    glUniformMatrix4fv(uniformID, 1, false, m.GetValuePointer());
 }
 
 void Shader::Bind() const

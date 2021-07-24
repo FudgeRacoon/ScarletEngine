@@ -5,6 +5,8 @@
 #include <string>
 #include <cstring>
 
+#include "scarlet/common/Types.hpp"
+
 #include "scarlet/math/Vector2.hpp"
 
 namespace scarlet

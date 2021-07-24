@@ -1,6 +1,8 @@
 #ifndef COLOR_HPP
 #define COLOR_HPP
 
+#include "scarlet/common/Types.hpp"
+
 #include "scarlet/math/Math.hpp"
 
 namespace scarlet
@@ -85,7 +87,7 @@ namespace scarlet
 
             return result;
         }
-        Color operator *(real value)
+        Color operator *(float value)
         {
             Color result;
 
@@ -111,7 +113,7 @@ namespace scarlet
         }
         
     public:
-        static Color Lerp(Color c1, Color c2, real t)
+        static Color Lerp(Color c1, Color c2, float t)
         {
             return Color
             (

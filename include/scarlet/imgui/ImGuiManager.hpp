@@ -20,7 +20,7 @@ namespace scarlet
     protected:
         std::string title;
 
-    public:
+    protected:
         ImGuiWindow(std::string title);
 
     public:

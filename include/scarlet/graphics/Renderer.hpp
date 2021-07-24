@@ -87,15 +87,7 @@ namespace scarlet
         static void EndScene();
 
     public:
-        static void DrawLine(Vector2 start, Vector2 end, float width, Color color, const Shader* shader = nullptr);
-        static void DrawLine(float x1, float y1, float x2, float y2, float width, Color color, const Shader* shader = nullptr);
-    
-    public:
-        static void DrawRect(float x, float y, float width, float height, Color color, const Shader* shader = nullptr);
-        static void DrawRect(Vector2 position, Vector2 size, Color color, const Shader* shader = nullptr);
         static void DrawRect(Rect* rect, Color color, const Shader* shader = nullptr);
-
-    public:
         static void DrawEntity(GameObject* gameObject);
     };
 }

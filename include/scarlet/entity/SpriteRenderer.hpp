@@ -1,6 +1,8 @@
 #ifndef SPRITERENDERER_HPP
 #define SPRITERENDERER_HPP
 
+#include "scarlet/common/Types.hpp"
+
 #include "scarlet/entity/Component.hpp"
 
 #include "scarlet/graphics/Shader.hpp"

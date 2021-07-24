@@ -45,8 +45,8 @@ void Camera::ProcessMouseMovement()
         }
 
         Vector2 newPos = InputManager::GetMousePosition();
-        real offsetX = this->mousePositionBuffer.x - newPos.x;
-        real offsetY = this->mousePositionBuffer.y - newPos.y;
+        float offsetX = this->mousePositionBuffer.x - newPos.x;
+        float offsetY = this->mousePositionBuffer.y - newPos.y;
         
         this->mousePositionBuffer = newPos;
     

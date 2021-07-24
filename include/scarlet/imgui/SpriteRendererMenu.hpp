@@ -5,8 +5,6 @@
 
 #include "scarlet/imgui/IComponentMenu.hpp"
 
-#include "scarlet/math/Math.hpp"
-
 namespace scarlet
 {
     class SpriteRendererMenu : public IComponentMenu

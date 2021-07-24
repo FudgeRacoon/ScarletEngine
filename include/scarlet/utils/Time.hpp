@@ -8,10 +8,9 @@
 
 #include "scarlet/core/Application.hpp"
 
-#include "scarlet/math/Math.hpp"
+#include "scarlet/common/Types.hpp"
 
 using namespace std::chrono;
-
 
 namespace scarlet
 {   
@@ -43,9 +42,9 @@ namespace scarlet
         ~Time() = delete;
 
     private:
-        static void OnInit();
-        static void CalculateTimeElapsed();
-        static void OnFrameEnd();
+        static void Start();
+        static void Elapsed();
+        static void Reset();
 
     public:
         static double GetTicks();

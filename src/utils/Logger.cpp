@@ -1,31 +1,40 @@
 #include "scarlet/utils/Logger.hpp"
 using namespace scarlet;
 
-std::vector<Logger::LogEntry> Logger::messages;
+std::vector<Logger::LoggerEntry> Logger::messages;
+LoggerConfig_Flags Logger::configFlags = LoggerConfig_Flags::ENABLE_LOGGER | LoggerConfig_Flags::ENABLE_FILE_OUTPUT;
+
+void Logger::Configure(LoggerConfig_Flags flags)
+{
+    configFlags = flags;
+}
 
 void Logger::CreateLogFile()
 {
-    std::fstream logFile("ScarletEngine.log", std::ios::out | std::ios::trunc);
-    logFile << "----------Scarlet Engine Log File----------" << "\n\n";
-
-    for(LogEntry message : messages)
+    if((int)configFlags == (int)(ENABLE_LOGGER | ENABLE_FILE_OUTPUT))
     {
-        const char* type;
-        
-        switch (message.type)
+        std::fstream logFile("ScarletEngine.log", std::ios::out | std::ios::trunc);
+        logFile << "----------Scarlet Engine Log File----------" << "\n\n";
+
+        for(LoggerEntry message : messages)
         {
-            case LogPriority::SCARLET_INFO: type = "INFO"; break;
-            case LogPriority::SCARLET_DEBUG: type = "DEBUG"; break;
-            case LogPriority::SCARLET_WARNING: type = "WARNING"; break;
-            case LogPriority::SCARLET_ERROR: type = "ERROR"; break;
-            case LogPriority::SCARLET_FATAL: type = "FATAL"; break;
+            const char* type;
+            
+            switch (message.type)
+            {
+                case LoggerPriority::SCARLET_INFO: type = "INFO"; break;
+                case LoggerPriority::SCARLET_DEBUG: type = "DEBUG"; break;
+                case LoggerPriority::SCARLET_WARNING: type = "WARNING"; break;
+                case LoggerPriority::SCARLET_ERROR: type = "ERROR"; break;
+                case LoggerPriority::SCARLET_FATAL: type = "FATAL"; break;
+            }
+
+            char buffer[256] = {'\0'};
+            sprintf(buffer, "[%s][%02d:%02d:%02d]: %s\n", type, message.time.hour, message.time.minute, message.time.second, message.message);
+
+            logFile.write(buffer, strlen(buffer)); 
         }
 
-        char buffer[256] = {'\0'};
-        sprintf(buffer, "[%s][%02d:%02d:%02d]: %s\n", type, message.time.hour, message.time.minute, message.time.second, message.message);
-
-        logFile.write(buffer, strlen(buffer)); 
+        logFile.close();
     }
-
-    logFile.close();
 }

@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 
+#include "scarlet/common/Types.hpp"
+
 #include "scarlet/entity/GameObject.hpp"
 
 #include "scarlet/utils/Logger.hpp"
@@ -52,6 +54,9 @@ namespace scarlet
 
             return gameObjectsOfType;
         }
+
+    public:
+        uint32 GetGameObjectCount();
 
     public:
         void PollSetupQueue();

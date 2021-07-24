@@ -11,17 +11,11 @@ Application* Application::Get()
 
 void Application::Run(int argc, char* argv[])
 {
-    Time::OnInit();
-
     this->OnInit();
     
-    InputManager::Init();
-    
-    ImGuiManager::OnAttach();
-
     while(Window::Get()->Running())
     {
-        Time::CalculateTimeElapsed();
+        Time::Elapsed();
 
         if(Time::GetDeltaTime() >= (1000.0 / Time::FRAME_RATE_TARGET))
         {
@@ -29,7 +23,8 @@ void Application::Run(int argc, char* argv[])
             if(lag >= 4.0)
                 Logger::LogWarning("%.2fms lag has occured.", lag);
 
-            InputManager::Update();
+            InputManager::OnUpdate();
+
             ImGuiManager::OnEvent(InputManager::GetSDLEvent());
 
             Renderer::ClearBuffers(RendererBufferType::RENDERER_BUFFER_COLOR);
@@ -40,9 +35,9 @@ void Application::Run(int argc, char* argv[])
 
             Renderer::SwapBuffers();
 
-            InputManager::End();
+            InputManager::OnFrameEnd();
 
-            Time::OnFrameEnd();
+            Time::Reset();
         }
     }
 
@@ -53,21 +48,26 @@ void Application::Run(int argc, char* argv[])
 }
 
 void Application::OnInit()
-{
-    Window::Get()->Init("Scarlet Engine", 800, 600, true);
-    Window::Get()->EnableVSync(true);
-    
-    Renderer::Init();
+{   
+    Time::Start();
 
+    Window::Get()->Init("Scarlet Engine", 800, 600, true);
+    Window::Get()->EnableVSync(false);
+    
+    InputManager::OnInit();
+
+    Renderer::Init();
     Renderer::SetViewport(0, 0, Window::Get()->GetWidth(), Window::Get()->GetHeight());
     Renderer::SetBlendingFunction(RendererBlendFunc::RENDERER_SRC_ALPHA, RendererBlendFunc::RENDERER_ONE_MINUS_SRC_ALPHA);
     Renderer::SetClearColor(Color(100, 100, 100));
-
     Renderer::EnableBlending(true);
+
+    ImGuiManager::OnAttach();
+
+    Logger::Configure(LoggerConfig_Flags::DISABLE_LOGGER);
 
     StateManager::AddState("Editor", new Editor());
     StateManager::AddState("Game", new Game());
-
     StateManager::ChangeState("Editor");
 }
 

@@ -8,16 +8,16 @@ double Time::currentTime  = 0.0;
 double Time::previousTime = 0.0;
 double Time::deltaTime = 0.0;
 
-void Time::OnInit()
+void Time::Start()
 {
     startTime = high_resolution_clock::now();
 }
-void Time::CalculateTimeElapsed()
+void Time::Elapsed()
 {
     currentTime = GetTicks();
     deltaTime = currentTime - previousTime;
 }
-void Time::OnFrameEnd()
+void Time::Reset()
 {
     previousTime = currentTime;
 }

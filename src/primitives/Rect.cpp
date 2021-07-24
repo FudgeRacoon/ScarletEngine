@@ -1,13 +1,13 @@
 #include "scarlet/primitives/Rect.hpp"
 using namespace scarlet;
 
-Rect::Rect(real x, real y, real width, real height)
+Rect::Rect(float x, float y, float width, float height)
 {   
     this->x = x; this->y = y;
     this->width = width; this->height = height;
     this->xMax = this->x + this->width; this->yMax = this->y - this->height;
 
-    this->dataBuffer = new real[20];
+    this->dataBuffer = new float[20];
     this->indicesBuffer = new uint32[6];
 
     //Vertex 0
@@ -55,12 +55,12 @@ Rect::Rect(real x, real y, real width, real height)
     *(this->indicesBuffer + 5) = 0;
 
     this->vao = new VertexArray();
-    this->vbo = new VertexBuffer(this->dataBuffer, sizeof(real) * 20, GL_DYNAMIC_DRAW);
+    this->vbo = new VertexBuffer(this->dataBuffer, sizeof(float) * 20, GL_DYNAMIC_DRAW);
     this->ibo = new IndexBuffer(this->indicesBuffer, sizeof(uint32) * 6);
     
     VertexBufferLayout layout;
-    layout.Push<real>(3, false);
-    layout.Push<real>(2, false);
+    layout.Push<float>(3, false);
+    layout.Push<float>(2, false);
 
     this->vao->AddBuffer(*this->vbo, layout);
 }
@@ -71,41 +71,41 @@ Rect::~Rect()
     delete this->ibo;
 }
 
-void Rect::SetX(real x)
+void Rect::SetX(float x)
 {
     this->x = x;
     this->xMax = this->x + this->width;
 
-    this->vbo->UpdateBufferData(0, sizeof(real), &this->x);
-    this->vbo->UpdateBufferData(sizeof(real) * 5, sizeof(real), &this->x);
-    this->vbo->UpdateBufferData(sizeof(real) * 10, sizeof(real), &this->xMax);
-    this->vbo->UpdateBufferData(sizeof(real) * 15, sizeof(real), &this->xMax);
+    this->vbo->UpdateBufferData(0, sizeof(float), &this->x);
+    this->vbo->UpdateBufferData(sizeof(float) * 5, sizeof(float), &this->x);
+    this->vbo->UpdateBufferData(sizeof(float) * 10, sizeof(float), &this->xMax);
+    this->vbo->UpdateBufferData(sizeof(float) * 15, sizeof(float), &this->xMax);
 }
-void Rect::SetY(real y)
+void Rect::SetY(float y)
 {
     this->y = y;
     this->yMax = this->y - this->height;
 
-    this->vbo->UpdateBufferData(sizeof(real), sizeof(real), &this->y);
-    this->vbo->UpdateBufferData(sizeof(real) * 6, sizeof(real), &this->yMax);
-    this->vbo->UpdateBufferData(sizeof(real) * 11, sizeof(real), &this->yMax);
-    this->vbo->UpdateBufferData(sizeof(real) * 16, sizeof(real), &this->y);
+    this->vbo->UpdateBufferData(sizeof(float), sizeof(float), &this->y);
+    this->vbo->UpdateBufferData(sizeof(float) * 6, sizeof(float), &this->yMax);
+    this->vbo->UpdateBufferData(sizeof(float) * 11, sizeof(float), &this->yMax);
+    this->vbo->UpdateBufferData(sizeof(float) * 16, sizeof(float), &this->y);
 }
-void Rect::SetWidth(real width)
+void Rect::SetWidth(float width)
 {
     this->width = width;
     this->xMax = this->x + this->width;
 
-    this->vbo->UpdateBufferData(sizeof(real) * 10, sizeof(real), &this->xMax);
-    this->vbo->UpdateBufferData(sizeof(real) * 15, sizeof(real), &this->xMax);
+    this->vbo->UpdateBufferData(sizeof(float) * 10, sizeof(float), &this->xMax);
+    this->vbo->UpdateBufferData(sizeof(float) * 15, sizeof(float), &this->xMax);
 }
-void Rect::SetHeight(real height)
+void Rect::SetHeight(float height)
 {
     this->height = height;
     this->yMax = this->y - this->height;
 
-    this->vbo->UpdateBufferData(sizeof(real) * 11, sizeof(real), &this->yMax);
-    this->vbo->UpdateBufferData(sizeof(real) * 16, sizeof(real), &this->yMax);
+    this->vbo->UpdateBufferData(sizeof(float) * 11, sizeof(float), &this->yMax);
+    this->vbo->UpdateBufferData(sizeof(float) * 16, sizeof(float), &this->yMax);
 }
 void Rect::SetUV(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
 {
@@ -113,37 +113,37 @@ void Rect::SetUV(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
     *(this->dataBuffer + 8) = v1.x;
     *(this->dataBuffer + 9) = v1.y;
 
-    real* v1Data = new real[2];
+    float* v1Data = new float[2];
     *(v1Data + 0) = v1.x;
     *(v1Data + 1) = v1.y;
-    this->vbo->UpdateBufferData(8 * sizeof(real), 2 * sizeof(real), v1Data);
+    this->vbo->UpdateBufferData(8 * sizeof(float), 2 * sizeof(float), v1Data);
 
     //UV (1,0)
     *(this->dataBuffer + 13) = v2.x;
     *(this->dataBuffer + 14) = v2.y;
 
-    real* v2Data = new real[2];
+    float* v2Data = new float[2];
     *(v2Data + 0) = v2.x;
     *(v2Data + 1) = v2.y;
-    this->vbo->UpdateBufferData(13 * sizeof(real), 2 * sizeof(real), v2Data);
+    this->vbo->UpdateBufferData(13 * sizeof(float), 2 * sizeof(float), v2Data);
 
     //UV (1,1)
     *(this->dataBuffer + 18) = v3.x;
     *(this->dataBuffer + 19) = v3.y;
 
-    real* v3Data = new real[2];
+    float* v3Data = new float[2];
     *(v3Data + 0) = v3.x;
     *(v3Data + 1) = v3.y;
-    this->vbo->UpdateBufferData(18 * sizeof(real), 2 * sizeof(real), v3Data);
+    this->vbo->UpdateBufferData(18 * sizeof(float), 2 * sizeof(float), v3Data);
 
     //UV (0,1)
     *(this->dataBuffer + 3) = v4.x;
     *(this->dataBuffer + 4) = v4.y;
 
-    real* v4Data = new real[2];
+    float* v4Data = new float[2];
     *(v4Data + 0) = v4.x;
     *(v4Data + 1) = v4.y;
-    this->vbo->UpdateBufferData(3 * sizeof(real), 2 * sizeof(real), v4Data);
+    this->vbo->UpdateBufferData(3 * sizeof(float), 2 * sizeof(float), v4Data);
 
     delete[] v1Data;
     delete[] v2Data;
@@ -151,19 +151,19 @@ void Rect::SetUV(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
     delete[] v4Data;
 }
 
-real Rect::GetX()
+float Rect::GetX()
 {
     return this->x;
 }
-real Rect::GetY()
+float Rect::GetY()
 {
     return this->y;
 }
-real Rect::GetWidth()
+float Rect::GetWidth()
 {
     return this->width;
 }
-real Rect::GetHeight()
+float Rect::GetHeight()
 {
     return this->height;
 }

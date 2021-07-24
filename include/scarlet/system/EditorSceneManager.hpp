@@ -10,12 +10,13 @@
 
 #include "scarlet/system/SceneManager.hpp"
 
-#include "scarlet/graphics/Shader.hpp"
-
 #include "scarlet/graphics/camera/Camera.hpp"
 
 namespace scarlet
 {
+    #define ADD_GAMEOBJECT EditorSceneManager::Get()->GetActiveScene()->AddGameObject()
+    #define GET_GAMEOBJECT(name) EditorSceneManager::Get()->GetActiveScene()->GetGameObject(#name)
+
     class EditorSceneManager : public SceneManager
     {
     private:
@@ -33,7 +34,7 @@ namespace scarlet
         void SetActiveScene(int buildIndex) override;        
 
     public:
-        void UpdateActiveScene() override;
+        void UpdateActiveScene(Camera* editorCamera = nullptr) override;
     
     public:
         void LoadScenes();

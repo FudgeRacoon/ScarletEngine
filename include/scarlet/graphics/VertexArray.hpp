@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "scarlet/math/Math.hpp"
+#include "scarlet/common/Types.hpp"
 
 #include "scarlet/graphics/VertexBuffer.hpp"
 #include "scarlet/graphics/VertexBufferLayout.hpp"

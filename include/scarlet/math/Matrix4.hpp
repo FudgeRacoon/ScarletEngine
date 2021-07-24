@@ -3,6 +3,8 @@
 
 #include <math.h>
 
+#include "scarlet/common/Types.hpp"
+
 #include "scarlet/math/Math.hpp"
 #include "scarlet/math/Vector4.hpp"
 using namespace scarlet;
@@ -97,6 +99,12 @@ public:
             this->n[2][0] * v.x + this->n[2][1] * v.y + this->n[2][2] * v.z + this->n[2][3] * v.w,
             this->n[3][0] * v.x + this->n[3][1] * v.y + this->n[3][2] * v.z + this->n[3][3] * v.w
         );
+    }
+
+public:
+    const float* GetValuePointer()
+    {
+        return &n[0][0];
     }
 
 public:
@@ -217,7 +225,7 @@ public:
                         big = row;
                 
                 if(big != column)
-                    for(unsigned j = 0; j < N; ++j)
+                    for(uint32 j = 0; j < 4; ++j)
                     {
                         Math::Swap<float>(&m.n[column][j], &m.n[big][j]); 
                         Math::Swap<float>(&mat.n[column][j], &mat.n[big][j]);
@@ -249,19 +257,6 @@ public:
                 mat.n[row][column] /= m(row,row);
 
         return mat;          
-    }
-
-public:
-    static const float* GetValuePointer(Matrix4 m)
-    {
-        float* values = new float[16];
-        
-        *(values + 0) = m.n[0][0]; *(values + 1) = m.n[1][0]; *(values + 2) = m.n[2][0]; *(values + 3) = m.n[3][0];
-        *(values + 4) = m.n[0][1]; *(values + 5) = m.n[1][1]; *(values + 6) = m.n[2][1]; *(values + 7) = m.n[3][1];
-        *(values + 8) = m.n[0][2]; *(values + 9) = m.n[1][2]; *(values + 10) = m.n[2][2]; *(values + 11) = m.n[3][2];
-        *(values + 12) = m.n[0][3]; *(values + 13) = m.n[1][3]; *(values + 14) = m.n[2][3]; *(values + 15) = m.n[3][3];
-
-        return values;
     }
 };
 

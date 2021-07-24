@@ -5,6 +5,8 @@
 
 #include "SDL2/SDL.h"
 
+#include "scarlet/common/Types.hpp"
+
 #include "scarlet/core/Window.hpp"
 
 #include "scarlet/math/Vector2.hpp"
@@ -104,13 +106,13 @@ namespace scarlet
         static SDL_Event event;
 
     private:
-        static const uint8_t* keyboardStates;
-        static uint8_t* prevKeyboardStates;
+        static const byte* keyboardStates;
+        static byte* prevKeyboardStates;
         static int keyboardStatesLength;
 
     private:
-        static uint32_t mouseState;
-        static uint32_t prevMouseState;
+        static uint32 mouseState;
+        static uint32 prevMouseState;
 
     private:
         static int mousePosX, mousePosY;
@@ -118,9 +120,9 @@ namespace scarlet
         static int mouseScrollDelta;
 
     public:
-        static void Init();
-        static void Update();
-        static void End();
+        static void OnInit();
+        static void OnUpdate();
+        static void OnFrameEnd();
 
     public:
         static SDL_Event* GetSDLEvent(); 

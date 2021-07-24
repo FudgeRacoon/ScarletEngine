@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "scarlet/common/Types.hpp"
+
 #include "scarlet/math/Math.hpp"
 #include "scarlet/math/Vector2.hpp"
 
@@ -21,29 +23,29 @@ namespace scarlet
         IndexBuffer* ibo = nullptr;
 
     private:
-        real* dataBuffer = nullptr;
+        float* dataBuffer = nullptr;
         uint32* indicesBuffer = nullptr;
 
     private:
-        real x, y;
-        real width, height;
-        real xMax, yMax;
+        float x, y;
+        float width, height;
+        float xMax, yMax;
 
     public:
-        Rect(real x, real y, real width, real height);
+        Rect(float x, float y, float width, float height);
         ~Rect();
 
     public:
-        void SetX(real x);
-        void SetY(real y);
-        void SetWidth(real width);
-        void SetHeight(real height);
+        void SetX(float x);
+        void SetY(float y);
+        void SetWidth(float width);
+        void SetHeight(float height);
         void SetUV(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4);
 
-        real GetX();
-        real GetY();
-        real GetWidth();
-        real GetHeight();
+        float GetX();
+        float GetY();
+        float GetWidth();
+        float GetHeight();
         std::vector<Vector2> GetUV();
         Vector2 GetCenter();
 

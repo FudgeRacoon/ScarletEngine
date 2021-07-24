@@ -5,6 +5,8 @@
 
 #include "GL/glew.h"
 
+#include "scarlet/common/Types.hpp"
+
 #include "scarlet/math/Math.hpp"
 
 namespace scarlet

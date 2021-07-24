@@ -47,7 +47,8 @@
         "ratio": "cpp",
         "map": "cpp",
         "cstring": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "cassert": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

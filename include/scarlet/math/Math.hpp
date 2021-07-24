@@ -5,98 +5,89 @@
 #include <limits>
 #include <math.h>
 
-#define FLOAT_EQUAL(a, b) return a - b < Math::Epsilon ? true : false;
-
 namespace scarlet
-{
-    typedef unsigned char   byte;
-    typedef unsigned short  uint16;
-    typedef unsigned int    uint32;
-    typedef unsigned long   uint64;
-    typedef signed short    int16;
-    typedef signed int      int32;
-    typedef signed long     int64; 
-    typedef float           real;
+{   
+    #define FLOAT_EQUAL(a, b) return a - b < Math::Epsilon ? true : false
 
     class Math
     {
     public:
-        static constexpr real PI = 3.14159265359;
-        static constexpr real Epsilon = std::numeric_limits<real>::epsilon();
+        static constexpr float PI = 3.14159265359;
+        static constexpr float Epsilon = std::numeric_limits<float>::epsilon();
         static constexpr uint64 Infinity = std::numeric_limits<uint64>::infinity();
     
     public:
-        static real RadToDegree(real value)
+        static float RadToDegree(float value)
         {
             return value * (180.0 / PI);
         }
 
-        static real DegreeToRad(real value)
+        static float DegreeToRad(float value)
         {
             return value * (PI / 180.0);
         }
 
-        static real Sin(real value)
+        static float Sin(float value)
         {
             return sin(value);
         }
 
-        static real Cos(real value)
+        static float Cos(float value)
         {
             return cos(value);
         }
 
-        static real Tan(real value)
+        static float Tan(float value)
         {
             return tan(value);
         }
     
-        static real Asin(real value)
+        static float Asin(float value)
         {
             return asin(value);
         }
 
-        static real Acos(real value)
+        static float Acos(float value)
         {
             return acos(value);
         }
 
-        static real Atan2(real y, real x)
+        static float Atan2(float y, float x)
         {
             return atan2(y, x);
         }
     
-        static real Sqrt(float value)
+        static float Sqrt(float value)
         {
             return sqrt(value);
         }
     
-        static real Max(real a, real b)
+        static float Max(float a, float b)
         {
             return a > b ? a : b;
         }
 
-        static real Min(real a, real b)
+        static float Min(float a, float b)
         {
             return a < b ? a : b;
         }
 
-        static real Pow(real base, real exponent)
+        static float Pow(float base, float exponent)
         {
             return powf(base, exponent);
         }
 
-        static real Abs(real value)
+        static float Abs(float value)
         {
             return value < 0 ? -value : value;
         }
 
-        static int Round(real value)
+        static int Round(float value)
         {
             return (int)(value < 0.0f ? value - 0.5f : value + 0.5f);
         }
     
-        static real Clamp(real value, real min, real max)
+        static float Clamp(float value, float min, float max)
         {
             if(value > max)
                 return max;

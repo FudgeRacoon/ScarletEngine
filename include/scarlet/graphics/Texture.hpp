@@ -8,6 +8,8 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 
+#include "scarlet/common/Types.hpp"
+
 #include "scarlet/math/Math.hpp"
 
 #include "scarlet/utils/Logger.hpp"

@@ -3,12 +3,12 @@ using namespace scarlet;
 
 SDL_Event InputManager::event;
 
-const uint8_t* InputManager::keyboardStates = nullptr;
-uint8_t* InputManager::prevKeyboardStates = nullptr;
+const byte* InputManager::keyboardStates = nullptr;
+byte* InputManager::prevKeyboardStates = nullptr;
 int InputManager::keyboardStatesLength;
 
-uint32_t InputManager::mouseState;
-uint32_t InputManager::prevMouseState;
+uint32 InputManager::mouseState;
+uint32 InputManager::prevMouseState;
 
 int InputManager::mousePosX;
 int InputManager::mousePosY;
@@ -16,12 +16,12 @@ int InputManager::prevMousePosX;
 int InputManager::prevMousePosY;
 int InputManager::mouseScrollDelta;
 
-void InputManager::Init()
+void InputManager::OnInit()
 {
     keyboardStates = SDL_GetKeyboardState(&keyboardStatesLength);
-    prevKeyboardStates = new uint8_t[keyboardStatesLength];
+    prevKeyboardStates = new byte[keyboardStatesLength];
 }
-void InputManager::Update()
+void InputManager::OnUpdate()
 {
     while(SDL_PollEvent(&event))
     {
@@ -44,7 +44,7 @@ void InputManager::Update()
 
     mouseState = SDL_GetMouseState(&mousePosX, &mousePosY);
 }
-void InputManager::End()
+void InputManager::OnFrameEnd()
 {
     memcpy(prevKeyboardStates, keyboardStates, keyboardStatesLength);
 
@@ -52,7 +52,6 @@ void InputManager::End()
     prevMousePosX = mousePosX;
     prevMousePosY = mousePosY;
     prevMouseState = mouseState;
-
 }
 
 SDL_Event* InputManager::GetSDLEvent()
@@ -74,7 +73,7 @@ bool InputManager::GetKeyUp(KeyCode code)
 }
 bool InputManager::GetMouseButton(int button)
 {
-    uint32_t mask = 0;
+    uint32 mask = 0;
 
     switch(button)
     {
@@ -87,7 +86,7 @@ bool InputManager::GetMouseButton(int button)
 }
 bool InputManager::GetMouseButtonDown(int button)
 {
-    uint32_t mask = 0;
+    uint32 mask = 0;
 
     switch(button)
     {
@@ -100,7 +99,7 @@ bool InputManager::GetMouseButtonDown(int button)
 }
 bool InputManager::GetMouseButtonUp(int button)
 {
-    uint32_t mask = 0;
+    uint32 mask = 0;
 
     switch(button)
     {

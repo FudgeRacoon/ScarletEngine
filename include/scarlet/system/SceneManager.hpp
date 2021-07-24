@@ -1,11 +1,9 @@
 #ifndef SCENEMANAGER_HPP
 #define SCENEMANAGER_HPP
 
+#include "scarlet/common/Types.hpp"
+
 #include "scarlet/core/Scene.hpp"
-
-#include "scarlet/math/Math.hpp"
-
-#include "scarlet/graphics/Shader.hpp"
 
 #include "scarlet/graphics/camera/Camera.hpp"
 
@@ -36,7 +34,7 @@ namespace scarlet
         virtual void SetActiveScene(int buildIndex);
 
     public:
-        virtual void UpdateActiveScene();
+        virtual void UpdateActiveScene(Camera* editorCamera = nullptr);
     };
 }
 

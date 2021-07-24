@@ -8,6 +8,8 @@
 
 #include "GL/glew.h"
 
+#include "scarlet/math/Matrix4.hpp"
+
 #include "scarlet/utils/Logger.hpp"
 
 namespace scarlet
@@ -37,7 +39,7 @@ namespace scarlet
         void SetVec2f(std::string varName, float x, float y) const;
         void SetVec4i(std::string varName, int x, int y, int z, int w) const;
         void SetVec4f(std::string varName, float x, float y, float z, float w) const;
-        void SetMat4(std::string varName, const float* value) const;
+        void SetMat4(std::string varName, Matrix4 m) const;
 
     public:
         void Bind() const;

@@ -1,3 +1,5 @@
+#include "scarlet/common/Types.hpp"
+
 #include "scarlet/core/Application.hpp"
 #include "scarlet/core/Window.hpp"
 #include "scarlet/core/Scene.hpp"
@@ -31,6 +33,7 @@
 #include "scarlet/primitives/Rect.hpp"
 
 #include "scarlet/math/Math.hpp"
+#include "scarlet/math/Random.hpp"
 #include "scarlet/math/Color.hpp"
 #include "scarlet/math/Vector2.hpp"
 #include "scarlet/math/Vector3.hpp"
