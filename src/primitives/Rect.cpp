@@ -1,6 +1,68 @@
 #include "scarlet/primitives/Rect.hpp"
 using namespace scarlet;
 
+Rect::Rect(Vector3 position, Vector3 size)
+{
+    this->x = position.x; this->y = position.y;
+    this->width = size.x; this->height = size.y;
+    this->xMax = this->x + this->width; this->yMax = this->y - this->height;
+
+    this->dataBuffer = new float[20];
+    this->indicesBuffer = new uint32[6];
+
+    //Vertex 0
+    *(this->dataBuffer + 0) = this->x;
+    *(this->dataBuffer + 1) = this->y;
+    *(this->dataBuffer + 2) = 0.0f;
+    
+    //UV (0,1)
+    *(this->dataBuffer + 3) = 0.0f;
+    *(this->dataBuffer + 4) = 1.0f;
+
+    //Vertex 1
+    *(this->dataBuffer + 5) = this->x;
+    *(this->dataBuffer + 6) = this->yMax;
+    *(this->dataBuffer + 7) = 0.0f;
+    
+    //UV (0,0)
+    *(this->dataBuffer + 8) = 0.0f;
+    *(this->dataBuffer + 9) = 0.0f;
+
+    //Vertex 2
+    *(this->dataBuffer + 10) = this->xMax;
+    *(this->dataBuffer + 11) = this->yMax;
+    *(this->dataBuffer + 12) = 0.0f;
+    
+    //UV (1,0)
+    *(this->dataBuffer + 13) = 1.0f;
+    *(this->dataBuffer + 14) = 0.0f;
+
+    //Vertex 3
+    *(this->dataBuffer + 15) = this->xMax;
+    *(this->dataBuffer + 16) = this->y;
+    *(this->dataBuffer + 17) = 0.0f;
+    
+    //UV (1,1)
+    *(this->dataBuffer + 18) = 1.0f;
+    *(this->dataBuffer + 19) = 1.0f;
+
+    //Indicies
+    *(this->indicesBuffer) = 0;
+    *(this->indicesBuffer + 1) = 1;
+    *(this->indicesBuffer + 2) = 2;
+    *(this->indicesBuffer + 3) = 2;
+    *(this->indicesBuffer + 4) = 3;
+    *(this->indicesBuffer + 5) = 0;
+
+    this->vao = new VertexArray();
+    this->vbo = new VertexBuffer(this->dataBuffer, sizeof(float) * 20, GL_DYNAMIC_DRAW);
+    this->ibo = new IndexBuffer(this->indicesBuffer, sizeof(uint32) * 6, GL_DYNAMIC_DRAW);
+    
+    vbo->AddLayout<float>(3, false);
+    vbo->AddLayout<float>(2, false);
+
+    this->vao->AddBuffer(this->vbo);
+}
 Rect::Rect(float x, float y, float width, float height)
 {   
     this->x = x; this->y = y;
@@ -56,13 +118,12 @@ Rect::Rect(float x, float y, float width, float height)
 
     this->vao = new VertexArray();
     this->vbo = new VertexBuffer(this->dataBuffer, sizeof(float) * 20, GL_DYNAMIC_DRAW);
-    this->ibo = new IndexBuffer(this->indicesBuffer, sizeof(uint32) * 6);
+    this->ibo = new IndexBuffer(this->indicesBuffer, sizeof(uint32) * 6, GL_DYNAMIC_DRAW);
     
-    VertexBufferLayout layout;
-    layout.Push<float>(3, false);
-    layout.Push<float>(2, false);
+    vbo->AddLayout<float>(3, false);
+    vbo->AddLayout<float>(2, false);
 
-    this->vao->AddBuffer(*this->vbo, layout);
+    this->vao->AddBuffer(this->vbo);
 }
 Rect::~Rect()
 {

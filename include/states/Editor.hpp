@@ -12,7 +12,7 @@ class Editor : public IState
 {
 private:
     scarlet::Camera* editorCamera = nullptr;
-
+    
 public:
     void OnEnter() override
     {
@@ -32,6 +32,7 @@ public:
     void OnUpdate() override
     {   
         editorCamera->ProcessMouseMovement();
+
 
         scarlet::EditorSceneManager::Get()->UpdateActiveScene(editorCamera);
     }   

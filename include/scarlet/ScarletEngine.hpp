@@ -1,3 +1,4 @@
+#include "scarlet/common/Assert.hpp"
 #include "scarlet/common/Types.hpp"
 
 #include "scarlet/core/Application.hpp"
@@ -19,9 +20,9 @@
 #include "scarlet/entity/SpriteRenderer.hpp"
 
 #include "scarlet/graphics/Renderer.hpp"
+#include "scarlet/graphics/DebugRenderer.hpp"
 #include "scarlet/graphics/VertexArray.hpp"
 #include "scarlet/graphics/VertexBuffer.hpp"
-#include "scarlet/graphics/VertexBufferLayout.hpp"
 #include "scarlet/graphics/IndexBuffer.hpp"
 #include "scarlet/graphics/Shader.hpp"
 #include "scarlet/graphics/Texture.hpp"

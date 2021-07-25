@@ -15,7 +15,6 @@
 #include "scarlet/graphics/Shader.hpp"
 #include "scarlet/graphics/camera/Camera.hpp"
 
-
 namespace scarlet
 {   
     class SceneManager;

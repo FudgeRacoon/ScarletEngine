@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <string>
-#include <type_traits>
 
 #include "scarlet/entity/Component.hpp"
 #include "scarlet/entity/Transform.hpp"

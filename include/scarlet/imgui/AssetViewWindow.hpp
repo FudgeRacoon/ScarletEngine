@@ -43,8 +43,8 @@ namespace scarlet
                 ImGui::PushID(id++);
                 
                 ImVec2 imageSize = ImVec2(spriteWidth, spriteHeight);
-                ImVec2 uv00      = ImVec2(spriteUvCoords[0].x, spriteUvCoords[0].y);
-                ImVec2 uv11      = ImVec2(spriteUvCoords[2].x, spriteUvCoords[2].y);
+                ImVec2 uv00      = ImVec2(spriteUvCoords[0].x, spriteUvCoords[2].y);
+                ImVec2 uv11      = ImVec2(spriteUvCoords[2].x, spriteUvCoords[0].y);
                 if(ImGui::ImageButton((int*)spriteTextureID, imageSize, uv00, uv11))
                 {
                     

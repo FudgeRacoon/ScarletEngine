@@ -1,4 +1,5 @@
 #include "scarlet/graphics/Shader.hpp"
+#include "scarlet/common/Assert.hpp"
 using namespace scarlet;
 
 const char* Shader::defaultVertexShaderSource =
@@ -21,7 +22,7 @@ const char* Shader::defaultVertexShaderSource =
 
 Shader::Shader(const char* fragmentShader)
 {
-    this->programID = glCreateProgram();
+    GLCALL(this->programID = glCreateProgram());
 
     if(this->programID == 0)
     {
@@ -32,23 +33,50 @@ Shader::Shader(const char* fragmentShader)
     CreateShaderWithSourceInternal(defaultVertexShaderSource, GL_VERTEX_SHADER);
     CreateShaderWithFileInternal(fragmentShader, GL_FRAGMENT_SHADER);
 
-    glLinkProgram(this->programID);
-    glValidateProgram(this->programID);
+    GLCALL(glLinkProgram(this->programID));
+    GLCALL(glValidateProgram(this->programID));
 
     int result;
     char buffer[512];
-    glGetProgramiv(this->programID, GL_LINK_STATUS, &result);
+    GLCALL(glGetProgramiv(this->programID, GL_LINK_STATUS, &result));
 
     if(result == 0)
     {
-        glGetProgramInfoLog(this->programID, 512, nullptr, buffer);
+        GLCALL(glGetProgramInfoLog(this->programID, 512, nullptr, buffer));
+        Logger::LogError("Failed to link Shader\n%s", buffer);
+        return;
+    }
+}
+Shader::Shader(const char* vertexShader, const char* fragmentShader)
+{
+    GLCALL(this->programID = glCreateProgram());
+
+    if(this->programID == 0)
+    {
+        Logger::LogError("Failed to create shader program.");
+        return;
+    }
+
+    CreateShaderWithFileInternal(vertexShader, GL_VERTEX_SHADER);
+    CreateShaderWithFileInternal(fragmentShader, GL_FRAGMENT_SHADER);
+
+    GLCALL(glLinkProgram(this->programID));
+    GLCALL(glValidateProgram(this->programID));
+
+    int result;
+    char buffer[512];
+    GLCALL(glGetProgramiv(this->programID, GL_LINK_STATUS, &result));
+
+    if(result == 0)
+    {
+        GLCALL(glGetProgramInfoLog(this->programID, 512, nullptr, buffer));
         Logger::LogError("Failed to link Shader\n%s", buffer);
         return;
     }
 }
 Shader::~Shader()
 {
-    glDeleteProgram(this->programID);
+    GLCALL(glDeleteProgram(this->programID));
 }
 
 void Shader::CreateShaderWithFileInternal(const char* filepath, int shaderType)
@@ -59,43 +87,46 @@ void Shader::CreateShaderWithFileInternal(const char* filepath, int shaderType)
 
     const char* source_c_str = source.c_str();
 
-    int shader = glCreateShader(shaderType);
-    glShaderSource(shader, 1, &source_c_str, nullptr);
-    glCompileShader(shader);
+    GLCALL(int shader = glCreateShader(shaderType));
+    GLCALL(glShaderSource(shader, 1, &source_c_str, nullptr));
+    GLCALL(glCompileShader(shader));
 
     int result;
     char buffer[512];
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
+    GLCALL(glGetShaderiv(shader, GL_COMPILE_STATUS, &result));
 
     if(result == 0)
     {
-        glGetShaderInfoLog(shader, 512, nullptr, buffer);
-        Logger::LogError("Failed to compile Fragment Shader.\n%s", buffer);
-        return;
+        GLCALL(glGetShaderInfoLog(shader, 512, nullptr, buffer));
+        switch(shaderType)
+        {
+            case GL_VERTEX_SHADER: Logger::LogError("Failed to compile Vertex Shader.\n%s", buffer); return;
+            case GL_FRAGMENT_SHADER: Logger::LogError("Failed to compile Fragment Shader.\n%s", buffer); return;
+        }
     }
 
-    glAttachShader(this->programID, shader);
-    glDeleteShader(shader);
+    GLCALL(glAttachShader(this->programID, shader));
+    GLCALL(glDeleteShader(shader));
 }
 void Shader::CreateShaderWithSourceInternal(const char* source, int shaderType)
 {
-    int shader = glCreateShader(shaderType);
-    glShaderSource(shader, 1, &source, nullptr);
-    glCompileShader(shader);
+    GLCALL(int shader = glCreateShader(shaderType));
+    GLCALL(glShaderSource(shader, 1, &source, nullptr));
+    GLCALL(glCompileShader(shader));
 
     int result;
     char buffer[512];
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
+    GLCALL(glGetShaderiv(shader, GL_COMPILE_STATUS, &result));
 
     if(result == 0)
     {
-        glGetShaderInfoLog(shader, 512, nullptr, buffer);
+        GLCALL(glGetShaderInfoLog(shader, 512, nullptr, buffer));
         Logger::LogError("Failed to compile Vertex Shader.\n%s", buffer);
         return;
     }
 
-    glAttachShader(this->programID, shader);
-    glDeleteShader(shader);
+    GLCALL(glAttachShader(this->programID, shader));
+    GLCALL(glDeleteShader(shader));
 }
 std::string Shader::ParseShaderInternal(const char* filepath)
 {
@@ -118,50 +149,50 @@ std::string Shader::ParseShaderInternal(const char* filepath)
 
 void Shader::SetBool(std::string varName, int value) const
 {
-    int uniformID = glGetUniformLocation(this->programID, varName.c_str());
-    glUniform1i(uniformID, value);
+    GLCALL(int uniformID = glGetUniformLocation(this->programID, varName.c_str()));
+    GLCALL(glUniform1i(uniformID, value));
 }
 void Shader::SetInt(std::string varName, int value) const
 {
-    int uniformID = glGetUniformLocation(this->programID, varName.c_str());
-    glUniform1i(uniformID, value);
+    GLCALL(int uniformID = glGetUniformLocation(this->programID, varName.c_str()));
+    GLCALL(glUniform1i(uniformID, value));
 }
 void Shader::SetFloat(std::string varName, float value) const
 {
-    int uniformID = glGetUniformLocation(this->programID, varName.c_str());
-    glUniform1f(uniformID, value);
+    GLCALL(int uniformID = glGetUniformLocation(this->programID, varName.c_str()));
+    GLCALL(glUniform1f(uniformID, value));
 }
-void Shader::SetVec2i(std::string varName, int x, int y) const
+void Shader::SetVec2i(std::string varName, Vector2 v) const
 {
-    int uniformID = glGetUniformLocation(this->programID, varName.c_str());
-    glUniform2i(uniformID, x, y);
+    GLCALL(int uniformID = glGetUniformLocation(this->programID, varName.c_str()));
+    GLCALL(glUniform2i(uniformID, (int)v.x, (int)v.y));
 }
-void Shader::SetVec2f(std::string varName, float x, float y) const
+void Shader::SetVec2f(std::string varName, Vector2 v) const
 {
-    int uniformID = glGetUniformLocation(this->programID, varName.c_str());
-    glUniform2f(uniformID, x, y);
+    GLCALL(int uniformID = glGetUniformLocation(this->programID, varName.c_str()));
+    GLCALL(glUniform2f(uniformID, v.x, v.y));
 }
-void Shader::SetVec4i(std::string varName, int x, int y, int z, int w) const
+void Shader::SetVec4i(std::string varName, Vector4 v) const
 {
-    int uniformID = glGetUniformLocation(this->programID, varName.c_str());
-    glUniform4i(uniformID, x, y, z, w);
+    GLCALL(int uniformID = glGetUniformLocation(this->programID, varName.c_str()));
+    GLCALL(glUniform4i(uniformID, (int)v.x, (int)v.y, (int)v.z, (int)v.w));
 }
-void Shader::SetVec4f(std::string varName, float x, float y, float z, float w) const
+void Shader::SetVec4f(std::string varName, Vector4 v) const
 {
-    int uniformID = glGetUniformLocation(this->programID, varName.c_str());
-    glUniform4f(uniformID, x, y, z, w);
+    GLCALL(int uniformID = glGetUniformLocation(this->programID, varName.c_str()));
+    GLCALL(glUniform4f(uniformID, v.x, v.y, v.z, v.w));
 }
 void Shader::SetMat4(std::string varName, Matrix4 m) const
 {
-    int uniformID = glGetUniformLocation(this->programID, varName.c_str());
-    glUniformMatrix4fv(uniformID, 1, false, m.GetValuePointer());
+    GLCALL(int uniformID = glGetUniformLocation(this->programID, varName.c_str()));
+    GLCALL(glUniformMatrix4fv(uniformID, 1, false, m.GetValuePointer()));
 }
 
 void Shader::Bind() const
 {
-    glUseProgram(this->programID);
+    GLCALL(glUseProgram(this->programID));
 }
 void Shader::UnBind() const
 {
-    glUseProgram(0);
+    GLCALL(glUseProgram(0));
 }

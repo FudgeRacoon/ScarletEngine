@@ -3,6 +3,8 @@
 #include "states/Game.hpp"
 using namespace scarlet;
 
+#define SCARLET_NODEBUG
+
 Application* Application::Get()
 {
     static Application* instance = new Application();
@@ -31,9 +33,13 @@ void Application::Run(int argc, char* argv[])
 
             this->OnUpdate();
 
+            DebugRenderer::RenderBatch();
+
             ImGuiManager::OnRender();
 
             Renderer::SwapBuffers();
+
+            DebugRenderer::Flush();
 
             InputManager::OnFrameEnd();
 
@@ -52,9 +58,15 @@ void Application::OnInit()
     Time::Start();
 
     Window::Get()->Init("Scarlet Engine", 800, 600, true);
-    Window::Get()->EnableVSync(false);
+    Window::Get()->EnableVSync(true);
     
     InputManager::OnInit();
+
+    // GraphicsContext::Init();
+    // GraphicsContext::SetViewport(0, 0, Window::Get()->GetWidth(), Window::Get()->GetHeight());
+    // GraphicsContext::SetBlendingFunction(RendererBlendFunc::RENDERER_SRC_ALPHA, RendererBlendFunc::RE
+    // GraphicsContext::SetClearColor(Color(100, 100, 100));
+    // GraphicsContext::EnableBlending(true);
 
     Renderer::Init();
     Renderer::SetViewport(0, 0, Window::Get()->GetWidth(), Window::Get()->GetHeight());
@@ -62,9 +74,11 @@ void Application::OnInit()
     Renderer::SetClearColor(Color(100, 100, 100));
     Renderer::EnableBlending(true);
 
+    DebugRenderer::Init();
+
     ImGuiManager::OnAttach();
 
-    Logger::Configure(LoggerConfig_Flags::DISABLE_LOGGER);
+    Logger::Configure(LoggerConfig_Flags::ENABLE_LOGGER);
 
     StateManager::AddState("Editor", new Editor());
     StateManager::AddState("Game", new Game());

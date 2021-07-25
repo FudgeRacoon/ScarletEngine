@@ -1,4 +1,5 @@
 #include "scarlet/graphics/Texture.hpp"
+#include "scarlet/common/Assert.hpp"
 using namespace scarlet;
 
 Texture::Texture(const char* filepath)
@@ -24,24 +25,23 @@ Texture::Texture(const char* filepath)
 
     TextureUtils::FlipTextureX(this);
 
-    glGenTextures(1, &this->ID);
-    glBindTexture(GL_TEXTURE_2D, this->ID);
+    GLCALL(glGenTextures(1, &this->ID));
+    GLCALL(glBindTexture(GL_TEXTURE_2D, this->ID));
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->width, this->height, 0, this->bytesPerPixel == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, this->pixels));
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->width, this->height, 0, this->bytesPerPixel == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, this->pixels);
-
-    glBindTexture(GL_TEXTURE_2D, 0);
+    GLCALL(glBindTexture(GL_TEXTURE_2D, 0));
 
     SDL_FreeSurface(data);
 }
 Texture::~Texture()
 {
-    glDeleteTextures(1, &this->ID);
+    GLCALL(glDeleteTextures(1, &this->ID));
 }
 
 uint32 Texture::GetID()
@@ -68,10 +68,10 @@ int Texture::GetBytesPerPixel()
 
 void Texture::Bind(uint32 slot) const
 {   
-    glActiveTexture(GL_TEXTURE0 + slot);
-    glBindTexture(GL_TEXTURE_2D, this->ID);
+    GLCALL(glActiveTexture(GL_TEXTURE0 + slot));
+    GLCALL(glBindTexture(GL_TEXTURE_2D, this->ID));
 }
 void Texture::UnBind() const
 {
-    glBindTexture(GL_TEXTURE_2D, 0);
+    GLCALL(glBindTexture(GL_TEXTURE_2D, 0));
 }

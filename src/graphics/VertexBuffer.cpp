@@ -1,32 +1,45 @@
 #include "scarlet/graphics/VertexBuffer.hpp"
+#include "scarlet/common/Assert.hpp"
 using namespace scarlet;
 
 VertexBuffer::VertexBuffer(const void* data, size_t size, int usage)
 {
-    glGenBuffers(1, &this->ID);
-    glBindBuffer(GL_ARRAY_BUFFER, this->ID);
-    glBufferData(GL_ARRAY_BUFFER, size, data, usage);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    GLCALL(glGenBuffers(1, &this->ID));
+    GLCALL(glBindBuffer(GL_ARRAY_BUFFER, this->ID));
+    GLCALL(glBufferData(GL_ARRAY_BUFFER, size, data, usage));
+    GLCALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
+
+    this->stride = 0;
 }
 VertexBuffer::~VertexBuffer()
 {
-    glDeleteBuffers(1, &this->ID);
+    this->layouts.clear();
+    GLCALL(glDeleteBuffers(1, &this->ID));
+}
+
+std::vector<VertexBufferLayout> VertexBuffer::GetLayouts()
+{
+    return this->layouts;
+}
+size_t VertexBuffer::GetStride()
+{
+    return this->stride;
 }
 
 void VertexBuffer::UpdateBufferData(size_t offset, size_t size, const void* data)
 {
     Bind();
 
-    glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);
+    GLCALL(glBufferSubData(GL_ARRAY_BUFFER, offset, size, data));
     
     UnBind();
 }
 
 void VertexBuffer::Bind()
 {
-    glBindBuffer(GL_ARRAY_BUFFER, this->ID);
+    GLCALL(glBindBuffer(GL_ARRAY_BUFFER, this->ID));
 }
 void VertexBuffer::UnBind()
 {
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    GLCALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }

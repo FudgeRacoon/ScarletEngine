@@ -6,7 +6,8 @@
 #include "scarlet/common/Types.hpp"
 
 #include "scarlet/graphics/VertexBuffer.hpp"
-#include "scarlet/graphics/VertexBufferLayout.hpp"
+
+#include "scarlet/utils/Logger.hpp"
 
 namespace scarlet
 {
@@ -20,7 +21,7 @@ namespace scarlet
         ~VertexArray();
 
     public:
-        void AddBuffer(VertexBuffer& vertexBuffer, VertexBufferLayout& layout) const;
+        void AddBuffer(VertexBuffer* vertexBuffer) const;
 
     public:
         void Bind() const;

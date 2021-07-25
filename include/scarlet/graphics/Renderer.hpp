@@ -1,6 +1,8 @@
 #ifndef RENDERER_HPP
 #define RENDERER_HPP
 
+#include <vector>
+
 #include "GL/glew.h"
 
 #include "scarlet/core/Window.hpp"
@@ -9,6 +11,7 @@
 #include "scarlet/entity/Transform.hpp"
 #include "scarlet/entity/SpriteRenderer.hpp"
 
+#include "scarlet/graphics/VertexBuffer.hpp"
 #include "scarlet/graphics/VertexArray.hpp"
 #include "scarlet/graphics/IndexBuffer.hpp"
 #include "scarlet/graphics/Shader.hpp"
@@ -17,21 +20,14 @@
 
 #include "scarlet/math/Color.hpp"
 #include "scarlet/math/Vector3.hpp"
+#include "scarlet/math/Vector4.hpp"
 #include "scarlet/math/Matrix4.hpp"
 
+#include "scarlet/primitives/Line.hpp"
 #include "scarlet/primitives/Rect.hpp"
 
 namespace scarlet
 {
-    enum EntityRenderingWarnings
-    {
-        MISSING_SPRITERENDERER = 0,
-        MISSING_SPRITE,
-        MISSING_TEXTURE,
-        MISSING_MATERIAL,
-        MISSING_CAMERA
-    };
-
     enum RendererBufferType
     {
         RENDERER_BUFFER_DEPTH = 0x00000100,
@@ -47,16 +43,14 @@ namespace scarlet
 
     struct RendererData
     {
-        Color clearColor;
-        Camera* rendererCamera;
         Shader* defualtShader;
+        Camera* rendererCamera;
 
-        RendererData()
-        {
-            this->clearColor = Color();
-            this->rendererCamera = nullptr;
-            this->defualtShader = nullptr;
-        }
+        Color   clearColor;
+        Vector4 viewport;
+
+        RendererData() :  defualtShader(nullptr), 
+            rendererCamera(nullptr) {}
     };
 
     class Renderer
@@ -71,13 +65,16 @@ namespace scarlet
         static void Init();
 
     public:
-        static void EnableBlending(bool enable);
+        static Vector4 GetViewport();
 
     public:
         static void SetViewport(uint32 x, uint32 y, uint32 width, uint32 height);
         static void SetBlendingFunction(uint32 sFactor, uint32 dFactor);
         static void SetClearColor(Color color);
     
+    public:
+        static void EnableBlending(bool enable);
+
     public:
         static void ClearBuffers(uint32 buffers);
         static void SwapBuffers();

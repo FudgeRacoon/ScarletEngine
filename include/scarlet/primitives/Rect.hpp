@@ -7,11 +7,11 @@
 
 #include "scarlet/math/Math.hpp"
 #include "scarlet/math/Vector2.hpp"
+#include "scarlet/math/Vector3.hpp"
 
 #include "scarlet/graphics/VertexArray.hpp"
 #include "scarlet/graphics/VertexBuffer.hpp"
 #include "scarlet/graphics/IndexBuffer.hpp"
-#include "scarlet/graphics/VertexBufferLayout.hpp"
 
 namespace scarlet
 {
@@ -32,6 +32,8 @@ namespace scarlet
         float xMax, yMax;
 
     public:
+        Rect() = default;
+        Rect(Vector3 position, Vector3 size);
         Rect(float x, float y, float width, float height);
         ~Rect();
 

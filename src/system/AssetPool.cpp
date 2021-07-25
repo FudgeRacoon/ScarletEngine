@@ -4,7 +4,7 @@ using namespace scarlet;
 
 #include "scarlet/entity/SpriteRenderer.hpp"
 
-#include "scarlet/system/EditorSceneManager.hpp"
+#include "scarlet/system/SceneManager.hpp"
 
 AssetPool::SpritesTreeMap AssetPool::sprites;
 AssetPool::TexturesTreeMap AssetPool::textures;
@@ -65,7 +65,7 @@ void AssetPool::RemoveSprite(std::string name)
     auto it = sprites.find(name);
     if(it != sprites.end())
     {
-        std::vector<GameObject*> gameObjects = EditorSceneManager::Get()->GetActiveScene()->GetGameObjectsOfType<SpriteRenderer>();
+        std::vector<GameObject*> gameObjects = SceneManager::Get()->GetActiveScene()->GetGameObjectsOfType<SpriteRenderer>();
         
         for(GameObject* gameObject : gameObjects)
         {

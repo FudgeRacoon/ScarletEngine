@@ -24,6 +24,7 @@ namespace scarlet
 
     public:
         Shader(const char* fragmentShader);
+        Shader(const char* vertexShader, const char* fragmentShader);
         ~Shader();
 
     private:
@@ -35,10 +36,10 @@ namespace scarlet
         void SetBool(std::string varName, int value) const;
         void SetInt(std::string varName, int value) const;
         void SetFloat(std::string varName, float value) const;
-        void SetVec2i(std::string varName, int x, int y) const;
-        void SetVec2f(std::string varName, float x, float y) const;
-        void SetVec4i(std::string varName, int x, int y, int z, int w) const;
-        void SetVec4f(std::string varName, float x, float y, float z, float w) const;
+        void SetVec2i(std::string varName, Vector2 v) const;
+        void SetVec2f(std::string varName, Vector2 v) const;
+        void SetVec4i(std::string varName, Vector4 v) const;
+        void SetVec4f(std::string varName, Vector4 v) const;
         void SetMat4(std::string varName, Matrix4 m) const;
 
     public:

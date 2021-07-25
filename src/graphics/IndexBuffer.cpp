@@ -1,18 +1,19 @@
 #include "scarlet/graphics/IndexBuffer.hpp"
+#include "scarlet/common/Assert.hpp"
 using namespace scarlet;
 
-IndexBuffer::IndexBuffer(const uint32_t* data, size_t size)
+IndexBuffer::IndexBuffer(const uint32_t* data, size_t size, int usage)
 {
-    glGenBuffers(1, &this->ID);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ID);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    GLCALL(glGenBuffers(1, &this->ID));
+    GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ID));
+    GLCALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, usage));
+    GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 
     this->count = size / sizeof(uint32);
 }
 IndexBuffer::~IndexBuffer()
 {
-    glDeleteBuffers(1, &this->ID);
+    GLCALL(glDeleteBuffers(1, &this->ID));
 }
 
 uint32 IndexBuffer::GetCount()
@@ -20,11 +21,20 @@ uint32 IndexBuffer::GetCount()
     return this->count;
 }
 
+void IndexBuffer::UpdateBufferData(size_t offset, size_t size, const uint32* data)
+{
+    this->Bind();
+
+    GLCALL(glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, size, data));
+
+    this->UnBind();
+}
+
 void IndexBuffer::Bind() const
 {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ID);
+    GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ID));
 }
 void IndexBuffer::UnBind() const
 {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 }

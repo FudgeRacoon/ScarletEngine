@@ -4,6 +4,7 @@
 #include "scarlet/common/Types.hpp"
 
 #include "scarlet/math/Math.hpp"
+#include "scarlet/math/Vector4.hpp"
 
 namespace scarlet
 {
@@ -111,7 +112,11 @@ namespace scarlet
                    this->b != c.b &&
                    this->a != c.a;
         }
-        
+        operator Vector4()
+        {
+            return Vector4((float)this->r, (float)this->g, (float)this->b, (float)this->a);
+        }
+
     public:
         static Color Lerp(Color c1, Color c2, float t)
         {

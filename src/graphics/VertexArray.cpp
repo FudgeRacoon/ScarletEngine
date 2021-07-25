@@ -1,49 +1,48 @@
 #include "scarlet/graphics/VertexArray.hpp"
+#include "scarlet/common/Assert.hpp"
 using namespace scarlet;
-
-#include "scarlet/utils/Logger.hpp"
 
 VertexArray::VertexArray()
 {
-    glGenVertexArrays(1, &this->ID);
-    glBindVertexArray(0);
+    GLCALL(glGenVertexArrays(1, &this->ID));
+    GLCALL(glBindVertexArray(0));
 }
 VertexArray::~VertexArray()
 {
-    glDeleteVertexArrays(1, &this->ID);
+    GLCALL(glDeleteVertexArrays(1, &this->ID));
 }
 
-void VertexArray::AddBuffer(VertexBuffer& vertexBuffer, VertexBufferLayout& layout) const
+void VertexArray::AddBuffer(VertexBuffer* vertexBuffer) const
 {
     this->Bind();
-    vertexBuffer.Bind();
+    vertexBuffer->Bind();
 
     uint32 offset = 0;
 
-    auto elements = layout.GetElements();
+    auto layouts = vertexBuffer->GetLayouts();
 
-    if(elements.empty())
+    if(layouts.empty())
     {
         Logger::LogError("Failed to add buffer. Must specify a layout.");
     } 
     else
-        for(uint32 index = 0; index < elements.size(); index++)
+        for(uint32 index = 0; index < layouts.size(); index++)
         {
-            auto& element = elements[index];
-            glEnableVertexAttribArray(index);
-            glVertexAttribPointer(index, element.format, element.type, element.normalized, layout.GetStride(), (const void*)offset);
-            offset += element.format * VertexBufferElements::GetSizeOfType(element.type);
+            auto& layout = layouts[index];
+            GLCALL(glEnableVertexAttribArray(index));
+            GLCALL(glVertexAttribPointer(index, layout.format, layout.type, layout.normalized, vertexBuffer->GetStride(), (const void*)offset));
+            offset += layout.format * VertexBufferLayout::GetSizeOfType(layout.type);
         }
     
-    vertexBuffer.UnBind();
+    vertexBuffer->UnBind();
     this->UnBind();
 }
 
 void VertexArray::Bind() const
 {
-    glBindVertexArray(this->ID);
+    GLCALL(glBindVertexArray(this->ID));
 }
 void VertexArray::UnBind() const
 {
-    glBindVertexArray(0);
+    GLCALL(glBindVertexArray(0));
 }
