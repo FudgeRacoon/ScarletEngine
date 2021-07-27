@@ -61,7 +61,7 @@ void Application::OnInit()
     GraphicsContext::Init();
     GraphicsContext::SetViewPort(0, 0, Window::Get()->GetWidth(), Window::Get()->GetHeight());
     GraphicsContext::SetBlendingFunction(BlendFunc::SCARLET_SRC_ALPHA, BlendFunc::SCARLET_ONE_MINUS_SRC_ALPHA);
-    GraphicsContext::SetClearColor(Color(100, 100, 100));
+    GraphicsContext::SetClearColor(Color(22, 22, 22));
     GraphicsContext::EnableBlending(true);
 
     Renderer::Init();

@@ -5,6 +5,8 @@
 #include <limits>
 #include <math.h>
 
+#include "scarlet/common/Types.hpp"
+
 namespace scarlet
 {   
     #define FLOAT_EQUAL(a, b) return a - b < Math::Epsilon ? true : false

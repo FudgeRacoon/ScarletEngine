@@ -33,10 +33,10 @@ namespace scarlet
         }
         Color(float r, float g, float b, float a)
         {
-            this->r = r;
-            this->g = g;
-            this->b = b;
-            this->a = a;
+            this->r = (byte)r;
+            this->g = (byte)g;
+            this->b = (byte)b;
+            this->a = (byte)a;
         }
 
     public:
@@ -58,6 +58,38 @@ namespace scarlet
         }
 
     public:
+        Color operator +(float value)
+        {
+            Color result;
+
+            result.r = Math::Clamp(this->r + value, 0, 255);
+            result.g = Math::Clamp(this->g + value, 0, 255);
+            result.b = Math::Clamp(this->b + value, 0, 255);
+            result.a = Math::Clamp(this->a + value, 0, 255);
+
+            return result;
+        }
+        Color operator -(float value)
+        {
+            Color result;
+
+            result.r = Math::Clamp(this->r - value, 0, 255);
+            result.g = Math::Clamp(this->g - value, 0, 255);
+            result.b = Math::Clamp(this->b - value, 0, 255);
+            result.a = Math::Clamp(this->a - value, 0, 255);
+
+            return result;
+        }
+        Color operator *(float value)
+        {
+            Color result;
+
+            result.r = Math::Clamp(this->r * value, 0, 255);
+            result.g = Math::Clamp(this->g * value, 0, 255);
+            result.b = Math::Clamp(this->b * value, 0, 255);
+
+            return result;
+        }
         Color operator +(Color c)
         {
             Color result;
@@ -85,16 +117,6 @@ namespace scarlet
             result.r = Math::Clamp(this->r * c.r, 0, 255);
             result.g = Math::Clamp(this->g * c.g, 0, 255);
             result.b = Math::Clamp(this->b * c.b, 0, 255);
-
-            return result;
-        }
-        Color operator *(float value)
-        {
-            Color result;
-
-            result.r = Math::Clamp(this->r * value, 0, 255);
-            result.g = Math::Clamp(this->g * value, 0, 255);
-            result.b = Math::Clamp(this->b * value, 0, 255);
 
             return result;
         }
@@ -128,7 +150,7 @@ namespace scarlet
                 c1.a +( (c2.a - c1.a) * t)
             );
         }
-    
+
     public:
         static uint32 RGBToHex(Color c)
         {

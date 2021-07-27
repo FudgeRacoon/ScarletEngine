@@ -6,12 +6,12 @@
 #include "scarlet/utils/OpenGLDebug.hpp"
 
 #ifdef SCARLET_NODEBUG
-    #define SCARLET__CORE_ASSERT(_EXPR)
+    #define SCARLET_CORE_ASSERT(_EXPR)
 #else
-    #define SCARLET__CORE_ASSERT(_EXPR)  assert(_EXPR)
+    #define SCARLET_CORE_ASSERT(_EXPR)  assert(_EXPR)
     #define GLCALL(_EXPR) GLClearError();\
         _EXPR;\
-        SCARLET__CORE_ASSERT(GLLogCall())    
+        SCARLET_CORE_ASSERT(GLLogCall())    
 #endif
 
 #endif

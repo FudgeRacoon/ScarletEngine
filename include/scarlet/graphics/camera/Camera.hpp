@@ -24,7 +24,7 @@ namespace scarlet
         float rightPlane, leftPlane;
         float bottomPlane, topPlane;
         float nearPlane, farPlane;
-
+        
     private:
         Vector3 direction;
 
@@ -44,6 +44,14 @@ namespace scarlet
 
     public:
         float GetSize();
+        float GetRightPlane();
+        float GetLeftPlane();
+        float GetBottomPlane();
+        float GetTopPlane();
+        float GetNearPlane();
+        float GetFarPlane();
+
+    public:
         Vector3 GetDirection();
         Matrix4 GetViewMatrix();
         Matrix4 GetProjectionMatrix(); 

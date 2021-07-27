@@ -32,6 +32,7 @@
 #include "scarlet/graphics/camera/Camera.hpp"
 #include "scarlet/graphics/camera/CameraController.hpp"
 
+#include "scarlet/primitives/Line.hpp"
 #include "scarlet/primitives/Rect.hpp"
 
 #include "scarlet/math/Math.hpp"
@@ -45,3 +46,5 @@
 #include "scarlet/utils/TextureUtils.hpp"
 #include "scarlet/utils/Logger.hpp"
 #include "scarlet/utils/Time.hpp"
+
+#include "scarletEditor/GridLines.hpp"

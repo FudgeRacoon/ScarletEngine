@@ -57,6 +57,31 @@ float Camera::GetSize()
 {
     return this->size;
 }
+float Camera::GetRightPlane()
+{
+    return this->rightPlane * this->size;
+}
+float Camera::GetLeftPlane()
+{
+    return this->leftPlane * this->size;
+}
+float Camera::GetBottomPlane()
+{
+    return this->bottomPlane * this->size;
+}
+float Camera::GetTopPlane()
+{
+    return this->topPlane * this->size;
+}
+float Camera::GetNearPlane()
+{
+    return this->nearPlane;
+}
+float Camera::GetFarPlane()
+{
+    return this->farPlane;
+}
+
 Vector3 Camera::GetDirection()
 {
     return this->direction;

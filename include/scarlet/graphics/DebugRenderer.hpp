@@ -22,8 +22,8 @@ namespace scarlet
 {   
     struct Vertex
     {
-        Vector3 position;   //12 bytes
-        Vector4 color;      //16 bytes
+        Vector3 position; 
+        Vector4 color;    
     };
 
     struct DebugRendererData
