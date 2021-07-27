@@ -3,6 +3,8 @@
 
 #include "scarlet/core/Window.hpp"
 
+#include "scarlet/graphics/GraphicsContext.hpp"
+
 #include "scarlet/system/InputManager.hpp"
 
 #include "scarlet/math/Math.hpp"
@@ -36,9 +38,6 @@ namespace scarlet
     public:
         Camera();
         Camera(Vector3 position);
-
-    public:
-        void ProcessMouseMovement();
 
     public:
         Vector3 ScreenToWorldPoint(Vector3 point);

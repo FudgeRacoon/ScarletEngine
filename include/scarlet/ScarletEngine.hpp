@@ -19,6 +19,7 @@
 #include "scarlet/entity/Transform.hpp"
 #include "scarlet/entity/SpriteRenderer.hpp"
 
+#include "scarlet/graphics/GraphicsContext.hpp"
 #include "scarlet/graphics/Renderer.hpp"
 #include "scarlet/graphics/DebugRenderer.hpp"
 #include "scarlet/graphics/VertexArray.hpp"

@@ -87,7 +87,7 @@ namespace scarlet
 
         HOME = 74,
         PAGEUP = 75,
-        DELETEYY = 76,
+        DELETE = 76,
         END = 77,
         PAGEDOWN = 78,
         RIGHT = 79,
@@ -121,7 +121,7 @@ namespace scarlet
 
     public:
         static void OnInit();
-        static void OnUpdate();
+        static void OnEvent();
         static void OnFrameEnd();
 
     public:

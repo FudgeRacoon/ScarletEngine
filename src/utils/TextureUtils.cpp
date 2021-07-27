@@ -71,10 +71,10 @@ std::vector<Sprite*> TextureUtils::SliceSprite(Sprite* sprite, int spriteWidth, 
             std::string name = sprite->GetName();
             name.append("_" + std::to_string(counter));
 
-            Sprite* newSprite = AssetPool::AddSprite(name, sprite->GetTexture());
-            newSprite->GetRect()->SetUV(v1, v2, v3, v4);
+            // Sprite* newSprite = AssetPool::AddSprite(name, sprite->GetTexture());
+            // newSprite->GetRect()->SetUV(v1, v2, v3, v4);
 
-            sprites[counter++] = newSprite;
+            //sprites[counter++] = newSprite;
         }
 
     return sprites;

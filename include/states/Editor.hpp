@@ -12,17 +12,18 @@ class Editor : public IState
 {
 private:
     scarlet::Camera* editorCamera = nullptr;
+    scarlet::CameraController* editorCameraController = nullptr;
     
 public:
     void OnEnter() override
     {
-        this->editorCamera = new scarlet::Camera();
+        editorCamera = new scarlet::Camera();
+        editorCameraController = new scarlet::CameraController(editorCamera);
 
         scarlet::AssetPool::AddTexture("mario_sprite_sheet_texture", "assets\\textures\\MarioSpriteSheet.png");
         scarlet::AssetPool::AddSprite("mairo_sprite_sheet", scarlet::AssetPool::GetTexture("mario_sprite_sheet_texture"));
         scarlet::TextureUtils::SliceSprite(scarlet::AssetPool::GetSprite("mairo_sprite_sheet"), 64, 64);
 
-        scarlet::ImGuiManager::AddWindow(new scarlet::AssetViewWindow());
         scarlet::ImGuiManager::AddWindow(new scarlet::ProfilerWindow());
 
         scarlet::EditorSceneManager::Get()->CreateScene("Scene_1");
@@ -31,8 +32,7 @@ public:
 
     void OnUpdate() override
     {   
-        editorCamera->ProcessMouseMovement();
-
+        editorCameraController->OnUpdate();
 
         scarlet::EditorSceneManager::Get()->UpdateActiveScene(editorCamera);
     }   

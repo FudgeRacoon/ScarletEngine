@@ -13,29 +13,47 @@
 
 #include "scarlet/math/Color.hpp"
 #include "scarlet/math/Vector3.hpp"
+#include "scarlet/math/Vector4.hpp"
 
 #include "scarlet/primitives/Line.hpp"
 #include "scarlet/primitives/Rect.hpp"
 
 namespace scarlet
 {   
-    struct DebugRendererData
+    struct Vertex
     {
-        Shader* defaultShader;
-        Camera* rendererCamera;
-
-        DebugRendererData() : defaultShader(nullptr), 
-            rendererCamera(nullptr) {}
+        Vector3 position;   //12 bytes
+        Vector4 color;      //16 bytes
     };
 
-    struct VerticesData
+    struct DebugRendererData
     {
-        VertexBuffer*  vbo;
-        IndexBuffer*   ibo;
-        VertexArray*   vao;
-        
-        VerticesData() : vbo(nullptr), 
-            ibo(nullptr), vao(nullptr){}
+        const uint32        MAX_LINES = 10000;
+        const uint32        MAX_QUADS = 10000;
+        const uint32        LINE_VERTICES = 7 * 2;
+        const uint32        QUAD_VERTICES = 7 * 4;
+        const uint32        MAX_LINE_VERTICES = MAX_LINES * LINE_VERTICES;
+        const uint32        MAX_QUAD_VERTICES = MAX_QUADS * QUAD_VERTICES;
+
+        uint32              lineCount;
+        uint32              quadCount;
+
+        IndexBuffer*        lineIndexBuffer = nullptr;
+        VertexBuffer*       lineVertexBuffer = nullptr;
+        VertexArray*        lineVertexArray = nullptr;
+
+        Vertex*             lineVertexPtr = nullptr;
+        Vertex*             lineVertexBase = nullptr;
+
+        IndexBuffer*        quadIndexBuffer = nullptr;
+        VertexBuffer*       quadVertexBuffer = nullptr;
+        VertexArray*        quadVertexArray = nullptr;
+
+        Vertex*             quadVertexPtr = nullptr;
+        Vertex*             quadVertexBase = nullptr;
+
+        Shader*             defaultShader = nullptr;
+        Camera*             debugRendererCamera = nullptr;
     };
 
     class DebugRenderer
@@ -43,28 +61,14 @@ namespace scarlet
     private:
         static DebugRendererData debugRendererData;
 
-    private:
-        static VerticesData lineData;
-        static VerticesData rectData;
-
-    private:
-        static const uint32 MAX_LINES = 1000;
-        static const uint32 MAX_RECTS = 1000;
-        static const uint32 LINE_VERTICES = 7 * 2;
-        static const uint32 RECT_VERTICES = 7 * 4;
-        static const uint32 MAX_LINE_VERTICES = MAX_LINES * LINE_VERTICES;
-        static const uint32 MAX_RECT_VERTICES = MAX_RECTS * RECT_VERTICES;
-
-    private:
-        static float* vertexBuffer;
-        static uint32* indexBuffer;
-
-    private:
-        static std::vector<SPair<Line, Color>> lines;
-        static std::vector<SPair<Rect, Color>> rects;
-
     public:
         static void Init();
+        static void ShutDown();
+
+    private:
+        static void StartBatch();
+        static void NextBatch();
+        static void Flush();
 
     public:
         static void BeginScene(Camera* camera);
@@ -79,14 +83,6 @@ namespace scarlet
         static void DrawRect(Rect rect, Color color);
         static void DrawRect(Vector3 position, Vector3 size, Color color);
         static void DrawRect(float x, float y, float width, float height, Color color);
-
-    private:
-        static void INTERNAL_PrepareLineBatch();
-        static void INTERNAL_PrepareRectBatch();
-
-    public:
-        static void RenderBatch();
-        static void Flush();
     };
 }
 

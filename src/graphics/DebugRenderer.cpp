@@ -4,211 +4,214 @@ using namespace scarlet;
 
 DebugRendererData DebugRenderer::debugRendererData;
 
-VerticesData DebugRenderer::lineData;
-VerticesData DebugRenderer::rectData;
-
-float* DebugRenderer::vertexBuffer = new float[MAX_RECT_VERTICES];
-uint32* DebugRenderer::indexBuffer = new uint32[MAX_RECTS * 6];
-
-std::vector<SPair<Line, Color>> DebugRenderer::lines;
-std::vector<SPair<Rect, Color>> DebugRenderer::rects;
-
 void DebugRenderer::Init()
 {
-    lines.reserve(MAX_LINES);
-    rects.reserve(MAX_RECTS);
+    #pragma region Line Buffer Init
+    debugRendererData.lineVertexBuffer = new VertexBuffer(
+        nullptr, 
+        debugRendererData.MAX_LINE_VERTICES * sizeof(float),
+        GL_DYNAMIC_DRAW  
+    );
+    debugRendererData.lineVertexBuffer->AddLayout<float>(3, false);
+    debugRendererData.lineVertexBuffer->AddLayout<float>(4, false);
+    debugRendererData.lineVertexArray = new VertexArray();
+    debugRendererData.lineVertexArray->AddBuffer(debugRendererData.lineVertexBuffer);
 
-    lineData.vbo = new VertexBuffer(nullptr, MAX_LINE_VERTICES * sizeof(float), GL_DYNAMIC_DRAW);
-    lineData.vbo->AddLayout<float>(3, false);
-    lineData.vbo->AddLayout<float>(4, false);
-    lineData.vao = new VertexArray();
-    lineData.vao->AddBuffer(lineData.vbo);
-        
-    rectData.vbo = new VertexBuffer(nullptr, MAX_RECT_VERTICES * sizeof(float), GL_DYNAMIC_DRAW);
-    rectData.vbo->AddLayout<float>(3, false);
-    rectData.vbo->AddLayout<float>(4, false);
-    rectData.ibo = new IndexBuffer(nullptr, MAX_RECTS * 6 * sizeof(float), GL_DYNAMIC_DRAW);
-    rectData.vao = new VertexArray();
-    rectData.vao->AddBuffer(rectData.vbo);
-    
+    debugRendererData.lineVertexBase = new Vertex[debugRendererData.MAX_LINES * 2];
+    debugRendererData.lineVertexPtr = debugRendererData.lineVertexBase;
+    #pragma endregion
+
+    #pragma region Quad Buffer Init
+    debugRendererData.quadVertexBuffer = new VertexBuffer(
+        nullptr, 
+        debugRendererData.MAX_QUAD_VERTICES * sizeof(float),
+        GL_DYNAMIC_DRAW  
+    );
+    debugRendererData.quadVertexBuffer->AddLayout<float>(3, false);
+    debugRendererData.quadVertexBuffer->AddLayout<float>(4, false);
+    debugRendererData.quadVertexArray = new VertexArray();
+    debugRendererData.quadVertexArray->AddBuffer(debugRendererData.quadVertexBuffer);
+
+    int offset = 0;
+    uint32* quadIndices = new uint32[debugRendererData.MAX_QUADS * 6];
+    for(int i = 0; i < debugRendererData.MAX_QUADS * 6; i += 6)
+    {
+        quadIndices[i + 0] = 0 + offset; 
+        quadIndices[i + 1] = 1 + offset;
+        quadIndices[i + 2] = 2 + offset;
+        quadIndices[i + 3] = 2 + offset;
+        quadIndices[i + 4] = 3 + offset;
+        quadIndices[i + 5] = 0 + offset;
+
+        offset += 4;
+    }
+
+    debugRendererData.quadIndexBuffer = new IndexBuffer(
+        quadIndices, 
+        debugRendererData.MAX_QUADS * 6 * sizeof(float),
+        GL_STATIC_DRAW
+    );
+
+    delete[] quadIndices;
+
+    debugRendererData.quadVertexBase = new Vertex[debugRendererData.MAX_QUADS * 4];
+    debugRendererData.quadVertexPtr = debugRendererData.quadVertexBase;
+    #pragma endregion
+
     debugRendererData.defaultShader = new Shader(
-        "assets\\shaders\\flatColorVertex.shader", 
+        "assets\\shaders\\flatColorVertex.shader",
         "assets\\shaders\\flatColorFragment.shader"
     );
+}
+void DebugRenderer::ShutDown()
+{
+    delete debugRendererData.lineIndexBuffer;
+    delete debugRendererData.lineVertexBuffer;
+    delete debugRendererData.lineVertexArray;
+
+    delete[] debugRendererData.lineVertexBase;
+
+    delete debugRendererData.quadIndexBuffer;
+    delete debugRendererData.quadVertexBuffer;
+    delete debugRendererData.quadVertexArray;
+
+    delete[] debugRendererData.quadVertexBase;
+    
+    delete debugRendererData.defaultShader;
+    delete debugRendererData.debugRendererCamera;
+}
+
+void DebugRenderer::StartBatch()
+{
+    debugRendererData.lineCount = 0;
+    debugRendererData.quadCount = 0;
+    debugRendererData.lineVertexPtr = debugRendererData.lineVertexBase;
+    debugRendererData.quadVertexPtr = debugRendererData.quadVertexBase;
+}
+void DebugRenderer::NextBatch()
+{
+    Flush();
+    StartBatch();
+}
+void DebugRenderer::Flush()
+{
+    debugRendererData.lineVertexBuffer->UpdateBufferData(
+        0, 
+        debugRendererData.lineCount * debugRendererData.LINE_VERTICES * sizeof(float),
+        debugRendererData.lineVertexBase
+    );
+
+    debugRendererData.quadVertexBuffer->UpdateBufferData(
+        0,
+        debugRendererData.quadCount * debugRendererData.QUAD_VERTICES * sizeof(float),
+        debugRendererData.quadVertexBase
+    );
+
+    debugRendererData.defaultShader->Bind();
+    debugRendererData.defaultShader->SetMat4(
+        "uView", debugRendererData.debugRendererCamera->GetViewMatrix()
+    );
+    debugRendererData.defaultShader->SetMat4(
+        "uProj", debugRendererData.debugRendererCamera->GetProjectionMatrix()
+    );
+
+    debugRendererData.lineVertexArray->Bind();
+    GLCALL(glDrawArrays(GL_LINES, 0, debugRendererData.lineCount * 2));
+    debugRendererData.lineVertexArray->UnBind();
+
+    debugRendererData.quadVertexArray->Bind();
+    debugRendererData.quadIndexBuffer->Bind();
+    GLCALL(glDrawElements(GL_TRIANGLES, debugRendererData.quadCount * 6, GL_UNSIGNED_INT, 0));
+    debugRendererData.quadIndexBuffer->UnBind();
+    debugRendererData.quadVertexArray->UnBind();
+
+    debugRendererData.defaultShader->UnBind();
 }
 
 void DebugRenderer::BeginScene(Camera* camera)
 {
-    debugRendererData.rendererCamera = camera;
+    debugRendererData.debugRendererCamera = camera;
+
+    StartBatch();
 }
 void DebugRenderer::EndScene()
 {
-    debugRendererData.rendererCamera = nullptr;
+    Flush();
+
+    debugRendererData.debugRendererCamera = nullptr;
 }
 
 void DebugRenderer::DrawLine(Line line, Color color)
 {
-    if(lines.size() >= MAX_LINES)
+    if(debugRendererData.lineCount >= debugRendererData.MAX_LINES)
+        NextBatch();
+    
+    for(int i = 0; i < 2; i++)
     {
-        Logger::LogWarning("Reached max lines that can be rendered.");
-        return;
+        debugRendererData.lineVertexPtr->position = i == 0 ? line.start : line.end;
+        debugRendererData.lineVertexPtr->color = color;
+        debugRendererData.lineVertexPtr++;
     }
 
-    lines.push_back(SPair<Line, Color>(line, color));
+    debugRendererData.lineCount++;
 }
 void DebugRenderer::DrawLine(Vector3 start, Vector3 end, Color color)
 {
-    if(lines.size() >= MAX_LINES)
-    {
-        Logger::LogWarning("Reached max lines that can be rendered.");
-        return;
-    }
-    
-    lines.push_back(SPair<Line, Color>(Line(start, end), color));
+    DrawLine(Line(start, end), color);
 }
 void DebugRenderer::DrawLine(float x0, float y0, float x1, float y1, Color color)
 {
-    if(lines.size() >= MAX_LINES)
-    {
-        Logger::LogWarning("Reached max lines that can be rendered.");
-        return;
-    }
-
-    lines.push_back(SPair<Line, Color>(Line(x0, y0, x1, y1), color));
+    DrawLine(Line(x0, y0, x1, y1), color);
 }
 
 void DebugRenderer::DrawRect(Rect rect, Color color)
 {
-    if(lines.size() >= MAX_LINES)
+    if(debugRendererData.quadCount >= debugRendererData.MAX_QUADS)
+        NextBatch();
+
+    Vector3 position;
+
+    for(int i = 0; i < 4; i++)
     {
-        Logger::LogWarning("Reached max rects that can be rendered.");
-        return;
+        switch (i)
+        {
+            case 0: position = Vector3(
+                rect.GetX(), 
+                rect.GetY(), 
+                0.0f
+            ); break;
+
+            case 1: position = Vector3(
+                rect.GetX(), 
+                rect.GetY() - rect.GetHeight(), 
+                0.0f
+            ); break;
+
+            case 2: position = Vector3(
+                rect.GetX() + rect.GetWidth(), 
+                rect.GetY() - rect.GetHeight(), 
+                0.0f
+            ); break;
+
+            case 3: position = Vector3(
+                rect.GetX() + rect.GetWidth(), 
+                rect.GetY(), 
+                0.0f
+            ); break;
+        }
+
+        debugRendererData.quadVertexPtr->position = position;
+        debugRendererData.quadVertexPtr->color = color;
+        debugRendererData.quadVertexPtr++;
     }
 
-    rects.push_back(SPair<Rect, Color>(rect, color));
+    debugRendererData.quadCount++;
 }
 void DebugRenderer::DrawRect(Vector3 position, Vector3 size, Color color)
 {
-    if(lines.size() >= MAX_LINES)
-    {
-        Logger::LogWarning("Reached max rects that can be rendered.");
-        return;
-    }
-
-    rects.push_back(SPair<Rect, Color>(Rect(position, size), color));
+    DrawRect(Rect(position, size), color);
 }
 void DebugRenderer::DrawRect(float x, float y, float width, float height, Color color)
 {
-    if(lines.size() >= MAX_LINES)
-    {
-        Logger::LogWarning("Reached max rects that can be rendered.");
-        return;
-    }
-
-    rects.push_back(SPair<Rect, Color>(Rect(x, y, width, height), color));
-}
-
-void DebugRenderer::INTERNAL_PrepareLineBatch()
-{
-    if(lines.size() <= 0 || lines.size() >= MAX_LINES)
-        return;
-    
-    int vertexBufferIndexOffset = 0;
-
-    for(SPair<Line, Color> line : lines)
-    {
-        for(int i = 0; i < 2; i++)
-        {
-            Vector3 position = i == 0 ? line.first.start : line.first.end;
-
-            vertexBuffer[vertexBufferIndexOffset + 0] = position.x;
-            vertexBuffer[vertexBufferIndexOffset + 1] = position.y;
-            vertexBuffer[vertexBufferIndexOffset + 2] = 0.0f;
-
-            vertexBuffer[vertexBufferIndexOffset + 3] = (float)(line.second.r / 255.0f);
-            vertexBuffer[vertexBufferIndexOffset + 4] = (float)(line.second.g / 255.0f);
-            vertexBuffer[vertexBufferIndexOffset + 5] = (float)(line.second.b / 255.0f);
-            vertexBuffer[vertexBufferIndexOffset + 6] = (float)(line.second.a / 255.0f);
-
-            vertexBufferIndexOffset += 7;
-        }
-    }
-
-    lineData.vbo->UpdateBufferData(0, lines.size() * LINE_VERTICES * sizeof(float), vertexBuffer);
-}
-void DebugRenderer::INTERNAL_PrepareRectBatch()
-{
-    if(rects.size() <= 0 || lines.size() >= MAX_RECTS)
-        return;
-
-    int indexBufferValueOffset = 0;
-    int vertexBufferIndexOffset = 0, indexBufferIndexOffset = 0;
-
-    for(SPair<Rect, Color> rect : rects)
-    {
-        for(int i = 0; i < 4; i++)
-        {
-            Vector3 position;
-
-            switch(i)
-            {
-                case 0: position = Vector3(rect.first.GetX(), rect.first.GetY(), 0.0f); break;
-                case 1: position = Vector3(rect.first.GetX(), rect.first.GetY() - rect.first.GetHeight(), 0.0f); break;
-                case 2: position = Vector3(rect.first.GetX() + rect.first.GetWidth(), rect.first.GetY() - rect.first.GetHeight(), 0.0f); break;
-                case 3: position = Vector3(rect.first.GetX() + rect.first.GetWidth(), rect.first.GetY(), 0.0f); break;
-            }
-
-            vertexBuffer[vertexBufferIndexOffset + 0] = position.x;
-            vertexBuffer[vertexBufferIndexOffset + 1] = position.y;
-            vertexBuffer[vertexBufferIndexOffset + 2] = 0.0f;
-
-            vertexBuffer[vertexBufferIndexOffset + 3] = (float)(rect.second.r / 255.0f);
-            vertexBuffer[vertexBufferIndexOffset + 4] = (float)(rect.second.g / 255.0f);
-            vertexBuffer[vertexBufferIndexOffset + 5] = (float)(rect.second.b / 255.0f);
-            vertexBuffer[vertexBufferIndexOffset + 6] = (float)(rect.second.a / 255.0f);
-
-            vertexBufferIndexOffset += 7;
-        }
-
-        indexBuffer[indexBufferIndexOffset + 0] = 0 + indexBufferValueOffset;
-        indexBuffer[indexBufferIndexOffset + 1] = 1 + indexBufferValueOffset;
-        indexBuffer[indexBufferIndexOffset + 2] = 2 + indexBufferValueOffset;
-        indexBuffer[indexBufferIndexOffset + 3] = 2 + indexBufferValueOffset;
-        indexBuffer[indexBufferIndexOffset + 4] = 3 + indexBufferValueOffset;
-        indexBuffer[indexBufferIndexOffset + 5] = 0 + indexBufferValueOffset;
-
-        indexBufferValueOffset += 4;
-        indexBufferIndexOffset += 6;
-    }
-
-    rectData.vbo->UpdateBufferData(0, rects.size() * RECT_VERTICES * sizeof(float), vertexBuffer);
-    rectData.ibo->UpdateBufferData(0, rects.size() * 6 * sizeof(float), indexBuffer);
-}
-
-void DebugRenderer::RenderBatch()
-{
-    INTERNAL_PrepareLineBatch();
-    INTERNAL_PrepareRectBatch();
-    
-    debugRendererData.defaultShader->Bind();
-    
-    debugRendererData.defaultShader->SetMat4("uView", debugRendererData.rendererCamera->GetViewMatrix());
-    debugRendererData.defaultShader->SetMat4("uProj", debugRendererData.rendererCamera->GetProjectionMatrix());
-
-    lineData.vao->Bind();
-    GLCALL(glDrawArrays(GL_LINES, 0, lines.size() * 2));
-    lineData.vao->UnBind();
-
-    rectData.vao->Bind();
-    rectData.ibo->Bind();
-    GLCALL(glDrawElements(GL_TRIANGLES, rects.size() * 6, GL_UNSIGNED_INT, 0));
-    rectData.ibo->UnBind();
-    rectData.vao->UnBind();
-    
-    debugRendererData.defaultShader->UnBind();
-}
-void DebugRenderer::Flush()
-{
-    lines.clear();
-    rects.clear();
+    DrawRect(Rect(x, y, width, height), color);
 }

@@ -28,27 +28,11 @@
 
 namespace scarlet
 {
-    enum RendererBufferType
-    {
-        RENDERER_BUFFER_DEPTH = 0x00000100,
-        RENDERER_BUFFER_STENCIL = 0x00000400,
-        RENDERER_BUFFER_COLOR = 0x00004000
-    };
-
-    enum RendererBlendFunc
-    {
-        RENDERER_SRC_ALPHA = 0x0302,
-        RENDERER_ONE_MINUS_SRC_ALPHA = 0x0303,
-    };
-
     struct RendererData
     {
         Shader* defualtShader;
         Camera* rendererCamera;
-
-        Color   clearColor;
-        Vector4 viewport;
-
+        
         RendererData() :  defualtShader(nullptr), 
             rendererCamera(nullptr) {}
     };
@@ -63,28 +47,18 @@ namespace scarlet
 
     public:
         static void Init();
+        static void ShutDown();
 
     public:
-        static Vector4 GetViewport();
-
-    public:
-        static void SetViewport(uint32 x, uint32 y, uint32 width, uint32 height);
-        static void SetBlendingFunction(uint32 sFactor, uint32 dFactor);
-        static void SetClearColor(Color color);
-    
-    public:
-        static void EnableBlending(bool enable);
-
-    public:
-        static void ClearBuffers(uint32 buffers);
-        static void SwapBuffers();
+        static void StartBatch();
+        static void NextBatch();
+        static void Flush();
 
     public:
         static void BeginScene(Camera* camera);
         static void EndScene();
 
     public:
-        static void DrawRect(Rect* rect, Color color, const Shader* shader = nullptr);
         static void DrawEntity(GameObject* gameObject);
     };
 }

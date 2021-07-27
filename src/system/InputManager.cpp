@@ -21,7 +21,7 @@ void InputManager::OnInit()
     keyboardStates = SDL_GetKeyboardState(&keyboardStatesLength);
     prevKeyboardStates = new byte[keyboardStatesLength];
 }
-void InputManager::OnUpdate()
+void InputManager::OnEvent()
 {
     while(SDL_PollEvent(&event))
     {

@@ -7,11 +7,11 @@ Camera::Camera()
     
     this->direction   =  Vector3::FRONT();
 
-    this->leftPlane   = -Window::Get()->GetWidth() / 2; 
-    this->rightPlane  =  Window::Get()->GetWidth() / 2;
+    this->leftPlane   = -GraphicsContext::GetViewPort().z / 2; 
+    this->rightPlane  =  GraphicsContext::GetViewPort().z / 2;
     
-    this->bottomPlane = -Window::Get()->GetHeight() / 2; 
-    this->topPlane    =  Window::Get()->GetHeight() / 2;
+    this->bottomPlane = -GraphicsContext::GetViewPort().w / 2; 
+    this->topPlane    =  GraphicsContext::GetViewPort().w / 2;
     
     this->nearPlane   =  0.0f; 
     this->farPlane    = -100.0f;
@@ -32,34 +32,6 @@ Camera::Camera(Vector3 position)
     
     this->nearPlane   =  0.0f; 
     this->farPlane    = -100.0f;
-}
-
-void Camera::ProcessMouseMovement()
-{
-    if(InputManager::GetMouseButton(1))
-    {   
-        if(this->mouseClickedFlag == true)
-        {
-            this->mousePositionBuffer = InputManager::GetMousePosition();
-            this->mouseClickedFlag = false;
-        }
-
-        Vector2 newPos = InputManager::GetMousePosition();
-        float offsetX = this->mousePositionBuffer.x - newPos.x;
-        float offsetY = this->mousePositionBuffer.y - newPos.y;
-        
-        this->mousePositionBuffer = newPos;
-    
-        this->position = this->position + Vector3(offsetX, -offsetY, 0.0f);        
-    }
-
-    if(InputManager::GetMouseButtonUp(1))
-        this->mouseClickedFlag = true;
-
-    if(InputManager::GetMouseScrollDelta() > 0)
-        this->size -= 0.05f;
-    else if(InputManager::GetMouseScrollDelta() < 0)
-        this->size += 0.05f;
 }
 
 Vector3 Camera::ScreenToWorldPoint(Vector3 point)
