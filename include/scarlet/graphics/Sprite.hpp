@@ -6,6 +6,8 @@
 
 #include "scarlet/graphics/Texture.hpp"
 
+#include <scarlet/math/Vector2.hpp>
+
 #include "scarlet/primitives/Rect.hpp"
 
 namespace scarlet
@@ -16,25 +18,29 @@ namespace scarlet
     {
     private:
         std::string name;
-
-    private:
-        Texture* texture = nullptr;
-        Rect* rect = nullptr;
         
     private:
-        Sprite(std::string name);
+        Rect rect;
+        Texture* texture = nullptr;
+        std::vector<Vector2> uv;
+        
+    private:
         Sprite(std::string name, Texture* texture);
+        Sprite(std::string name, Texture* texture, std::vector<Vector2> uv);
         ~Sprite();
 
     public:
         std::string GetName();
         Texture* GetTexture();
-        Rect* GetRect();
+        Rect GetRect();
+        std::vector<Vector2> GetUV();
         
     public:
         void SetName(std::string name);
         void SetTexture(Texture* texture);
-        
+        void SetRect(Rect rect);
+        void SetUV(std::vector<Vector2> uv);
+
     friend AssetPool;
     };
 }

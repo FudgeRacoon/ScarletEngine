@@ -14,7 +14,7 @@ private:
     scarlet::Camera* editorCamera = nullptr;
     scarlet::CameraController* editorCameraController = nullptr;
     scarlet::GridLines* editorGridLines = nullptr;
-    
+
 public:
     void OnEnter() override
     {
@@ -27,6 +27,7 @@ public:
         scarlet::TextureUtils::SliceSprite(scarlet::AssetPool::GetSprite("mairo_sprite_sheet"), 64, 64);
 
         scarlet::ImGuiManager::AddWindow(new scarlet::ProfilerWindow());
+        scarlet::ImGuiManager::AddWindow(new scarlet::AssetViewWindow());
 
         scarlet::EditorSceneManager::Get()->CreateScene("Scene_1");
         scarlet::EditorSceneManager::Get()->SetActiveScene(0);
@@ -36,12 +37,6 @@ public:
     {   
         editorCameraController->OnUpdate();
         editorGridLines->OnRender();
-
-        scarlet::DebugRenderer::BeginScene(editorCamera);
-
-        scarlet::DebugRenderer::DrawRect(-16.0f, 16.0f, 64.0f, 64.0f, Color::RED());
-
-        scarlet::DebugRenderer::EndScene();
 
         scarlet::EditorSceneManager::Get()->UpdateActiveScene(editorCamera);
     }   

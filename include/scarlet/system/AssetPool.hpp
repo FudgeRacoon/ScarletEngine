@@ -8,6 +8,8 @@
 #include "scarlet/graphics/Texture.hpp"
 #include "scarlet/graphics/Sprite.hpp"
 
+#include "scarlet/math/Vector2.hpp"
+
 #include "scarlet/primitives/Rect.hpp"
 
 #include "scarlet/utils/Logger.hpp"
@@ -29,7 +31,12 @@ namespace scarlet
 
     public:
         static Sprite* AddSprite(std::string name, Texture* texture);
+        static Sprite* AddSprite(std::string name, Texture* texture, std::vector<Vector2> uv);
+
+    public:
         static Texture* AddTexture(std::string name, const char* filepath);
+        static Texture* AddTexture(std::string name, uint32 color, uint32 width, uint32 height);
+        static Texture* AddTexture(std::string name, uint32* pixels, uint32 width, uint32 height);
         
     public:
         static void RemoveSprite(std::string name);

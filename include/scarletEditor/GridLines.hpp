@@ -4,7 +4,7 @@
 #include "scarlet/math/Math.hpp"
 
 #include "scarlet/graphics/GraphicsContext.hpp"
-#include "scarlet/graphics/DebugRenderer.hpp"
+#include "scarlet/graphics/Renderer.hpp"
 #include "scarlet/graphics/camera/Camera.hpp"
 
 namespace scarlet

@@ -1,4 +1,4 @@
-#include "scarlet/graphics/camera/CameraController.hpp"
+#include "scarletEditor/CameraController.hpp"
 using namespace scarlet;
 
 CameraController::CameraController(Camera* camera)

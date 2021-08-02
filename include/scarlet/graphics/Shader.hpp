@@ -19,17 +19,12 @@ namespace scarlet
     private:
         uint32_t programID;
 
-    private:
-        static const char* defaultVertexShaderSource;
-
     public:
-        Shader(const char* fragmentShader);
         Shader(const char* vertexShader, const char* fragmentShader);
         ~Shader();
 
     private:
-        void CreateShaderWithFileInternal(const char* filepath, int shaderType);
-        void CreateShaderWithSourceInternal(const char* source, int shaderType);
+        void CreateShaderInternal(const char* filepath, int shaderType);
         std::string ParseShaderInternal(const char* filepath);
 
     public:

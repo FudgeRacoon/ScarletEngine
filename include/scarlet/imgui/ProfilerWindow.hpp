@@ -2,6 +2,7 @@
 #define PROFILERWINDOW_HPP
 
 #include "scarlet/system/EditorSceneManager.hpp"
+#include "scarlet/system/AssetPool.hpp"
 
 #include "scarlet/utils/Time.hpp"
 

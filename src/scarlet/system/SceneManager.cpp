@@ -63,6 +63,6 @@ void SceneManager::UpdateActiveScene(Camera* editorCamera)
         Logger::LogWarning("No active scene.");
 
     activeScene->OnUpdate();
-    activeScene->OnRender(editorCamera);
+    activeScene->OnRender();
 }
 

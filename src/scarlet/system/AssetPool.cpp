@@ -12,7 +12,7 @@ AssetPool::TexturesTreeMap AssetPool::textures;
 AssetPool::TextureUsersHashMap AssetPool::textureUsers;
 
 Sprite* AssetPool::AddSprite(std::string name, Texture* texture)
-{   
+{
     auto spritesIterator = sprites.find(name);
     if(spritesIterator != sprites.end())
     {
@@ -33,6 +33,29 @@ Sprite* AssetPool::AddSprite(std::string name, Texture* texture)
 
     return sprite;
 }
+Sprite* AssetPool::AddSprite(std::string name, Texture* texture, std::vector<Vector2> uv)
+{   
+    auto spritesIterator = sprites.find(name);
+    if(spritesIterator != sprites.end())
+    {
+        Logger::LogWarning("Sprite name already exists.");
+        return nullptr;
+    }
+
+    Sprite* sprite = new Sprite(name, texture, uv);
+    sprites.insert(
+        std::make_pair(
+            name, 
+            sprite
+        )
+    );
+    
+    auto textureUsersIterator = textureUsers.find(texture->GetID());
+    textureUsersIterator->second.push_back(sprite);
+
+    return sprite;
+}
+
 Texture* AssetPool::AddTexture(std::string name, const char* filepath)
 {
     auto it = textures.find(name);
@@ -57,6 +80,58 @@ Texture* AssetPool::AddTexture(std::string name, const char* filepath)
         )
     );
     
+    return texture;
+}
+Texture* AssetPool::AddTexture(std::string name, uint32 color, uint32 width, uint32 height)
+{
+    auto it = textures.find(name);
+    if(it != textures.end())
+    {
+        Logger::LogWarning("Texture name already exists.");
+        return nullptr;
+    }
+
+    Texture* texture = new Texture(color, width, height);
+    textures.insert(
+        std::make_pair(
+            name,
+            texture
+        )
+    );
+
+    textureUsers.insert(
+        std::make_pair(
+            texture->GetID(),
+            std::vector<Sprite*>()
+        )
+    );
+
+    return texture;
+}
+Texture* AssetPool::AddTexture(std::string name, uint32* pixels, uint32 width, uint32 height)
+{
+    auto it = textures.find(name);
+    if(it != textures.end())
+    {
+        Logger::LogWarning("Texture name already exists.");
+        return nullptr;
+    }
+
+    Texture* texture = new Texture(pixels, width, height);
+    textures.insert(
+        std::make_pair(
+            name, 
+            texture
+        )
+    );
+
+    textureUsers.insert(
+        std::make_pair(
+            texture->GetID(),
+            std::vector<Sprite*>()
+        )
+    );
+
     return texture;
 }
 

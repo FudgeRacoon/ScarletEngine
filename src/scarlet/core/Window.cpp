@@ -43,12 +43,10 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
         return EXIT_FAILURE;
     }
 
-    //Set OpenGL version and compatibility options
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-    //Set up window for fullscreen or windowed mode
     if(fullscreen)
     {
         SDL_DisplayMode displayMode;
@@ -72,19 +70,8 @@ int Window::Init(std::string title, int width, int height, bool fullscreen)
         fullscreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_MAXIMIZED : SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
     );
 
-    //Create OpenGL rendering context for current this window
-    //and Set the swap interval
     this->context = SDL_GL_CreateContext(this->window);
 
-    glewExperimental = true;
-    if(glewInit() != 0)
-    {
-        Logger::LogFatal("Cannot initialize Glew");
-        SDL_DestroyWindow(this->window);
-        SDL_Quit();
-        return EXIT_FAILURE;
-    }
-    
     this->running = true;
     
     return EXIT_SUCCESS;

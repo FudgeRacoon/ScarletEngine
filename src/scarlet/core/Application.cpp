@@ -44,7 +44,7 @@ void Application::Run(int argc, char* argv[])
 
     ImGuiManager::OnDetach();
     
-    DebugRenderer::ShutDown();
+    Renderer::ShutDown();
 
     Window::Get()->Release();
 }
@@ -60,12 +60,11 @@ void Application::OnInit()
 
     GraphicsContext::Init();
     GraphicsContext::SetViewPort(0, 0, Window::Get()->GetWidth(), Window::Get()->GetHeight());
-    GraphicsContext::SetBlendingFunction(BlendFunc::SCARLET_SRC_ALPHA, BlendFunc::SCARLET_ONE_MINUS_SRC_ALPHA);
+    GraphicsContext::SetBlendingFunction(BlendFunction::SCARLET_SRC_ALPHA, BlendFunction::SCARLET_ONE_MINUS_SRC_ALPHA);
     GraphicsContext::SetClearColor(Color(22, 22, 22));
     GraphicsContext::EnableBlending(true);
 
     Renderer::Init();
-    DebugRenderer::Init();
 
     ImGuiManager::OnAttach();
 

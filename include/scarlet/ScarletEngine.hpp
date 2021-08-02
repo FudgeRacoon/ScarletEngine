@@ -21,7 +21,6 @@
 
 #include "scarlet/graphics/GraphicsContext.hpp"
 #include "scarlet/graphics/Renderer.hpp"
-#include "scarlet/graphics/DebugRenderer.hpp"
 #include "scarlet/graphics/VertexArray.hpp"
 #include "scarlet/graphics/VertexBuffer.hpp"
 #include "scarlet/graphics/IndexBuffer.hpp"
@@ -30,7 +29,6 @@
 #include "scarlet/graphics/Sprite.hpp"
 
 #include "scarlet/graphics/camera/Camera.hpp"
-#include "scarlet/graphics/camera/CameraController.hpp"
 
 #include "scarlet/primitives/Line.hpp"
 #include "scarlet/primitives/Rect.hpp"
@@ -47,4 +45,5 @@
 #include "scarlet/utils/Logger.hpp"
 #include "scarlet/utils/Time.hpp"
 
+#include "scarletEditor/CameraController.hpp"
 #include "scarletEditor/GridLines.hpp"

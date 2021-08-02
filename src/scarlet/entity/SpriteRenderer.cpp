@@ -4,7 +4,7 @@ using namespace scarlet;
 SpriteRenderer::SpriteRenderer()
 {
     this->sprite = nullptr;
-    this->material = new Shader("assets\\shaders\\defaultFragment.shader");
+    this->material = nullptr;
 
     this->color = Color();
     this->flipX = false; this->flipY = false;

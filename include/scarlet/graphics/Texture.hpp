@@ -31,6 +31,8 @@ namespace scarlet
 
     private:
         Texture(const char* filepath);
+        Texture(uint32 color, uint32 width, uint32 height);
+        Texture(uint32* pixels, uint32 width, uint32 height);
         ~Texture();
 
     public:

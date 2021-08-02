@@ -48,7 +48,8 @@
         "map": "cpp",
         "cstring": "cpp",
         "iomanip": "cpp",
-        "cassert": "cpp"
+        "cassert": "cpp",
+        "queue": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

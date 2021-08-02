@@ -19,24 +19,26 @@ namespace scarlet
         float xMax, yMax;
 
     public:
-        Rect() = default;
+        Rect();
         Rect(Vector3 position, Vector3 size);
         Rect(float x, float y, float width, float height);
 
     public:
-        void SetX(float x);
-        void SetY(float y);
-        void SetWidth(float width);
-        void SetHeight(float height);
-
         float GetX();
         float GetY();
         float GetWidth();
         float GetHeight();
         Vector2 GetCenter();
-
+    
+    public:
+        void SetX(float x);
+        void SetY(float y);
+        void SetWidth(float width);
+        void SetHeight(float height);
+    
     public:
         bool Contains(Vector2 point);
+        bool OverLaps(Rect rect);
     };
 }
 

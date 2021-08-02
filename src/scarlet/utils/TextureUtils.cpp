@@ -49,6 +49,7 @@ std::vector<Sprite*> TextureUtils::SliceSprite(Sprite* sprite, int spriteWidth, 
     int horzintalNumOfSprites = width / spriteWidth;
     int verticalNumOfSprites = height / spriteHeight;
 
+    std::vector<Vector2> uv(4);
     std::vector<Sprite*> sprites(horzintalNumOfSprites * verticalNumOfSprites);
 
     for(int y = 1; y <= verticalNumOfSprites; y++)
@@ -63,18 +64,17 @@ std::vector<Sprite*> TextureUtils::SliceSprite(Sprite* sprite, int spriteWidth, 
             float xTop = (currentWidth + spriteWidth) / width;
             float yTop = ((height - currentHeight) + spriteHeight) / height;
 
-            Vector2 v1(xBottom, yBottom);
-            Vector2 v2(xTop, yBottom);
-            Vector2 v3(xTop, yTop);
-            Vector2 v4(xBottom, yTop);
+            uv[0] = Vector2(xBottom, yBottom);
+            uv[1] = Vector2(xTop, yBottom);
+            uv[2] = Vector2(xTop, yTop);
+            uv[3] = Vector2(xBottom, yTop);
 
             std::string name = sprite->GetName();
             name.append("_" + std::to_string(counter));
 
-            // Sprite* newSprite = AssetPool::AddSprite(name, sprite->GetTexture());
-            // newSprite->GetRect()->SetUV(v1, v2, v3, v4);
+            Sprite* newSprite = AssetPool::AddSprite(name, sprite->GetTexture(), uv);
 
-            //sprites[counter++] = newSprite;
+            sprites[counter++] = newSprite;
         }
 
     return sprites;

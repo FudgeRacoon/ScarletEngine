@@ -39,8 +39,64 @@ Texture::Texture(const char* filepath)
 
     SDL_FreeSurface(data);
 }
+Texture::Texture(uint32 color, uint32 width, uint32 height)
+{
+    uint32 pitch = width * 4;
+    this->pixels = new byte[height * pitch];
+    
+    for(int y = 0; y < height; y++)
+        for(int x = 0; x < pitch; x++)
+            this->pixels[(y * pitch) + x] = color;
+
+    this->width = width;
+    this->height = height;
+
+    this->bytesPerPixel = 4;
+
+    GLCALL(glGenTextures(1, &this->ID));
+    GLCALL(glBindTexture(GL_TEXTURE_2D, this->ID));
+
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+
+    GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->pixels));
+
+    GLCALL(glBindTexture(GL_TEXTURE_2D, 0));
+}
+Texture::Texture(uint32* pixels, uint32 width, uint32 height)
+{
+    uint32 pitch = width * 4;
+    this->pixels = new byte[height * pitch];
+    
+    for(int y = 0; y < height; y++)
+        for(int x = 0; x < pitch; x++)
+            this->pixels[(y * pitch) + x] = pixels[(y * pitch) + x];
+
+    this->width = width;
+    this->height = height;
+
+    this->bytesPerPixel = 4;
+
+    TextureUtils::FlipTextureX(this);
+
+    GLCALL(glGenTextures(1, &this->ID));
+    GLCALL(glBindTexture(GL_TEXTURE_2D, this->ID));
+
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+
+    GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->pixels));
+
+    GLCALL(glBindTexture(GL_TEXTURE_2D, 0));
+}
 Texture::~Texture()
 {
+    delete[] this->pixels;
+
     GLCALL(glDeleteTextures(1, &this->ID));
 }
 
@@ -52,7 +108,6 @@ byte* Texture::GetPixels()
 {
     return this->pixels;
 }
-
 int Texture::GetWidth()
 {
     return this->width;
