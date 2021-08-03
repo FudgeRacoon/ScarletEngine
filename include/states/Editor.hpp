@@ -14,7 +14,7 @@ private:
     scarlet::Camera* editorCamera = nullptr;
     scarlet::CameraController* editorCameraController = nullptr;
     scarlet::GridLines* editorGridLines = nullptr;
-
+    
 public:
     void OnEnter() override
     {

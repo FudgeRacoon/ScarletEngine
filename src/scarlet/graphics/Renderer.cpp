@@ -23,11 +23,8 @@ void Renderer::Flush()
     rendererData.defaultShader->Bind();
 
     for(int i = 0; i < rendererData.currentTextureIndex; i++)
-    {
         rendererData.textureSlots[i]->Bind(i);
-        rendererData.defaultShader->SetInt("textures[" + std::to_string(i) + "]", i);
-    }
-
+    
     rendererData.lineVertexBuffer->UpdateBufferData(
         0,
         rendererData.lineCount * rendererData.LINE_VERTICES_SIZE,
@@ -126,6 +123,13 @@ void Renderer::InitShaders()
         "assets\\shaders\\defaultVertex.shader",
         "assets\\shaders\\defaultFragment.shader"
     );
+
+    rendererData.defaultShader->Bind();
+
+    for(int i = 0; i < GraphicsContext::GetMaxTextureSlots(); i++)
+        rendererData.defaultShader->SetInt("textures[" + std::to_string(i) + "]", i);
+
+    rendererData.defaultShader->UnBind();
 }
 
 void Renderer::Init()
@@ -197,6 +201,27 @@ void Renderer::DrawLine(float x0, float y0, float x1, float y1, Color color)
 
 void Renderer::DrawQuad(Rect rect, Color color)
 {
+    float x = rect.GetX(); 
+    float y = rect.GetY();
+    float xMax = x + rect.GetWidth();
+    float yMax = y - rect.GetHeight();
+
+    DrawLine(x, y, xMax, y, color);
+    DrawLine(x, yMax, xMax, yMax, color);
+    DrawLine(x, y, x, yMax, color);
+    DrawLine(xMax, y, xMax, yMax, color);
+}
+void Renderer::DrawQuad(Vector3 position, Vector3 size, Color color)
+{
+    DrawQuad(Rect(position, size), color);
+}
+void Renderer::DrawQuad(float x, float y, float width, float height, Color color)
+{
+    DrawQuad(Rect(x, y, width, height), color);
+}
+
+void Renderer::DrawFilledQuad(Rect rect, Color color)
+{
     Vector3 position;
 
     for(int i = 0; i < 4; i++)
@@ -237,13 +262,64 @@ void Renderer::DrawQuad(Rect rect, Color color)
 
     rendererData.quadCount++;
 }
-void Renderer::DrawQuad(Vector3 position, Vector3 size, Color color)
+void Renderer::DrawFilledQuad(Vector3 position, Vector3 size, Color color)
 {
-    DrawQuad(Rect(position, size), color);
+    DrawFilledQuad(Rect(position, size), color);
 }
-void Renderer::DrawQuad(float x, float y, float width, float height, Color color)
+void Renderer::DrawFilledQuad(float x, float y, float width, float height, Color color)
 {
-    DrawQuad(Rect(x, y, width, height), color);
+    DrawFilledQuad(Rect(x, y, width, height), color);
+}
+
+void Renderer::DrawRotatedQuad(Rect rect, float radians, Color color)
+{
+    Vector3 position;
+
+    for(int i = 0; i < 4; i++)
+    {
+        switch(i)
+        {
+            case 0: position = Vector3(
+                rect.GetX(), 
+                rect.GetY() - rect.GetHeight(), 
+                0.0f
+            ); break;
+
+            case 1: position = Vector3(
+                rect.GetX() + rect.GetWidth(), 
+                rect.GetY() - rect.GetHeight(), 
+                0.0f
+            ); break;
+
+            case 2: position = Vector3(
+                rect.GetX() + rect.GetWidth(), 
+                rect.GetY(), 
+                0.0f
+            ); break;
+
+            case 3: position = Vector3(
+                rect.GetX(), 
+                rect.GetY(), 
+                0.0f
+            ); break;
+        }
+    
+        rendererData.quadVertexPtr->position = Matrix4::Rotate(radians, Vector3::FRONT()) * position;
+        rendererData.quadVertexPtr->color = (Vector4)color;
+        rendererData.quadVertexPtr->textureCoords = rendererData.defaultUV.at(i);
+        rendererData.quadVertexPtr->textureIndex = 0;
+        rendererData.quadVertexPtr++;
+    }
+
+    rendererData.quadCount++;
+}
+void Renderer::DrawRotatedQuad(Vector3 position, Vector3 size, float radians, Color color)
+{
+    DrawRotatedQuad(Rect(position, size), radians, color);
+}
+void Renderer::DrawRotatedQuad(float x, float y, float width, float height, float radians, Color color)
+{
+    DrawRotatedQuad(Rect(x, y, width, height), radians, color);
 }
 
 void Renderer::DrawEntity(GameObject* gameObject)

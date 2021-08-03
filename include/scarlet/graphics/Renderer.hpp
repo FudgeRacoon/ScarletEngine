@@ -111,6 +111,16 @@ namespace scarlet
         static void DrawQuad(float x, float y, float width, float height, Color color);
 
     public:
+        static void DrawFilledQuad(Rect rect, Color color);
+        static void DrawFilledQuad(Vector3 position, Vector3 size, Color color);
+        static void DrawFilledQuad(float x, float y, float width, float height, Color color);
+
+    public:
+        static void DrawRotatedQuad(Rect rect, float radians, Color color);
+        static void DrawRotatedQuad(Vector3 position, Vector3 size, float radians, Color color);
+        static void DrawRotatedQuad(float x, float y, float width, float height, float radians, Color color);
+
+    public:
         static void DrawEntity(GameObject* gameObject);
     };
 }

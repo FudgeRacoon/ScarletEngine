@@ -11,11 +11,27 @@ namespace scarlet
     {
         while(glGetError() != GL_NO_ERROR);
     }
-    inline bool GLLogCall()
+    inline bool GLLogCall(const char* file, int line)
     {
-        while(GLenum error = glGetError())
+        GLenum errorCode;
+
+        while((errorCode = glGetError()) != GL_NO_ERROR)
         {
-            scarlet::Logger::LogError("Opengl error occured with error code %d", error);
+            char* error;
+
+            switch(errorCode)
+            {
+                case GL_INVALID_ENUM:                  error = "INVALID_ENUM\0"; break;
+                case GL_INVALID_VALUE:                 error = "INVALID_VALUE\0"; break;
+                case GL_INVALID_OPERATION:             error = "INVALID_OPERATION\0"; break;
+                case GL_STACK_OVERFLOW:                error = "STACK_OVERFLOW\0"; break;
+                case GL_STACK_UNDERFLOW:               error = "STACK_UNDERFLOW\0"; break;
+                case GL_OUT_OF_MEMORY:                 error = "OUT_OF_MEMORY\0"; break;
+                case GL_INVALID_FRAMEBUFFER_OPERATION: error = "INVALID_FRAMEBUFFER_OPERATION\0"; break;
+            }
+
+            Logger::LogError("OpenGL Error: %s | %s (%d)", error, file, line);
+            delete[] error;
             return false;
         }
 

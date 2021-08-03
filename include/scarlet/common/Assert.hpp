@@ -11,7 +11,7 @@
     #define SCARLET_CORE_ASSERT(_EXPR)  assert(_EXPR)
     #define GLCALL(_EXPR) GLClearError();\
         _EXPR;\
-        SCARLET_CORE_ASSERT(GLLogCall())    
+        SCARLET_CORE_ASSERT(GLLogCall(__FILE__, __LINE__))    
 #endif
 
 #endif

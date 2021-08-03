@@ -33,7 +33,7 @@ namespace scarlet
             this->buttonID = 0;
             this->imageSize = 1.0f;
 
-            this->showSprites = false;
+            this->showSprites = true;
             this->showTextures = false;
         }
 
