@@ -1,5 +1,4 @@
 #include "scarlet/graphics/Texture.hpp"
-#include "scarlet/common/Assert.hpp"
 using namespace scarlet;
 
 Texture::Texture(const char* filepath)
@@ -45,8 +44,8 @@ Texture::Texture(uint32 color, uint32 width, uint32 height)
     this->pixels = new byte[height * pitch];
     
     for(int y = 0; y < height; y++)
-        for(int x = 0; x < pitch; x++)
-            this->pixels[(y * pitch) + x] = color;
+        for(int x = 0; x < pitch; x += 4)
+            MemoryUtils::UintToBytes(this->pixels + ((y * pitch) + x), color);
 
     this->width = width;
     this->height = height;
@@ -65,14 +64,16 @@ Texture::Texture(uint32 color, uint32 width, uint32 height)
 
     GLCALL(glBindTexture(GL_TEXTURE_2D, 0));
 }
-Texture::Texture(uint32* pixels, uint32 width, uint32 height)
+Texture::Texture(void* pixels, uint32 width, uint32 height)
 {
     uint32 pitch = width * 4;
     this->pixels = new byte[height * pitch];
     
+    byte* otherPixels = (byte*)pixels;
+    
     for(int y = 0; y < height; y++)
         for(int x = 0; x < pitch; x++)
-            this->pixels[(y * pitch) + x] = pixels[(y * pitch) + x];
+            this->pixels[(y * pitch) + x] = otherPixels[(y * pitch) + x];
 
     this->width = width;
     this->height = height;

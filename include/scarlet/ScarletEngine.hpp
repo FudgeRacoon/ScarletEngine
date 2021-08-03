@@ -41,8 +41,10 @@
 #include "scarlet/math/Vector4.hpp"
 #include "scarlet/math/Matrix4.hpp"
 
-#include "scarlet/utils/TextureUtils.hpp"
 #include "scarlet/utils/Logger.hpp"
+#include "scarlet/utils/OpenGLDebug.hpp"
+#include "scarlet/utils/MemoryUtils.hpp"
+#include "scarlet/utils/TextureUtils.hpp"
 #include "scarlet/utils/Time.hpp"
 
 #include "scarletEditor/CameraController.hpp"

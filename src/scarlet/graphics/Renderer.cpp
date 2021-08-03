@@ -9,6 +9,8 @@ void Renderer::StartBatch()
     rendererData.quadCount = 0;
 
     rendererData.currentTextureIndex = 1;
+    for(int i = rendererData.currentTextureIndex; i < GraphicsContext::GetMaxTextureSlots(); i++)
+        rendererData.textureSlots[i] = nullptr;
     
     rendererData.lineVertexPtr = rendererData.lineVertexBase;
     rendererData.quadVertexPtr = rendererData.quadVertexBase;
@@ -177,6 +179,9 @@ void Renderer::EndScene()
 
 void Renderer::DrawLine(Line line, Color color)
 {
+    if(rendererData.lineCount >= rendererData.MAX_LINES)
+        NextBatch();
+
     Vector3 position;
 
     for(int i = 0; i < 2; i++)
@@ -222,6 +227,9 @@ void Renderer::DrawQuad(float x, float y, float width, float height, Color color
 
 void Renderer::DrawFilledQuad(Rect rect, Color color)
 {
+    if(rendererData.quadCount >= rendererData.MAX_QUADS)
+        NextBatch();
+
     Vector3 position;
 
     for(int i = 0; i < 4; i++)
@@ -273,6 +281,9 @@ void Renderer::DrawFilledQuad(float x, float y, float width, float height, Color
 
 void Renderer::DrawRotatedQuad(Rect rect, float radians, Color color)
 {
+    if(rendererData.quadCount >= rendererData.MAX_QUADS)
+        NextBatch();
+
     Vector3 position;
 
     for(int i = 0; i < 4; i++)
@@ -335,7 +346,7 @@ void Renderer::DrawEntity(GameObject* gameObject)
     Sprite* sprite = spriteRenderer->sprite;
     Texture* texture = sprite->GetTexture();
 
-    if(!spriteRenderer || !sprite || !texture)
+    if(!spriteRenderer || !sprite)
         return;
 
     Matrix4 model = Matrix4::Identity();
@@ -345,22 +356,30 @@ void Renderer::DrawEntity(GameObject* gameObject)
     model = model * Matrix4::Rotate(transform->rotation.y, Vector3::UP());
     model = model * Matrix4::Rotate(transform->rotation.z, Vector3::FRONT());
     
-    bool textureExists = false;
-    uint32 textureIndex = rendererData.currentTextureIndex;
+    bool textureExists; 
+    uint32 textureIndex;
 
-    for(int i = 0; i < rendererData.currentTextureIndex; i++)
-        if(rendererData.textureSlots[i]->GetID() == texture->GetID())
-        {
-            textureExists = true;
-            textureIndex = i;
-            break;
-        }
-    
-    if(!textureExists)
+    if(texture)
     {
-        rendererData.textureSlots[textureIndex] = texture;
-        rendererData.currentTextureIndex++;
+        textureExists = false;
+        textureIndex = rendererData.currentTextureIndex;
+
+        for(int i = 0; i < rendererData.currentTextureIndex; i++)
+            if(rendererData.textureSlots[i]->GetID() == texture->GetID())
+            {
+                textureExists = true;
+                textureIndex = i;
+                break;
+            }
+    
+        if(!textureExists)
+        {
+            rendererData.textureSlots[textureIndex] = texture;
+            rendererData.currentTextureIndex++;
+        }
     }
+    else
+        textureIndex = 0;
 
     Vector4 position;
 

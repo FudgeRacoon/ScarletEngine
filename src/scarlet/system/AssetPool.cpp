@@ -108,7 +108,7 @@ Texture* AssetPool::AddTexture(std::string name, uint32 color, uint32 width, uin
 
     return texture;
 }
-Texture* AssetPool::AddTexture(std::string name, uint32* pixels, uint32 width, uint32 height)
+Texture* AssetPool::AddTexture(std::string name, void* pixels, uint32 width, uint32 height)
 {
     auto it = textures.find(name);
     if(it != textures.end())

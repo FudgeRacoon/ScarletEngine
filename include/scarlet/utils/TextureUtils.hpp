@@ -9,6 +9,8 @@
 
 #include "scarlet/math/Vector2.hpp"
 
+#include "scarlet/utils/MemoryUtils.hpp"
+
 namespace scarlet
 {
     class Texture;

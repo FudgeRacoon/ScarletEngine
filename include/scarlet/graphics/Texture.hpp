@@ -8,11 +8,13 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 
+#include "scarlet/common/Assert.hpp"
 #include "scarlet/common/Types.hpp"
 
 #include "scarlet/math/Math.hpp"
 
 #include "scarlet/utils/Logger.hpp"
+#include "scarlet/utils/MemoryUtils.hpp"
 #include "scarlet/utils/TextureUtils.hpp"
 
 namespace scarlet
@@ -32,7 +34,7 @@ namespace scarlet
     private:
         Texture(const char* filepath);
         Texture(uint32 color, uint32 width, uint32 height);
-        Texture(uint32* pixels, uint32 width, uint32 height);
+        Texture(void* pixels, uint32 width, uint32 height);
         ~Texture();
 
     public:

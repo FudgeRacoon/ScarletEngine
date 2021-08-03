@@ -21,11 +21,11 @@ void TextureUtils::FlipTextureX(Texture* texture)
         byte* tempTopBuffer = new byte[pitch];
         byte* tempBottomBuffer = new byte[pitch];
 
-        memcpy(tempTopBuffer, topPixels, pitch);
-        memcpy(tempBottomBuffer, bottomPixels, pitch);
+        MemoryUtils::MemoryCopy(tempTopBuffer, topPixels, pitch);
+        MemoryUtils::MemoryCopy(tempBottomBuffer, bottomPixels, pitch);
 
-        memcpy(topPixels, tempBottomBuffer, pitch);
-        memcpy(bottomPixels, tempTopBuffer, pitch);
+        MemoryUtils::MemoryCopy(topPixels, tempBottomBuffer, pitch);
+        MemoryUtils::MemoryCopy(bottomPixels, tempTopBuffer, pitch);
 
         topPixels += pitch;
         bottomPixels -= pitch;

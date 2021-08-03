@@ -50,29 +50,32 @@ namespace scarlet
             
             for(std::pair<std::string, Sprite*> sprite : AssetPool::GetSprites())
             {   
-                float imageWidth        = 64.0f * this->imageSize;
-                float imageHeight       = 64.0f * this->imageSize;
-                std::vector<Vector2> uv = sprite.second->GetUV();
-                int textureID           = sprite.second->GetTexture()->GetID();
-                
-                ImGui::PushID(this->buttonID++);
-                
-                ImVec2 imageSize = ImVec2(imageWidth, imageHeight);
-                ImVec2 uv00      = ImVec2(uv[0].x, uv[2].y);
-                ImVec2 uv11      = ImVec2(uv[2].x, uv[0].y);
-                
-                if(ImGui::ImageButton((int*)textureID, imageSize, uv00, uv11))
+                if(sprite.second->GetTexture())
                 {
-                    
+                    float imageWidth        = 64.0f * this->imageSize;
+                    float imageHeight       = 64.0f * this->imageSize;
+                    std::vector<Vector2> uv = sprite.second->GetUV();
+                    int textureID           = sprite.second->GetTexture()->GetID();
+
+                    ImGui::PushID(this->buttonID++);
+
+                    ImVec2 imageSize = ImVec2(imageWidth, imageHeight);
+                    ImVec2 uv00      = ImVec2(uv[0].x, uv[2].y);
+                    ImVec2 uv11      = ImVec2(uv[2].x, uv[0].y);
+
+                    if(ImGui::ImageButton((int*)textureID, imageSize, uv00, uv11))
+                    {
+
+                    }
+
+                    ImGui::PopID();
+
+                    float lastImageXMax = ImGui::GetItemRectMax().x;
+                    float nextImageXMax = lastImageXMax + itemSpacing.x + imageWidth;
+
+                    if(nextImageXMax < windowXMax)
+                        ImGui::SameLine();
                 }
-                
-                ImGui::PopID();
-
-                float lastImageXMax = ImGui::GetItemRectMax().x;
-                float nextImageXMax = lastImageXMax + itemSpacing.x + imageWidth;
-
-                if(nextImageXMax < windowXMax)
-                    ImGui::SameLine();
             }
         }
         void ShowTextures(ImVec2 windowPos, ImVec2 windowSize, ImVec2 itemSpacing)

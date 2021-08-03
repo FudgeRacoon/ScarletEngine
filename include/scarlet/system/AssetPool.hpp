@@ -36,7 +36,7 @@ namespace scarlet
     public:
         static Texture* AddTexture(std::string name, const char* filepath);
         static Texture* AddTexture(std::string name, uint32 color, uint32 width, uint32 height);
-        static Texture* AddTexture(std::string name, uint32* pixels, uint32 width, uint32 height);
+        static Texture* AddTexture(std::string name, void* pixels, uint32 width, uint32 height);
         
     public:
         static void RemoveSprite(std::string name);
