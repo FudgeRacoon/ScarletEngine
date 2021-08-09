@@ -5,6 +5,8 @@
 
 #include "scarlet/common/Types.hpp"
 
+#include "scarlet/debug/Assert.hpp"
+
 #include "scarlet/graphics/VertexBuffer.hpp"
 
 #include "scarlet/utils/Logger.hpp"

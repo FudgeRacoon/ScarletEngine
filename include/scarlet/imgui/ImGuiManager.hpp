@@ -20,21 +20,25 @@ namespace scarlet
     protected:
         std::string title;
 
-    protected:
-        ImGuiWindow(std::string title);
-
     public:
-        virtual void OnUpdate() = 0;
+        ImGuiWindow(std::string title);
+        virtual ~ImGuiWindow();
 
     public:
         std::string GetTitle()
         {
             return this->title;
         }
+        
+    public:
         void SetTitle(std::string title)
         {
             this->title = title;
         }
+    
+    public:
+        virtual void OnUpdate() = 0;
+
     };
 
     class ImGuiManager
@@ -49,6 +53,7 @@ namespace scarlet
 
     public:
         static ImGuiWindow* AddWindow(ImGuiWindow* window);
+        static ImGuiWindow* GetWindow(std::string title);
         static void RemoveWindow(std::string title);
 
     public:

@@ -10,6 +10,8 @@ double Time::deltaTime = 0.0;
 
 void Time::Start()
 {
+    Logger::LogInfo("Intitializing Time Subsystem...");
+
     startTime = high_resolution_clock::now();
 }
 void Time::Elapsed()

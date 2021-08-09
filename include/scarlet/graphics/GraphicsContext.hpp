@@ -3,9 +3,9 @@
 
 #include "GL/glew.h"
 
-#include "scarlet/common/Assert.hpp"
 #include "scarlet/common/Types.hpp"
 
+#include "scarlet/debug/Assert.hpp"
 
 #include "scarlet/core/Window.hpp"
 

@@ -5,7 +5,6 @@
 
 #include "scarlet/entity/Component.hpp"
 
-#include "scarlet/graphics/Shader.hpp"
 #include "scarlet/graphics/Sprite.hpp"
 
 #include "scarlet/math/Color.hpp"
@@ -16,9 +15,6 @@ namespace scarlet
     {
     public:
         Sprite* sprite;
-        Shader* material;
-
-    public:
         Color   color;
         bool    flipX, flipY;
         uint16  sortingOrder;
@@ -29,7 +25,7 @@ namespace scarlet
     public:
         void Setup() override;
         void Update() override;
-        void GUI() override;
+        void UIUpdate() override;
     };
 }
 

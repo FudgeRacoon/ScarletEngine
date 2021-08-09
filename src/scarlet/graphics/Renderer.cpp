@@ -136,6 +136,8 @@ void Renderer::InitShaders()
 
 void Renderer::Init()
 {
+    Logger::LogInfo("Intitializing Renderer Subsystem...");
+
     InitBuffers();
     InitTextureSlots();
     InitShaders();

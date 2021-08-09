@@ -37,6 +37,8 @@ Window* Window::Get()
 }
 int Window::Init(std::string title, int width, int height, bool fullscreen)
 {
+    Logger::LogInfo("Intitializing Window Subsystem...");
+
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         Logger::LogFatal("Cannot initialize SDL2 window");

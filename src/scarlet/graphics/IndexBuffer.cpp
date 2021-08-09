@@ -1,5 +1,4 @@
 #include "scarlet/graphics/IndexBuffer.hpp"
-#include "scarlet/common/Assert.hpp"
 using namespace scarlet;
 
 IndexBuffer::IndexBuffer(const uint32_t* data, size_t size, int usage)

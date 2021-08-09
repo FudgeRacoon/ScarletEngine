@@ -4,9 +4,6 @@ using namespace scarlet;
 SpriteRenderer::SpriteRenderer()
 {
     this->sprite = nullptr;
-    this->material = nullptr;
-
-    this->color = Color();
     this->flipX = false; this->flipY = false;
     this->sortingOrder = 0;
 }
@@ -19,7 +16,7 @@ void SpriteRenderer::Update()
 {
     
 }
-void SpriteRenderer::GUI()
+void SpriteRenderer::UIUpdate()
 {
     
 }

@@ -1,9 +1,11 @@
-#include "scarlet/common/Assert.hpp"
 #include "scarlet/common/Types.hpp"
 
 #include "scarlet/core/Application.hpp"
 #include "scarlet/core/Window.hpp"
 #include "scarlet/core/Scene.hpp"
+
+#include "scarlet/debug/Assert.hpp"
+#include "scarlet/debug/OpenGLDebug.hpp"
 
 #include "scarlet/system/AssetPool.hpp"
 #include "scarlet/system/GameObjectManager.hpp"
@@ -42,7 +44,6 @@
 #include "scarlet/math/Matrix4.hpp"
 
 #include "scarlet/utils/Logger.hpp"
-#include "scarlet/utils/OpenGLDebug.hpp"
 #include "scarlet/utils/MemoryUtils.hpp"
 #include "scarlet/utils/TextureUtils.hpp"
 #include "scarlet/utils/Time.hpp"

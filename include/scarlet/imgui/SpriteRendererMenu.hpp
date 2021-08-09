@@ -3,52 +3,111 @@
 
 #include "ImGui/imgui.h"
 
-#include "scarlet/imgui/IComponentMenu.hpp"
+#include "scarlet/imgui/ComponentMenu.hpp"
+
+#include "scarlet/utils/MemoryUtils.hpp"
 
 namespace scarlet
 {
-    class SpriteRendererMenu : public IComponentMenu
+    class SpriteRendererMenu : public ComponentMenu
     {
     public:
-        std::string spritePath;
-        float       color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-        bool        flipX = false, flipY = false;
-        int         sortingOrder = 0;
+        char*       spriteName;
+        float*      color;
+        bool        flipX, flipY;
+        int         sortingOrder;
     
     public:
-        SpriteRendererMenu()
+        SpriteRendererMenu() : ComponentMenu("SpriteRenderer")
         {
-            this->title = "SpriteRenderer";
-            this->active = true;
+            this->spriteName = new char[16];
+            this->spriteName[15] = '\0';
+            MemoryUtils::MemorySet(this->spriteName, ' ', 15);
+            
+            this->color = new float[4];
+            for(int i = 0; i < 4; i++)
+                this->color[i] = 1.0f;
+
+            this->flipX = false; this->flipY = false;
+            this->sortingOrder = 0;
+        }
+        ~SpriteRendererMenu()
+        {
+            delete[] this->spriteName;
+            delete[] this->color;
         }
 
     public:
         void Update() override
         {
             if(ImGui::CollapsingHeader(this->title.c_str(), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
-            {
-                #pragma region Color
-                ImGui::Text("Color");
-                ImGui::SameLine(0.0f, 100.0f);
-                ImGui::ColorEdit4("", color);
-                #pragma endregion
+            {   
+                //Sprite
+                {
+                    ImGui::SetCursorPosX(this->START_POS);
 
-                #pragma region Flip
-                ImGui::Text("Flip");
-                ImGui::SameLine(0.0f, 107.0f);
+                    ImGui::Text("Sprite");
+                    ImGui::SameLine();
 
-                ImGui::Checkbox("X", &this->flipX);
-                ImGui::SameLine();
-                ImGui::Checkbox("Y", &this->flipY);
-                #pragma endregion
+                    ImGui::SetCursorPosX(this->SPACING);
 
-                #pragma region Sorting Order
-                ImGui::PushItemWidth(100.0f);
+                    ImGui::PushItemWidth(360.0f);
 
-                ImGui::Text("Sorting Order");
-                ImGui::SameLine(0.0f, 44.0f);
-                ImGui::InputInt("", &this->sortingOrder);
-                #pragma endregion
+                    ImGui::InputText(
+                        "##spriteText", 
+                        spriteName, 
+                        strlen(spriteName),
+                        ImGuiInputTextFlags_::ImGuiInputTextFlags_ReadOnly
+                    );
+
+                    ImGui::PopItemWidth();
+                }
+
+                //Color
+                {
+                    ImGui::SetCursorPosX(this->START_POS);
+
+                    ImGui::Text("Color");
+                    ImGui::SameLine();
+
+                    ImGui::SetCursorPosX(this->SPACING);
+
+                    ImGui::PushItemWidth(360.0f);
+                    
+                    ImGui::ColorEdit4("##color", color);
+                    
+                    ImGui::PopItemWidth();
+                }
+
+                //Flip
+                {
+                    ImGui::SetCursorPosX(this->START_POS);
+
+                    ImGui::Text("Flip");
+                    ImGui::SameLine();
+                    
+                    ImGui::SetCursorPosX(this->SPACING);
+
+                    ImGui::Checkbox("X", &this->flipX);
+                    ImGui::SameLine();
+                    ImGui::Checkbox("Y", &this->flipY);
+                }
+
+                //Sorting Order
+                {   
+                    ImGui::SetCursorPosX(this->START_POS);
+
+                    ImGui::Text("Sorting Order");
+                    ImGui::SameLine();
+
+                    ImGui::SetCursorPosX(this->SPACING);
+
+                    ImGui::PushItemWidth(360.0f);
+
+                    ImGui::InputInt("##sortingOrder", &this->sortingOrder);
+
+                    ImGui::PopItemWidth();
+                }
             }
         }   
     };

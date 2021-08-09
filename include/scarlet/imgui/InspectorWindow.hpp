@@ -1,56 +1,29 @@
 #ifndef INSPECTOR_WINDOW_HPP
 #define INSPECTOR_WINDOW_HPP
 
-#include <map>
-#include <string>
+#include <vector>
 
 #include "scarlet/imgui/ImGuiManager.hpp"
-#include "scarlet/imgui/IComponentMenu.hpp"
+#include "scarlet/imgui/ComponentMenu.hpp"
+#include "scarlet/imgui/TransformMenu.hpp"
+#include "scarlet/imgui/SpriteRendererMenu.hpp"
 
 namespace scarlet
 {
     class InspectorWindow : public ImGuiWindow
     {
     private:
-        std::map<std::string, IComponentMenu*> componentMenus;
+        std::vector<ComponentMenu*> componentMenus;
     
     public:
-        InspectorWindow() : ImGuiWindow("Inspector") {}
+        InspectorWindow();
+        ~InspectorWindow();
 
     public:
-        IComponentMenu* AddComponentMenu(IComponentMenu* componentMenu)
-        {
-            this->componentMenus.insert(std::make_pair(componentMenu->GetTitle(), componentMenu));
-            return componentMenu;
-        }
-        void RemoveComponentMenu(std::string title)
-        {
-            std::map<std::string, IComponentMenu*>::iterator it;
-
-            it = componentMenus.find(title);
-            if(it == componentMenus.end())
-            {
-                Logger::LogError("No imgui component menu exists with that name.");
-                return;
-            }
-
-            delete it->second;
-            componentMenus.erase(it);
-        }
+        ComponentMenu* GetComponentMenu(std::string title);
 
     public:
-        void OnUpdate() override
-        {
-            ImGui::Begin(this->title.c_str()); 
-            
-            for(std::pair<std::string, IComponentMenu*> componentMenu : componentMenus)
-            {
-                if(componentMenu.second->GetActive())
-                    componentMenu.second->Update();
-            }
-            
-            ImGui::End();
-        }
+        void OnUpdate() override;
     };
 }
 

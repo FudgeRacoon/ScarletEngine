@@ -8,6 +8,8 @@
 
 #include "GL/glew.h"
 
+#include "scarlet/debug/Assert.hpp"
+
 #include "scarlet/math/Matrix4.hpp"
 
 #include "scarlet/utils/Logger.hpp"

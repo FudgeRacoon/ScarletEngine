@@ -22,6 +22,7 @@ void MemoryUtils::UintToBytes(void* dst, uint32 value)
     int shiftamt = 24;
         
     byte* dstPtr = (byte*)dst;
+    
     while(len > 0)
     {
         *dstPtr = value >> shiftamt;
@@ -31,6 +32,13 @@ void MemoryUtils::UintToBytes(void* dst, uint32 value)
     }
 }
 
+void MemoryUtils::MemorySet(void* dst, int value, size_t bytes)
+{
+    byte* dstPtr = (byte*)dst;
+
+    for(int i = 0; i < bytes; i++)
+        *(dstPtr + i) = (byte)value;
+}
 void MemoryUtils::MemoryCopy(void* dst, void* src, size_t bytes)
 {
     byte* dstPtr = (byte*)dst;

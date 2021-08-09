@@ -18,6 +18,8 @@ int InputManager::mouseScrollDelta;
 
 void InputManager::OnInit()
 {
+    Logger::LogInfo("Intitializing InputManager Subsystem...");
+
     keyboardStates = SDL_GetKeyboardState(&keyboardStatesLength);
     prevKeyboardStates = new byte[keyboardStatesLength];
 }

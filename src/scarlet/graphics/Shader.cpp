@@ -1,5 +1,4 @@
 #include "scarlet/graphics/Shader.hpp"
-#include "scarlet/common/Assert.hpp"
 using namespace scarlet;
 
 Shader::Shader(const char* vertexShader, const char* fragmentShader)

@@ -8,8 +8,9 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 
-#include "scarlet/common/Assert.hpp"
 #include "scarlet/common/Types.hpp"
+
+#include "scarlet/debug/Assert.hpp"
 
 #include "scarlet/math/Math.hpp"
 

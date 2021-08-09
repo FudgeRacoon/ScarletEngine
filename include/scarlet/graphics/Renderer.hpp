@@ -1,8 +1,9 @@
 #ifndef RENDERER_HPP
 #define RENDERER_HPP
 
-#include "scarlet/common/Assert.hpp"
 #include "scarlet/common/Types.hpp"
+
+#include "scarlet/debug/Assert.hpp"
 
 #include "scarlet/entity/GameObject.hpp"
 #include "scarlet/entity/Transform.hpp"

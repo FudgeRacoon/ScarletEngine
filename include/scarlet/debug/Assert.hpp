@@ -3,7 +3,7 @@
 
 #include <assert.h>
 
-#include "scarlet/utils/OpenGLDebug.hpp"
+#include "scarlet/debug/OpenGLDebug.hpp"
 
 #ifdef SCARLET_NODEBUG
     #define SCARLET_CORE_ASSERT(_EXPR)

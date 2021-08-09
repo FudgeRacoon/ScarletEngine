@@ -7,6 +7,8 @@
 
 #include "scarlet/common/Types.hpp"
 
+#include "scarlet/utils/Logger.hpp"
+
 #include "scarlet/core/Window.hpp"
 
 #include "scarlet/math/Vector2.hpp"

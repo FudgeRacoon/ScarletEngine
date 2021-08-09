@@ -20,7 +20,7 @@ namespace scarlet
     public:
         void Setup() override;
         void Update() override;
-        void GUI() override;
+        void UIUpdate() override;
     };
 }
 

@@ -5,11 +5,17 @@ ImGuiWindow::ImGuiWindow(std::string title)
 {
     this->title = title;
 }
+ImGuiWindow::~ImGuiWindow()
+{
+    
+}
 
 std::map<std::string, ImGuiWindow*> ImGuiManager::imguiWindows;
 
 void ImGuiManager::OnAttach()
 {
+    Logger::LogInfo("Intitializing ImGui Subsystem...");
+
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -37,11 +43,20 @@ ImGuiWindow* ImGuiManager::AddWindow(ImGuiWindow* window)
     imguiWindows.insert(std::make_pair(window->GetTitle(), window));
     return window;
 }
+ImGuiWindow* ImGuiManager::GetWindow(std::string title)
+{
+    auto it = imguiWindows.find(title);
+    if(it == imguiWindows.end())
+    {
+        Logger::LogError("No imgui window exists with that name.");
+        return nullptr;
+    }
+
+    return it->second;
+}
 void ImGuiManager::RemoveWindow(std::string title)
 {
-    std::map<std::string, ImGuiWindow*>::iterator it;
-
-    it = imguiWindows.find(title);
+    auto it = imguiWindows.find(title);
     if(it == imguiWindows.end())
     {
         Logger::LogError("No imgui window exists with that name.");

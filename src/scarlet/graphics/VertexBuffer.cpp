@@ -1,5 +1,4 @@
 #include "scarlet/graphics/VertexBuffer.hpp"
-#include "scarlet/common/Assert.hpp"
 using namespace scarlet;
 
 VertexBuffer::VertexBuffer(const void* data, size_t size, int usage)

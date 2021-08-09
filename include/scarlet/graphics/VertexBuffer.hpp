@@ -9,6 +9,8 @@
 
 #include "scarlet/common/Types.hpp"
 
+#include "scarlet/debug/Assert.hpp"
+
 namespace scarlet
 {   
     struct VertexBufferLayout

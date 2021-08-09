@@ -7,6 +7,7 @@
 
 #include "scarlet/graphics/Texture.hpp"
 #include "scarlet/graphics/Sprite.hpp"
+#include "scarlet/graphics/Shader.hpp"
 
 #include "scarlet/math/Vector2.hpp"
 
@@ -22,6 +23,7 @@ namespace scarlet
     public:
         typedef std::map<std::string, Sprite*> SpritesTreeMap;
         typedef std::map<std::string, Texture*> TexturesTreeMap;
+        typedef std::map<std::string, Shader*> ShadersTreeMap;
         typedef std::unordered_map<uint32, std::vector<Sprite*>> TextureUsersHashMap;
 
     private:

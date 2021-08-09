@@ -1,5 +1,4 @@
 #include "scarlet/graphics/VertexArray.hpp"
-#include "scarlet/common/Assert.hpp"
 using namespace scarlet;
 
 VertexArray::VertexArray()

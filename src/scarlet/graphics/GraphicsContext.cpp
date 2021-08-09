@@ -5,6 +5,8 @@ Vector4 GraphicsContext::viewport;
 
 void GraphicsContext::Init()
 {
+    Logger::LogInfo("Intitializing Graphics Context Subsystem...");
+
     glewExperimental = true;
     if(glewInit() != 0)
     {

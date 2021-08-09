@@ -88,7 +88,7 @@ namespace scarlet
             this->active = value;
         }
 
-    public:
+    private:
         void Setup()
         {
             if(this->active)
