@@ -12,8 +12,13 @@
 
 #include "scarlet/utils/Logger.hpp"
 
+#include "scarlet//graphics/GraphicsContext.hpp"
 #include "scarlet/graphics/Renderer.hpp"
 #include "scarlet/graphics/camera/Camera.hpp"
+
+#include "scarlet/system/AssetPool.hpp"
+
+#include "scarletEditor/Selector.hpp"
 
 namespace scarlet
 {   
@@ -64,7 +69,10 @@ namespace scarlet
         
     public:
         void UpdateGameObjects();
-        void RenderGameObjects(Camera* camera);
+
+    public:
+        void RenderEditor(Camera* editorCamera, editor::Selector* editorSelector);
+        void RenderRuntime(Camera* camera);
     };
 }
 

@@ -31,20 +31,21 @@ namespace scarlet
 {   
     struct RendererVertexData
     {
-        Vector3 position;
-        Vector4 color;
-        Vector2 textureCoords;
-        float   textureIndex;
+        Vector3 position;       //12 bytes
+        Vector4 color;          //16 bytes
+        Vector2 textureCoords;  //8  bytes
+        float   textureIndex;   //4  bytes
+        float   instanceID;     //4  bytes
     };
 
     struct RendererData
     {
         const uint32           MAX_LINES = 10000;
-        const size_t           LINE_VERTICES_SIZE = 10 * 2 * sizeof(float);
+        const size_t           LINE_VERTICES_SIZE = 11 * 2 * sizeof(float);
         const size_t           MAX_LINE_VERTICES_SIZE = MAX_LINES * LINE_VERTICES_SIZE;
 
         const uint32           MAX_QUADS = 10000;
-        const size_t           QUAD_VERTICES_SIZE = 10 * 4 * sizeof(float);
+        const size_t           QUAD_VERTICES_SIZE = 11 * 4 * sizeof(float);
         const size_t           QUAD_INDICIES_SIZE = 6 * sizeof(uint32);
         const size_t           MAX_QUAD_VERTICES_SIZE = MAX_QUADS * QUAD_VERTICES_SIZE;
         const size_t           MAX_QUAD_INDICIES_SIZE = MAX_QUADS * QUAD_INDICIES_SIZE;
@@ -59,7 +60,7 @@ namespace scarlet
         Texture*               whiteTexture = nullptr;
         Texture**              textureSlots = nullptr;
 
-        Shader*                defaultShader = nullptr;
+        Shader*                currentShader = nullptr;
         Camera*                rendererCamera = nullptr;
 
         uint32                 lineCount = 0;
@@ -71,8 +72,6 @@ namespace scarlet
 
         RendererVertexData*    quadVertexPtr = nullptr;
         RendererVertexData*    quadVertexBase = nullptr;
-        
-        std::vector<Vector2>  defaultUV;
     };
 
     class Renderer
@@ -94,12 +93,16 @@ namespace scarlet
         static void InitShaders();
 
     public:
-        static void Init();
-        static void ShutDown();
+        static void OnInit();
+        static void OnShutDown();
 
     public:
         static void BeginScene(Camera* camera);
         static void EndScene();
+
+    public:
+        static Shader* GetBoundShader();
+        static void BindShader(Shader* shader);
 
     public:
         static void DrawLine(Line line, Color color);

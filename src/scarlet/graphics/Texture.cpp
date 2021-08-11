@@ -45,7 +45,7 @@ Texture::Texture(uint32 color, uint32 width, uint32 height)
     
     for(int y = 0; y < height; y++)
         for(int x = 0; x < pitch; x += 4)
-            MemoryUtils::UintToBytes(this->pixels + ((y * pitch) + x), color);
+            MemoryUtils::IntToBytes(this->pixels + ((y * pitch) + x), color);
 
     this->width = width;
     this->height = height;

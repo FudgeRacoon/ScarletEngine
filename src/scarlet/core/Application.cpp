@@ -26,7 +26,7 @@ void Application::Run(int argc, char* argv[])
             InputManager::OnEvent();
             ImGuiManager::OnEvent(InputManager::GetSDLEvent());
 
-            GraphicsContext::ClearBuffers(BufferType::SCARLET_BUFFER_COLOR);
+            GraphicsContext::ClearBuffers(Graphics_BufferType::SCARLET_BUFFER_COLOR);
 
             this->OnUpdate();
 
@@ -44,7 +44,7 @@ void Application::Run(int argc, char* argv[])
 
     ImGuiManager::OnDetach();
     
-    Renderer::ShutDown();
+    Renderer::OnShutDown();
 
     Window::Get()->Release();
 }
@@ -58,13 +58,15 @@ void Application::OnInit()
     
     InputManager::OnInit();
 
-    GraphicsContext::Init();
+    GraphicsContext::OnInit();
     GraphicsContext::SetViewPort(0, 0, Window::Get()->GetWidth(), Window::Get()->GetHeight());
-    GraphicsContext::SetBlendingFunction(BlendFunction::SCARLET_SRC_ALPHA, BlendFunction::SCARLET_ONE_MINUS_SRC_ALPHA);
+    GraphicsContext::SetBlendingFunction(Graphics_BlendFunction::SCARLET_SRC_ALPHA, Graphics_BlendFunction::SCARLET_ONE_MINUS_SRC_ALPHA);
     GraphicsContext::SetClearColor(Color(22, 22, 22));
     GraphicsContext::EnableBlending(true);
 
-    Renderer::Init();
+    AssetPool::OnInit();
+
+    Renderer::OnInit();
 
     ImGuiManager::OnAttach();
 

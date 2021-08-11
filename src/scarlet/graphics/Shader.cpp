@@ -71,7 +71,7 @@ std::string Shader::ParseShaderInternal(const char* filepath)
         Logger::LogError("Failed to open shader file.");
         return "";
     }
-
+    
     std::string line;
     std::stringstream ss;
 

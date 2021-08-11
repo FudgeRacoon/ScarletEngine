@@ -16,7 +16,7 @@ void MemoryUtils::IntToBytes(void* dst, int value)
         shiftamt -= 8;
     }
 }
-void MemoryUtils::UintToBytes(void* dst, uint32 value)
+void MemoryUtils::IntToBytes(void* dst, uint32 value)
 {
     int len = 4;
     int shiftamt = 24;

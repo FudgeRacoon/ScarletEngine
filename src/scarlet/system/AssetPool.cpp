@@ -1,15 +1,36 @@
 #include "scarlet/system/AssetPool.hpp"
-#include "scarlet/graphics/Sprite.hpp"
 using namespace scarlet;
 
-#include "scarlet/entity/SpriteRenderer.hpp"
+#include "scarlet/graphics/Renderer.hpp"
 
 #include "scarlet/system/SceneManager.hpp"
 
 AssetPool::SpritesTreeMap AssetPool::sprites;
+AssetPool::ShadersTreeMap AssetPool::shaders;
 AssetPool::TexturesTreeMap AssetPool::textures;
 
 AssetPool::TextureUsersHashMap AssetPool::textureUsers;
+
+void AssetPool::OnInit()
+{
+    Logger::LogInfo("Intitializing AssetPool Subsystem...");
+
+    Shader* shader = nullptr;
+
+    shader = AddShader("default_shader", "assets\\shaders\\defaultFragment.shader");
+    shader->Bind();
+    for(int i = 0; i < GraphicsContext::GetMaxTextureSlots(); i++)
+        shader->SetInt("textures[" + std::to_string(i) + "]", i);
+    shader->UnBind();
+
+    shader = AddShader("selection_shader", "assets\\shaders\\selectionFragment.shader");
+    shader->Bind();
+    for(int i = 0; i < GraphicsContext::GetMaxTextureSlots(); i++)
+        shader->SetInt("textures[" + std::to_string(i) + "]", i);
+    shader->UnBind();
+
+    AddTexture("white_texture", 0xffffffff, 32, 32);
+}
 
 Sprite* AssetPool::AddSprite(std::string name, Texture* texture)
 {
@@ -54,6 +75,26 @@ Sprite* AssetPool::AddSprite(std::string name, Texture* texture, std::vector<Vec
     textureUsersIterator->second.push_back(sprite);
 
     return sprite;
+}
+
+Shader* AssetPool::AddShader(std::string name, const char* filepath)
+{
+    auto it = shaders.find(name);
+    if(it != shaders.end())
+    {
+        Logger::LogWarning("Shader name already exists.");
+        return nullptr;
+    }
+
+    Shader* shader = new Shader("assets\\shaders\\defaultVertex.shader", filepath);
+    shaders.insert(
+        std::make_pair(
+            name, 
+            shader
+        )
+    );
+
+    return shader;
 }
 
 Texture* AssetPool::AddTexture(std::string name, const char* filepath)
@@ -155,6 +196,20 @@ void AssetPool::RemoveSprite(std::string name)
     else
         Logger::LogWarning("Sprite does not exist.");
 }
+void AssetPool::RemoveShader(std::string name)
+{
+    auto it = shaders.find(name);
+    if(it != shaders.end())
+    {
+        if(Renderer::GetBoundShader() == it->second)
+            Renderer::BindShader(GetShader("DefaultShader"));
+
+        delete it->second;
+        shaders.erase(it);
+    }
+    else
+        Logger::LogWarning("Shader does not exist.");
+}
 void AssetPool::RemoveTexture(std::string name)
 {
     auto textureIterator = textures.find(name);
@@ -183,6 +238,15 @@ Sprite* AssetPool::GetSprite(std::string name)
     Logger::LogWarning("Sprite does not exist.");
     return nullptr;
 }
+Shader* AssetPool::GetShader(std::string name)
+{
+    auto it = shaders.find(name);
+    if(it != shaders.end())
+        return it->second;
+
+    Logger::LogWarning("Shader does not exist.");
+    return nullptr;
+}
 Texture* AssetPool::GetTexture(std::string name)
 {
     auto it = textures.find(name);
@@ -196,6 +260,10 @@ Texture* AssetPool::GetTexture(std::string name)
 AssetPool::SpritesTreeMap AssetPool::GetSprites()
 {
     return sprites;
+}
+AssetPool::ShadersTreeMap AssetPool::GetShaders()
+{
+    return shaders;
 }
 AssetPool::TexturesTreeMap AssetPool::GetTextures()
 {

@@ -22,7 +22,7 @@ void Renderer::NextBatch()
 }
 void Renderer::Flush()
 {   
-    rendererData.defaultShader->Bind();
+    rendererData.currentShader->Bind();
 
     for(int i = 0; i < rendererData.currentTextureIndex; i++)
         rendererData.textureSlots[i]->Bind(i);
@@ -39,21 +39,21 @@ void Renderer::Flush()
         rendererData.quadVertexBase
     );
 
-    rendererData.defaultShader->SetMat4(
+    rendererData.currentShader->SetMat4(
         "uView", rendererData.rendererCamera->GetViewMatrix()
     );
-    rendererData.defaultShader->SetMat4(
+    rendererData.currentShader->SetMat4(
         "uProj", rendererData.rendererCamera->GetProjectionMatrix()
     );
 
     GraphicsContext::DrawArrays(
-        DrawMode::SCARLET_LINES,
+        Graphics_DrawMode::SCARLET_LINES,
         rendererData.lineVertexArray,
         rendererData.lineCount * 2
     );
 
     GraphicsContext::DrawElements(
-        DrawMode::SCARLET_TRIANGLES, 
+        Graphics_DrawMode::SCARLET_TRIANGLES, 
         rendererData.quadVertexArray, 
         rendererData.quadIndexBuffer,
         rendererData.quadCount * 6
@@ -62,7 +62,7 @@ void Renderer::Flush()
     for(int i = 0; i < rendererData.currentTextureIndex; i++)
         rendererData.textureSlots[i]->UnBind();
         
-    rendererData.defaultShader->UnBind();
+    rendererData.currentShader->UnBind();
 }
 
 void Renderer::InitBuffers()
@@ -76,6 +76,7 @@ void Renderer::InitBuffers()
     rendererData.lineVertexBuffer->AddLayout<float>(4, false);
     rendererData.lineVertexBuffer->AddLayout<float>(2, false);
     rendererData.lineVertexBuffer->AddLayout<float>(1, false);
+    rendererData.lineVertexBuffer->AddLayout<float>(1, false);
 
     rendererData.lineVertexArray = new VertexArray();
     rendererData.lineVertexArray->AddBuffer(rendererData.lineVertexBuffer);
@@ -88,6 +89,7 @@ void Renderer::InitBuffers()
     rendererData.quadVertexBuffer->AddLayout<float>(3, false);
     rendererData.quadVertexBuffer->AddLayout<float>(4, false);
     rendererData.quadVertexBuffer->AddLayout<float>(2, false);
+    rendererData.quadVertexBuffer->AddLayout<float>(1, false);
     rendererData.quadVertexBuffer->AddLayout<float>(1, false);
 
     int offset = 0;
@@ -115,26 +117,16 @@ void Renderer::InitBuffers()
 }
 void Renderer::InitTextureSlots()
 {
-    rendererData.whiteTexture = AssetPool::AddTexture("white_texture", 0xffffffff, 32, 32);
+    rendererData.whiteTexture = AssetPool::GetTexture("white_texture");
     rendererData.textureSlots = new Texture*[GraphicsContext::GetMaxTextureSlots()];
     rendererData.textureSlots[0] = rendererData.whiteTexture;
 }
 void Renderer::InitShaders()
-{
-    rendererData.defaultShader = new Shader(
-        "assets\\shaders\\defaultVertex.shader",
-        "assets\\shaders\\defaultFragment.shader"
-    );
-
-    rendererData.defaultShader->Bind();
-
-    for(int i = 0; i < GraphicsContext::GetMaxTextureSlots(); i++)
-        rendererData.defaultShader->SetInt("textures[" + std::to_string(i) + "]", i);
-
-    rendererData.defaultShader->UnBind();
+{   
+    rendererData.currentShader = AssetPool::GetShader("default_shader");
 }
 
-void Renderer::Init()
+void Renderer::OnInit()
 {
     Logger::LogInfo("Intitializing Renderer Subsystem...");
 
@@ -147,13 +139,8 @@ void Renderer::Init()
 
     rendererData.quadVertexBase = new RendererVertexData[rendererData.MAX_QUADS * 4];
     rendererData.quadVertexPtr = rendererData.quadVertexBase;
-
-    rendererData.defaultUV.push_back(Vector2(0.0f, 0.0f));
-    rendererData.defaultUV.push_back(Vector2(1.0f, 0.0f));
-    rendererData.defaultUV.push_back(Vector2(1.0f, 1.0f));
-    rendererData.defaultUV.push_back(Vector2(0.0f, 1.0f));
 }
-void Renderer::ShutDown()
+void Renderer::OnShutDown()
 {
     delete rendererData.quadVertexBuffer;
     delete rendererData.quadIndexBuffer;
@@ -162,8 +149,6 @@ void Renderer::ShutDown()
     delete[] rendererData.textureSlots;
 
     delete[] rendererData.quadVertexBase;
-
-    delete rendererData.defaultShader;
 }
 
 void Renderer::BeginScene(Camera* camera)
@@ -179,6 +164,15 @@ void Renderer::EndScene()
     rendererData.rendererCamera = nullptr;
 }
 
+Shader* Renderer::GetBoundShader()
+{
+    return rendererData.currentShader;
+}
+void Renderer::BindShader(Shader* shader)
+{
+    rendererData.currentShader = shader;
+}
+
 void Renderer::DrawLine(Line line, Color color)
 {
     if(rendererData.lineCount >= rendererData.MAX_LINES)
@@ -192,6 +186,7 @@ void Renderer::DrawLine(Line line, Color color)
         rendererData.lineVertexPtr->color = (Vector4)color;
         rendererData.lineVertexPtr->textureCoords = Vector2();
         rendererData.lineVertexPtr->textureIndex = 0;
+        rendererData.lineVertexPtr->instanceID = -1;
         rendererData.lineVertexPtr++;
     }
 
@@ -265,8 +260,9 @@ void Renderer::DrawFilledQuad(Rect rect, Color color)
     
         rendererData.quadVertexPtr->position = position;
         rendererData.quadVertexPtr->color = (Vector4)color;
-        rendererData.quadVertexPtr->textureCoords = rendererData.defaultUV.at(i);
+        rendererData.quadVertexPtr->textureCoords = Vector2();
         rendererData.quadVertexPtr->textureIndex = 0;
+        rendererData.quadVertexPtr->instanceID = -1;
         rendererData.quadVertexPtr++;
     }
 
@@ -319,8 +315,9 @@ void Renderer::DrawRotatedQuad(Rect rect, float radians, Color color)
     
         rendererData.quadVertexPtr->position = Matrix4::Rotate(radians, Vector3::FRONT()) * position;
         rendererData.quadVertexPtr->color = (Vector4)color;
-        rendererData.quadVertexPtr->textureCoords = rendererData.defaultUV.at(i);
+        rendererData.quadVertexPtr->textureCoords = Vector2();
         rendererData.quadVertexPtr->textureIndex = 0;
+        rendererData.quadVertexPtr->instanceID = -1;
         rendererData.quadVertexPtr++;
     }
 
@@ -418,6 +415,7 @@ void Renderer::DrawEntity(GameObject* gameObject)
         rendererData.quadVertexPtr->color = (Vector4)spriteRenderer->color;
         rendererData.quadVertexPtr->textureCoords = sprite->GetUV().at(i);
         rendererData.quadVertexPtr->textureIndex = textureIndex;
+        rendererData.quadVertexPtr->instanceID = gameObject->GetInstanceID() / 255.0f;
         rendererData.quadVertexPtr++;
     }
 

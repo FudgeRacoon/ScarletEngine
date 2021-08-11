@@ -14,11 +14,7 @@ void EditorSceneManager::CreateScene(std::string name)
 }
 void EditorSceneManager::RemoveScene(int buildIndex)
 {
-    if(buildIndex >= scenes.size())
-    {
-        Logger::LogError("Scene build index is out of bounds.");
-        return;
-    }
+    SCARLET_CORE_ASSERT(buildIndex < scenes.size(), "Index is out of bounds.");
 
     Scene* scene = scenes[buildIndex];
     if(scene == activeScene)
@@ -41,13 +37,13 @@ void EditorSceneManager::RemoveScene(int buildIndex)
     }   
 }
 
+void EditorSceneManager::SetCamera(Camera* camera)
+{
+    this->editorCamera = camera;
+}
 void EditorSceneManager::SetActiveScene(int buildIndex)
 {
-    if(buildIndex >= scenes.size())
-    {
-        Logger::LogError("Scene build index is out of bounds.");
-        return;
-    }
+    SCARLET_CORE_ASSERT(buildIndex < scenes.size(), "Index is out of bounds.");
 
     Scene* scene = scenes[buildIndex];
     if(scene == activeScene)
@@ -59,12 +55,44 @@ void EditorSceneManager::SetActiveScene(int buildIndex)
     activeScene = scene;
 }
 
-void EditorSceneManager::UpdateActiveScene(Camera* editorCamera)
+void EditorSceneManager::ActivateSelector()
 {
-    if(this->activeScene == nullptr)
-        Logger::LogWarning("No active scene.");
+    if(this->selector == nullptr)
+        this->selector = new scarlet::editor::Selector(
+            scarlet::GraphicsContext::GetViewPort().z,
+            scarlet::GraphicsContext::GetViewPort().w
+        );
+}
+void EditorSceneManager::ActivateGridLines()
+{
+    if(this->gridlines == nullptr)
+    {
+        SCARLET_CORE_ASSERT(this->editorCamera != nullptr, "Editor Camera is null.");
+        this->gridlines = new editor::GridLines(this->editorCamera);
+    }
+        
+}
+void EditorSceneManager::ActivateCameraController()
+{
+    if(this->cameraController == nullptr)
+    {
+        SCARLET_CORE_ASSERT(this->editorCamera != nullptr, "Editor Camera is null.");
+        this->cameraController = new editor::CameraController(this->editorCamera);
+    }
+}
 
-    activeScene->OnRender(editorCamera);
+void EditorSceneManager::UpdateActiveScene()
+{
+    SCARLET_CORE_ASSERT(this->activeScene != nullptr, "No active scene to update.");
+    
+    this->cameraController->OnMouseDown();
+    this->cameraController->OnMouseScroll();
+
+    this->selector->OnMousePress();
+
+    //this->gridlines->OnRender();
+
+    activeScene->OnRenderEditor(this->editorCamera, this->selector);
 }
 
 void EditorSceneManager::LoadScenes()

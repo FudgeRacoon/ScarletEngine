@@ -14,12 +14,12 @@ namespace scarlet
     using ScenesArray = std::vector<Scene*>;
 
     protected:
-        SceneManager() = default;
-        SceneManager(const SceneManager& sceneManager) = delete;
-
-    protected:
         static ScenesArray scenes;
         static Scene* activeScene;
+    
+    protected:
+        SceneManager() = default;
+        SceneManager(const SceneManager& sceneManager) = delete;
 
     public:
         static SceneManager* Get();
@@ -34,7 +34,7 @@ namespace scarlet
         virtual void SetActiveScene(int buildIndex);
 
     public:
-        virtual void UpdateActiveScene(Camera* editorCamera = nullptr);
+        virtual void UpdateActiveScene();
     };
 }
 

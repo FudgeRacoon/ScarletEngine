@@ -17,25 +17,22 @@ namespace scarlet
     {
     private:
         std::string name;
+        uint32 instanceID;
         bool active;
 
     private:
         std::vector<Component*> components;
 
     private:
-        GameObject(std::string name)
-        {
-            this->name = name;
-            this->active = true;
-            this->AddComponent<Transform>();
-        }
-        ~GameObject()
-        {
-            for(Component* component : this->components)
-                delete component;
+        GameObject(std::string name, uint32 instanceID);
+        ~GameObject();
+    
+    public:
+        bool GetActive();
+        uint32 GetInstanceID();
 
-            this->components.clear();
-        }
+    public: 
+        void SetActive(bool value);
 
     public:
         template <typename T>
@@ -78,33 +75,9 @@ namespace scarlet
                 }
         }
     
-    public:
-        bool GetActive()
-        {
-            return this->active;
-        }
-        void SetActive(bool value)
-        {
-            this->active = value;
-        }
-
     private:
-        void Setup()
-        {
-            if(this->active)
-            {
-                for(Component* component : this->components)
-                    component->Setup();
-            }
-        }
-        void Update()
-        {
-            if(this->active)
-            {
-                for(Component* component : this->components)
-                    component->Update();
-            }
-        }
+        void Setup();
+        void Update();
     
     friend GameObjectManager;
     };

@@ -6,6 +6,7 @@ GameObjectManager::~GameObjectManager()
 {
     for(std::pair<std::string, GameObject*> gameObject : this->gameObjects)
         delete gameObject.second;
+        
     this->gameObjects.clear();
 
     while(!this->setupQueue.empty())
@@ -23,9 +24,9 @@ GameObjectManager::~GameObjectManager()
 
 GameObject* GameObjectManager::AddGameObject()
 {
-    std::string name = "gameObject_" + std::to_string(gameObjectCount++);
+    std::string name = "gameObject_" + std::to_string(++gameObjectCount);
 
-    GameObject* gameObject = new GameObject(name);
+    GameObject* gameObject = new GameObject(name, gameObjectCount);
     this->gameObjects.insert(std::make_pair(name, gameObject));
     this->setupQueue.push(gameObject);
     return gameObject;
@@ -80,7 +81,34 @@ void GameObjectManager::UpdateGameObjects()
     for(std::pair<std::string, GameObject*> gameObject : this->gameObjects)
         gameObject.second->Update();
 }
-void GameObjectManager::RenderGameObjects(Camera* camera)
+
+void GameObjectManager::RenderEditor(Camera* editorCamera, editor::Selector* editorSelector)
+{
+    {
+        editorSelector->Bind();
+        Renderer::BeginScene(editorCamera);
+        Renderer::BindShader(AssetPool::GetShader("selection_shader"));
+
+        GraphicsContext::ClearBuffers(scarlet::SCARLET_BUFFER_COLOR);
+
+        for(std::pair<std::string, GameObject*> gameObject : this->gameObjects)
+            Renderer::DrawEntity(gameObject.second);
+
+        Renderer::EndScene();
+        editorSelector->UnBind();
+    }
+    
+    {
+        Renderer::BeginScene(editorCamera);
+        Renderer::BindShader(AssetPool::GetShader("default_shader"));
+    
+        for(std::pair<std::string, GameObject*> gameObject : this->gameObjects)
+            Renderer::DrawEntity(gameObject.second);
+        
+        Renderer::EndScene();
+    }
+}
+void GameObjectManager::RenderRuntime(Camera* camera)
 {
     Renderer::BeginScene(camera);
 

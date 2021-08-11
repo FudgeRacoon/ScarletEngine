@@ -9,29 +9,33 @@
 
 namespace scarlet
 {
-    class CameraController
-    {    
-    public:
-        Camera* controlledCamera;
-
-    private:
-        bool mousePressed;
-        Vector2 prevMousePosition;
-
-    private:
-        float zoomIntensity;
-        float mouseSensitvity;
-
-    public:
-        CameraController(Camera* camera);
-
-    public:
-        void SetZoomIntensity(float zoomIntensity);
-        void SetMouseSensitvity(float mouseSensitvity);
-
-    public:
-        void OnUpdate();
-    };
+    namespace editor
+    {
+        class CameraController
+        {    
+        public:
+            Camera* controlledCamera;
+    
+        private:
+            bool mousePressed;
+            Vector2 prevMousePosition;
+    
+        private:
+            float zoomIntensity;
+            float mouseSensitvity;
+    
+        public:
+            CameraController(Camera* camera);
+    
+        public:
+            void SetZoomIntensity(float zoomIntensity);
+            void SetMouseSensitvity(float mouseSensitvity);
+    
+        public:
+            void OnMouseDown();
+            void OnMouseScroll();
+        };
+    }
 }
 
 #endif

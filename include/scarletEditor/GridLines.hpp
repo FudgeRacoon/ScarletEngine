@@ -9,27 +9,30 @@
 
 namespace scarlet
 {
-    class GridLines
-    {   
-    private:
-        Camera* camera;
+    namespace editor
+    {
+        class GridLines
+        {   
+        private:
+            Camera* camera;
 
-    private:
-        uint32 cellWidth;
-        uint32 cellHeight;
-        Color lineColor;
+        private:
+            uint32 cellWidth;
+            uint32 cellHeight;
+            Color lineColor;
 
-    public:
-        GridLines(Camera* camera);
+        public:
+            GridLines(Camera* camera);
 
-    public:
-        void SetCellWidth(uint32 width);
-        void SetCellHeight(uint32 height);
-        void SetColor(Color color);
+        public:
+            void SetCellWidth(uint32 width);
+            void SetCellHeight(uint32 height);
+            void SetColor(Color color);
 
-    public:
-        void OnRender();
-    };
+        public:
+            void OnRender();
+        };
+    }
 }
 
 #endif

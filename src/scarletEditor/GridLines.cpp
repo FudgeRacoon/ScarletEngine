@@ -1,5 +1,5 @@
 #include "scarletEditor/GridLines.hpp"
-using namespace scarlet;
+using namespace scarlet::editor;
 
 GridLines::GridLines(Camera* camera)
 {

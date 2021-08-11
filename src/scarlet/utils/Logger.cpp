@@ -22,11 +22,11 @@ void Logger::CreateLogFile()
             
             switch (message.type)
             {
-                case LoggerPriority::SCARLET_INFO: type = "INFO"; break;
-                case LoggerPriority::SCARLET_DEBUG: type = "DEBUG"; break;
+                case LoggerPriority::SCARLET_INFO:    type = "INFO"; break;
+                case LoggerPriority::SCARLET_DEBUG:   type = "DEBUG"; break;
                 case LoggerPriority::SCARLET_WARNING: type = "WARNING"; break;
-                case LoggerPriority::SCARLET_ERROR: type = "ERROR"; break;
-                case LoggerPriority::SCARLET_FATAL: type = "FATAL"; break;
+                case LoggerPriority::SCARLET_ERROR:   type = "ERROR"; break;
+                case LoggerPriority::SCARLET_FATAL:   type = "FATAL"; break;
             }
 
             char buffer[256] = {'\0'};

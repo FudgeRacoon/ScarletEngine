@@ -51,9 +51,14 @@ void Scene::OnUpdate()
     this->gameObjectManager->UpdateGameObjects();
     this->gameObjectManager->PollDestroyQueue();
 }
-void Scene::OnRender(Camera* editorCamera)
+
+void Scene::OnRenderEditor(Camera* editorCamera, editor::Selector* selector)
 {
-    this->gameObjectManager->RenderGameObjects(editorCamera ? editorCamera : this->sceneCamera);
+    this->gameObjectManager->RenderEditor(editorCamera, selector);
+}
+void Scene::OnRenderRuntime()
+{
+    this->gameObjectManager->RenderRuntime(this->sceneCamera);
 }
 
 GameObject* Scene::AddGameObject()

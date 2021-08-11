@@ -23,6 +23,7 @@
 
 #include "scarlet/graphics/GraphicsContext.hpp"
 #include "scarlet/graphics/Renderer.hpp"
+#include "scarlet/graphics/FrameBuffer.hpp"
 #include "scarlet/graphics/VertexArray.hpp"
 #include "scarlet/graphics/VertexBuffer.hpp"
 #include "scarlet/graphics/IndexBuffer.hpp"
@@ -50,3 +51,4 @@
 
 #include "scarletEditor/CameraController.hpp"
 #include "scarletEditor/GridLines.hpp"
+#include "scarletEditor/Selector.hpp"

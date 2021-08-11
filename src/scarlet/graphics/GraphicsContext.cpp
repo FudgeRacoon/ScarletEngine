@@ -3,7 +3,7 @@ using namespace scarlet;
 
 Vector4 GraphicsContext::viewport;
 
-void GraphicsContext::Init()
+void GraphicsContext::OnInit()
 {
     Logger::LogInfo("Intitializing Graphics Context Subsystem...");
 
@@ -31,7 +31,7 @@ void GraphicsContext::SetViewPort(uint32 x, uint32 y, uint32 width, uint32 heigh
     viewport = Vector4(x, y, width, height);
     glViewport(x, y, width, height);
 }
-void GraphicsContext::SetBlendingFunction(BlendFunction sFactor, BlendFunction dFactor)
+void GraphicsContext::SetBlendingFunction(Graphics_BlendFunction sFactor, Graphics_BlendFunction dFactor)
 {
     glBlendFunc(sFactor, dFactor);
 }
@@ -54,7 +54,7 @@ void GraphicsContext::EnableBlending(bool enable)
     }
 }
 
-void GraphicsContext::ClearBuffers(uint32 buffers)
+void GraphicsContext::ClearBuffers(Graphics_BufferType buffers)
 {
     glClear(buffers);
 }
@@ -63,13 +63,13 @@ void GraphicsContext::SwapBuffers()
     SDL_GL_SwapWindow(Window::Get()->GetSDLWindow());
 }
 
-void GraphicsContext::DrawArrays(DrawMode mode, VertexArray* vao, uint32 count)
+void GraphicsContext::DrawArrays(Graphics_DrawMode mode, VertexArray* vao, uint32 count)
 {
     vao->Bind();
     GLCALL(glDrawArrays(mode, 0, count));
     vao->UnBind();
 }
-void GraphicsContext::DrawElements(DrawMode mode, VertexArray* vao, IndexBuffer* ibo, uint32 count)
+void GraphicsContext::DrawElements(Graphics_DrawMode mode, VertexArray* vao, IndexBuffer* ibo, uint32 count)
 {
     vao->Bind();
     ibo->Bind();

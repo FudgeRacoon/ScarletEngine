@@ -11,7 +11,7 @@ namespace scarlet
     {
     public:
         static void IntToBytes(void* dst, int32 value);
-        static void UintToBytes(void* dst, uint32 value);
+        static void IntToBytes(void* dst, uint32 value);
     
     public:
         static void MemorySet(void* dst, int value, size_t bytes);

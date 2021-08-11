@@ -1,5 +1,5 @@
 #include "scarletEditor/CameraController.hpp"
-using namespace scarlet;
+using namespace scarlet::editor;
 
 CameraController::CameraController(Camera* camera)
 {
@@ -20,7 +20,7 @@ void CameraController::SetMouseSensitvity(float mouseSensitvity)
     this->mouseSensitvity = mouseSensitvity;
 }
 
-void CameraController::OnUpdate()
+void CameraController::OnMouseDown()
 {
     if(InputManager::GetMouseButton(1))
     {
@@ -42,19 +42,17 @@ void CameraController::OnUpdate()
 
     if(InputManager::GetMouseButtonUp(1))
         this->mousePressed = false;
-
+}
+void CameraController::OnMouseScroll()
+{
     if(InputManager::GetMouseScrollDelta() > 0)
     {
         float cameraSize = this->controlledCamera->GetSize();
-        this->controlledCamera->SetSize(
-            cameraSize -= this->zoomIntensity
-        );
+        this->controlledCamera->SetSize(cameraSize -= this->zoomIntensity);
     }
     else if(InputManager::GetMouseScrollDelta() < 0)
     {
         float cameraSize = this->controlledCamera->GetSize();
-        this->controlledCamera->SetSize(
-            cameraSize += this->zoomIntensity
-        );
+        this->controlledCamera->SetSize(cameraSize += this->zoomIntensity);
     }
 }

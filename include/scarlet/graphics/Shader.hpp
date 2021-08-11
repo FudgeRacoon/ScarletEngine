@@ -16,12 +16,14 @@
 
 namespace scarlet
 {
+    class AssetPool;
+
     class Shader
     {
     private:
         uint32_t programID;
 
-    public:
+    private:
         Shader(const char* vertexShader, const char* fragmentShader);
         ~Shader();
 
@@ -42,6 +44,8 @@ namespace scarlet
     public:
         void Bind() const;
         void UnBind() const;
+    
+    friend AssetPool;
     };
 }
 

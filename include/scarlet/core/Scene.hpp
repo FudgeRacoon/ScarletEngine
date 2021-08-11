@@ -10,10 +10,9 @@
 
 #include "scarlet/system/GameObjectManager.hpp"
 
-#include "scarlet/math/Math.hpp"
-
-#include "scarlet/graphics/Shader.hpp"
 #include "scarlet/graphics/camera/Camera.hpp"
+
+#include "scarletEditor/Selector.hpp"
 
 namespace scarlet
 {   
@@ -50,7 +49,10 @@ namespace scarlet
     private:
         void OnEnter();
         void OnUpdate();
-        void OnRender(Camera* editorCamera = nullptr);
+
+    private:
+        void OnRenderEditor(Camera* editorCamera, editor::Selector* editorSelector);
+        void OnRenderRuntime();
 
     public:
         GameObject* AddGameObject();
