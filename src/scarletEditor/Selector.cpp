@@ -8,9 +8,9 @@ Selector::Selector(uint32 width, uint32 height)
     FrameBufferSpecification spec = {
         .width = width, 
         .height = height, 
-        .type = Graphics_Type::SCARLET_UNSIGNED_INT_8_8_8_8, 
-        .format = Graphics_Format::SCARLET_RGBA, 
-        .internalFormat = Graphics_Format::SCARLET_RGBA
+        .type = GL_INT, 
+        .format = GL_RED_INTEGER, 
+        .internalFormat = GL_R32I
     };
 
     this->SelectorFrameBuffer->AttachColorTexture(spec);
@@ -30,14 +30,12 @@ void Selector::OnMousePress()
 
     if(InputManager::GetMouseButton(0))
     {
-        int pixelVal = this->SelectorFrameBuffer->ReadPixel(
-            Graphics_Format::SCARLET_RGBA,
-            Graphics_Type::SCARLET_UNSIGNED_INT_8_8_8_8,
-            InputManager::GetMousePosition().x,
-            InputManager::GetMousePosition().y
-        );
+        int x = scarlet::InputManager::GetMousePosition().x;
+        int y = scarlet::GraphicsContext::GetViewPort().w - scarlet::InputManager::GetMousePosition().y;
 
-        Logger::LogDebug("%x", pixelVal);
+        int pixelVal = this->SelectorFrameBuffer->ReadPixel(GL_RED_INTEGER, GL_INT, x, y);
+
+        Logger::LogDebug("%d", pixelVal);
     }
 
     this->SelectorFrameBuffer->UnBind();

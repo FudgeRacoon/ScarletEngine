@@ -415,7 +415,7 @@ void Renderer::DrawEntity(GameObject* gameObject)
         rendererData.quadVertexPtr->color = (Vector4)spriteRenderer->color;
         rendererData.quadVertexPtr->textureCoords = sprite->GetUV().at(i);
         rendererData.quadVertexPtr->textureIndex = textureIndex;
-        rendererData.quadVertexPtr->instanceID = gameObject->GetInstanceID() / 255.0f;
+        rendererData.quadVertexPtr->instanceID = (float)gameObject->GetInstanceID();
         rendererData.quadVertexPtr++;
     }
 

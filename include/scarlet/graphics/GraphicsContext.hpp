@@ -19,48 +19,6 @@
 
 namespace scarlet
 {   
-    enum Graphics_Format
-    {
-        SCARLET_STENCIL_INDEX   = 0x1901, 
-        SCARLET_DEPTH_COMPONENT = 0x1902, 
-        SCARLET_RED             = 0x1903, 
-        SCARLET_GREEN           = 0x1904, 
-        SCARLET_BLUE            = 0x1905, 
-        SCARLET_RGB             = 0x1907, 
-        SCARLET_RGBA            = 0x1908,
-        SCARLET_BGR             = 0x80E0, 
-        SCARLET_BGRA            = 0x80E1,
-        SCARLET_DEPTH_STENCIL   = 0x84F9 
-    };
-
-    enum Graphics_Type
-    {
-        SCARLET_BYTE                           = 0x1400, 
-        SCARLET_UNSIGNED_BYTE                  = 0x1401,
-        SCARLET_SHORT                          = 0x1402, 
-        SCARLET_UNSIGNED_SHORT                 = 0x1403, 
-        SCARLET_INT                            = 0x1404, 
-        SCARLET_UNSIGNED_INT                   = 0x1405, 
-        SCARLET_FLOAT                          = 0x1406, 
-        SCARLET_HALF_FLOAT                     = 0x140B, 
-        SCARLET_UNSIGNED_BYTE_3_3_2            = 0x8032, 
-        SCARLET_UNSIGNED_SHORT_4_4_4_4         = 0x8033, 
-        SCARLET_UNSIGNED_SHORT_5_5_5_1         = 0x8034, 
-        SCARLET_UNSIGNED_INT_8_8_8_8           = 0x8035, 
-        SCARLET_UNSIGNED_INT_10_10_10_2        = 0x8036, 
-        SCARLET_UNSIGNED_BYTE_2_3_3_REV        = 0x8362, 
-        SCARLET_UNSIGNED_SHORT_5_6_5           = 0x8363, 
-        SCARLET_UNSIGNED_SHORT_5_6_5_REV       = 0x8364, 
-        SCARLET_UNSIGNED_SHORT_4_4_4_4_REV     = 0x8365, 
-        SCARLET_UNSIGNED_SHORT_1_5_5_5_REV     = 0x8366, 
-        SCARLET_UNSIGNED_INT_8_8_8_8_REV       = 0x8367, 
-        SCARLET_UNSIGNED_INT_2_10_10_10_REV    = 0x8368, 
-        SCARLET_UNSIGNED_INT_24_8              = 0x84FA, 
-        SCARLET_UNSIGNED_INT_10F_11F_11F_REV   = 0x8C3B, 
-        SCARLET_UNSIGNED_INT_5_9_9_9_REV       = 0x8C3E,
-        SCARLET_FLOAT_32_UNSIGNED_INT_24_8_REV = 0x8DAD
-    };
-
     enum Graphics_BlendFunction
     {
         SCARLET_SRC_ALPHA = 0x0302,

@@ -15,9 +15,9 @@ namespace scarlet
     {
         uint32 width;
         uint32 height;
-        Graphics_Type type;
-        Graphics_Format format;
-        Graphics_Format internalFormat;
+        int32 type;
+        int32 format;
+        int32 internalFormat;
     };
 
     class FrameBuffer
@@ -33,20 +33,18 @@ namespace scarlet
     public:
         FrameBuffer();
         ~FrameBuffer();
+    
+    private:
+        bool CheckStatus();
 
     public:
         uint32 GetFrameBufferID();
         uint32 GetColorAttachmentID();
 
     public:
-        bool CheckStatus();
-
-    public:
+        int ReadPixel(int32 format, int32 type, int x, int y);
         void AttachColorTexture(FrameBufferSpecification& spec);
-
-    public:
-        int ReadPixel(Graphics_Format format, Graphics_Type type, int x, int y, uint32 colorAttachmentIndex = 0);
-
+        
     public:
         void Bind();
         void UnBind();

@@ -7,36 +7,6 @@ EditorSceneManager* EditorSceneManager::Get()
     return instance;
 }
 
-void EditorSceneManager::CreateScene(std::string name)
-{
-    Scene* scene = new Scene(name, scenes.size());
-    scenes.push_back(scene);
-}
-void EditorSceneManager::RemoveScene(int buildIndex)
-{
-    SCARLET_CORE_ASSERT(buildIndex < scenes.size(), "Index is out of bounds.");
-
-    Scene* scene = scenes[buildIndex];
-    if(scene == activeScene)
-    {
-        Logger::LogWarning("Can not remove currently active scene.");
-        return;
-    }
-    
-    int counter = 0;
-    for(auto it = scenes.begin(); it != scenes.end(); it++)
-    {
-        if(counter == buildIndex)
-        {
-            delete *it;
-            scenes.erase(it);
-            return;
-        }
-
-        counter++;
-    }   
-}
-
 void EditorSceneManager::SetCamera(Camera* camera)
 {
     this->editorCamera = camera;
@@ -81,6 +51,36 @@ void EditorSceneManager::ActivateCameraController()
     }
 }
 
+void EditorSceneManager::CreateScene(std::string name)
+{
+    Scene* scene = new Scene(name, scenes.size());
+    scenes.push_back(scene);
+}
+void EditorSceneManager::RemoveScene(int buildIndex)
+{
+    SCARLET_CORE_ASSERT(buildIndex < scenes.size(), "Index is out of bounds.");
+
+    Scene* scene = scenes[buildIndex];
+    if(scene == activeScene)
+    {
+        Logger::LogWarning("Can not remove currently active scene.");
+        return;
+    }
+    
+    int counter = 0;
+    for(auto it = scenes.begin(); it != scenes.end(); it++)
+    {
+        if(counter == buildIndex)
+        {
+            delete *it;
+            scenes.erase(it);
+            return;
+        }
+
+        counter++;
+    }   
+}
+
 void EditorSceneManager::UpdateActiveScene()
 {
     SCARLET_CORE_ASSERT(this->activeScene != nullptr, "No active scene to update.");
@@ -90,7 +90,7 @@ void EditorSceneManager::UpdateActiveScene()
 
     this->selector->OnMousePress();
 
-    //this->gridlines->OnRender();
+    this->gridlines->OnRender();
 
     activeScene->OnRenderEditor(this->editorCamera, this->selector);
 }

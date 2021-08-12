@@ -45,7 +45,7 @@ namespace scarlet
         void ActivateSelector();
         void ActivateGridLines();        
         void ActivateCameraController();
-    
+
     public:
         void CreateScene(std::string name);
         void RemoveScene(int buildInxex);
