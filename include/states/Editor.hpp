@@ -35,7 +35,7 @@ public:
     {   
         if(scarlet::InputManager::GetKeyDown(scarlet::KeyCode::Space))
         {
-            scarlet::GameObject* go = scarlet::EditorSceneManager::Get()->GetActiveScene()->AddGameObject();
+            scarlet::GameObject* go = scarlet::EditorSceneManager::Get()->GetActiveScene()->AddEntity();
             go->AddComponent<scarlet::SpriteRenderer>();
             go->GetComponent<scarlet::SpriteRenderer>()->sprite = scarlet::AssetPool::GetSprite("mairo_sprite_sheet_0");
             go->GetComponent<scarlet::Transform>()->position = Vector3(rand.NextFloat(-960.0f, 960.0f), rand.NextFloat(-540.0f, 540.0f), 0.0f);

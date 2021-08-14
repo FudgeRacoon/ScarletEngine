@@ -6,10 +6,14 @@
 
 #include "scarlet/common/Types.hpp"
 
+#include "scarlet/entity/Registry.hpp"
 #include "scarlet/entity/GameObject.hpp"
+#include "scarlet/entity/Transform.hpp"
+#include "scarlet/entity/SpriteRenderer.hpp"
 
-#include "scarlet/system/GameObjectManager.hpp"
+#include "scarlet/system/AssetPool.hpp"
 
+#include "scarlet/graphics/Renderer.hpp"
 #include "scarlet/graphics/camera/Camera.hpp"
 
 #include "scarletEditor/Selector.hpp"
@@ -26,7 +30,7 @@ namespace scarlet
         uint32 buildIndex;
 
     private:
-        GameObjectManager* gameObjectManager;
+        Registry* registry;
 
     private:
         Camera* sceneCamera;
@@ -38,7 +42,7 @@ namespace scarlet
     public:
         std::string GetName();
         uint32 GetBuildIndex();
-        uint32 GetGameObjectCount();
+        uint32 GetEntityCount();
         Camera* GetCamera();
         
     public:
@@ -47,24 +51,27 @@ namespace scarlet
         void SetCamera(Camera* camera);
 
     private:
-        void OnEnter();
-        void OnUpdate();
+        void OnEnterRuntime();
+        void OnUpdateRuntime();
 
     private:
-        void OnRenderEditor(Camera* editorCamera, editor::Selector* editorSelector);
         void OnRenderRuntime();
+        void OnRenderEditor(Camera* editorCamera, editor::Selector* editorSelector);
 
     public:
-        GameObject* AddGameObject();
-        GameObject* GetGameObject(std::string name);
-        void DestroyGameObject(std::string name);
+        GameObject* AddEntity();
 
     public:
-        template <typename T>
-        std::vector<GameObject*> GetGameObjectsOfType()
+        GameObject* GetEntityById(uint32 id);
+        GameObject* GetEntityByName(std::string name);
+        template <typename T> std::vector<GameObject*> GetEntitiesOfType()
         {
-            return this->gameObjectManager->GetGameObjectsOfType<T>();
+            return this->registry->GetEntitiesOfType<T>();
         }
+
+    public:
+        void DestroyEntityById(uint32 id);
+        void DestroyEntityByName(std::string name);
     
     friend SceneManager;
     friend EditorSceneManager;

@@ -181,11 +181,11 @@ void AssetPool::RemoveSprite(std::string name)
     auto it = sprites.find(name);
     if(it != sprites.end())
     {
-        std::vector<GameObject*> gameObjects = SceneManager::Get()->GetActiveScene()->GetGameObjectsOfType<SpriteRenderer>();
+        std::vector<GameObject*> entities = SceneManager::Get()->GetActiveScene()->GetEntitiesOfType<SpriteRenderer>();
         
-        for(GameObject* gameObject : gameObjects)
+        for(GameObject* entity : entities)
         {
-            SpriteRenderer* spriteRenderer = gameObject->GetComponent<SpriteRenderer>();
+            SpriteRenderer* spriteRenderer = entity->GetComponent<SpriteRenderer>();
             if(spriteRenderer->sprite == it->second)
                 spriteRenderer->sprite = nullptr;
         }

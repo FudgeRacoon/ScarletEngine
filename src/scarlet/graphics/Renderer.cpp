@@ -142,13 +142,17 @@ void Renderer::OnInit()
 }
 void Renderer::OnShutDown()
 {
+    delete rendererData.lineVertexBuffer;
+    delete rendererData.lineVertexArray;
+
     delete rendererData.quadVertexBuffer;
     delete rendererData.quadIndexBuffer;
     delete rendererData.quadVertexArray;
 
-    delete[] rendererData.textureSlots;
-
+    delete[] rendererData.lineVertexBase;
     delete[] rendererData.quadVertexBase;
+
+    delete[] rendererData.textureSlots;
 }
 
 void Renderer::BeginScene(Camera* camera)
@@ -332,7 +336,7 @@ void Renderer::DrawRotatedQuad(float x, float y, float width, float height, floa
     DrawRotatedQuad(Rect(x, y, width, height), radians, color);
 }
 
-void Renderer::DrawEntity(GameObject* gameObject)
+void Renderer::DrawSprite(Sprite* sprite, Matrix4 model, uint32 id, Color color)
 {
     if(rendererData.quadCount >= rendererData.MAX_QUADS)
         NextBatch();
@@ -340,31 +344,16 @@ void Renderer::DrawEntity(GameObject* gameObject)
     if(rendererData.currentTextureIndex >= GraphicsContext::GetMaxTextureSlots())
         NextBatch();
 
-    Transform* transform = gameObject->GetComponent<Transform>();
-    SpriteRenderer* spriteRenderer = gameObject->GetComponent<SpriteRenderer>();
-    Sprite* sprite = spriteRenderer->sprite;
-    Texture* texture = sprite->GetTexture();
-
-    if(!spriteRenderer || !sprite)
-        return;
-
-    Matrix4 model = Matrix4::Identity();
-    model = model * Matrix4::Scale(transform->scale);
-    model = model * Matrix4::Transalte(transform->position);
-    model = model * Matrix4::Rotate(transform->rotation.x, Vector3::RIGHT());
-    model = model * Matrix4::Rotate(transform->rotation.y, Vector3::UP());
-    model = model * Matrix4::Rotate(transform->rotation.z, Vector3::FRONT());
-    
     bool textureExists; 
     uint32 textureIndex;
 
-    if(texture)
+    if(sprite->GetTexture() != nullptr)
     {
         textureExists = false;
         textureIndex = rendererData.currentTextureIndex;
 
         for(int i = 0; i < rendererData.currentTextureIndex; i++)
-            if(rendererData.textureSlots[i]->GetID() == texture->GetID())
+            if(rendererData.textureSlots[i]->GetID() == sprite->GetTexture()->GetID())
             {
                 textureExists = true;
                 textureIndex = i;
@@ -373,7 +362,7 @@ void Renderer::DrawEntity(GameObject* gameObject)
     
         if(!textureExists)
         {
-            rendererData.textureSlots[textureIndex] = texture;
+            rendererData.textureSlots[textureIndex] = sprite->GetTexture();
             rendererData.currentTextureIndex++;
         }
     }
@@ -412,10 +401,10 @@ void Renderer::DrawEntity(GameObject* gameObject)
         }
     
         rendererData.quadVertexPtr->position = model * position;
-        rendererData.quadVertexPtr->color = (Vector4)spriteRenderer->color;
+        rendererData.quadVertexPtr->color = (Vector4)color;
         rendererData.quadVertexPtr->textureCoords = sprite->GetUV().at(i);
         rendererData.quadVertexPtr->textureIndex = textureIndex;
-        rendererData.quadVertexPtr->instanceID = (float)gameObject->GetInstanceID();
+        rendererData.quadVertexPtr->instanceID = (float)id;
         rendererData.quadVertexPtr++;
     }
 

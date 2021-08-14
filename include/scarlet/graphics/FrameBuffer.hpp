@@ -1,11 +1,11 @@
 #ifndef FRAMEBUFFER_HPP
 #define FRAMEBUFFER_HPP
 
-#include "scarlet/graphics/GraphicsContext.hpp"
-
 #include "scarlet/common/Types.hpp"
 
 #include "scarlet/debug/Assert.hpp"
+
+#include "scarlet/graphics/GraphicsContext.hpp"
 
 #include "scarlet/utils/Logger.hpp"
 

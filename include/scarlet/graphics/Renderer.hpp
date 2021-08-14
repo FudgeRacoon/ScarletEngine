@@ -5,10 +5,6 @@
 
 #include "scarlet/debug/Assert.hpp"
 
-#include "scarlet/entity/GameObject.hpp"
-#include "scarlet/entity/Transform.hpp"
-#include "scarlet/entity/SpriteRenderer.hpp"
-
 #include "scarlet/graphics/GraphicsContext.hpp"
 #include "scarlet/graphics/VertexBuffer.hpp"
 #include "scarlet/graphics/VertexArray.hpp"
@@ -31,11 +27,11 @@ namespace scarlet
 {   
     struct RendererVertexData
     {
-        Vector3 position;       //12 bytes
-        Vector4 color;          //16 bytes
-        Vector2 textureCoords;  //8  bytes
-        float   textureIndex;   //4  bytes
-        float   instanceID;     //4  bytes
+        Vector3 position;      
+        Vector4 color;         
+        Vector2 textureCoords; 
+        float   textureIndex;  
+        float   instanceID;    
     };
 
     struct RendererData
@@ -125,7 +121,7 @@ namespace scarlet
         static void DrawRotatedQuad(float x, float y, float width, float height, float radians, Color color);
 
     public:
-        static void DrawEntity(GameObject* gameObject);
+        static void DrawSprite(Sprite* sprite, Matrix4 model, uint32 id, Color color);
     };
 }
 

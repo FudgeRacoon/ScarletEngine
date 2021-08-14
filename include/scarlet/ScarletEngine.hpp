@@ -8,7 +8,6 @@
 #include "scarlet/debug/OpenGLDebug.hpp"
 
 #include "scarlet/system/AssetPool.hpp"
-#include "scarlet/system/GameObjectManager.hpp"
 #include "scarlet/system/InputManager.hpp"
 #include "scarlet/system/SceneManager.hpp"
 #include "scarlet/system/EditorSceneManager.hpp"
@@ -17,6 +16,7 @@
 #include "scarlet/imgui/ImGuiManager.hpp"
 
 #include "scarlet/entity/GameObject.hpp"
+#include "scarlet/entity/Registry.hpp"
 #include "scarlet/entity/Component.hpp"
 #include "scarlet/entity/Transform.hpp"
 #include "scarlet/entity/SpriteRenderer.hpp"
@@ -46,6 +46,7 @@
 
 #include "scarlet/utils/Logger.hpp"
 #include "scarlet/utils/MemoryUtils.hpp"
+#include "scarlet/utils/StringUtils.hpp"
 #include "scarlet/utils/TextureUtils.hpp"
 #include "scarlet/utils/Time.hpp"
 

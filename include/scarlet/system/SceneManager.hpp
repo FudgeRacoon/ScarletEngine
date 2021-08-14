@@ -5,8 +5,6 @@
 
 #include "scarlet/core/Scene.hpp"
 
-#include "scarlet/graphics/camera/Camera.hpp"
-
 namespace scarlet
 {
     class SceneManager
@@ -14,8 +12,8 @@ namespace scarlet
     using ScenesArray = std::vector<Scene*>;
 
     protected:
-        static ScenesArray scenes;
         static Scene* activeScene;
+        static ScenesArray scenes;
     
     protected:
         SceneManager() = default;

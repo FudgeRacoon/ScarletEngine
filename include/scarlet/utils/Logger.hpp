@@ -44,11 +44,8 @@ namespace scarlet
         };
 
     private:
-        static std::vector<LoggerEntry> messages;
         static LoggerConfig_Flags configFlags;
-
-    public:
-        static void Configure(LoggerConfig_Flags flags);
+        static std::vector<LoggerEntry> messages;
 
     public:
         template <typename... Args>
@@ -214,6 +211,7 @@ namespace scarlet
     
     public:
         static void CreateLogFile();
+        static void Configure(LoggerConfig_Flags flags);
     };
 }
 

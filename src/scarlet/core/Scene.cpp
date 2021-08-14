@@ -3,12 +3,12 @@ using namespace scarlet;
 
 Scene::Scene(std::string name, uint32 buildIndex) : name(name), buildIndex(buildIndex)
 {
-    this->gameObjectManager = new GameObjectManager();
+    this->registry = new Registry();
     this->sceneCamera = new Camera();
 }
 Scene::~Scene()
 {
-    delete this->gameObjectManager;
+    delete this->registry;
 }
 
 std::string Scene::GetName()
@@ -19,9 +19,9 @@ uint32 Scene::GetBuildIndex()
 {
     return this->buildIndex;
 }
-uint32 Scene::GetGameObjectCount()
+uint32 Scene::GetEntityCount()
 {
-    return this->gameObjectManager->GetGameObjectCount();
+    return this->registry->GetEntityCount();
 }
 Camera* Scene::GetCamera()
 {
@@ -42,35 +42,131 @@ void Scene::SetCamera(Camera* camera)
     this->sceneCamera = camera;
 }
 
-void Scene::OnEnter()
+void Scene::OnEnterRuntime()
 {
-    this->gameObjectManager->PollSetupQueue();
+    this->registry->PollSetupQueue();
 }
-void Scene::OnUpdate()
+void Scene::OnUpdateRuntime()
 {
-    this->gameObjectManager->UpdateGameObjects();
-    this->gameObjectManager->PollDestroyQueue();
+    for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
+        entity.second->Update();
+
+    this->registry->PollDestroyQueue();
 }
 
-void Scene::OnRenderEditor(Camera* editorCamera, editor::Selector* selector)
-{
-    this->gameObjectManager->RenderEditor(editorCamera, selector);
-}
 void Scene::OnRenderRuntime()
 {
-    this->gameObjectManager->RenderRuntime(this->sceneCamera);
+    Renderer::BeginScene(this->sceneCamera);
+
+    for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
+    {
+        Transform* transform = entity.second->GetComponent<Transform>();
+        SpriteRenderer* spriteRenderer = entity.second->GetComponent<SpriteRenderer>();
+
+        if(!spriteRenderer || !spriteRenderer->sprite)
+            return;
+
+        Matrix4 model = Matrix4::Transform(
+            transform->position, 
+            transform->scale, 
+            transform->rotation
+        );
+
+        Renderer::DrawSprite(
+            spriteRenderer->sprite, 
+            model, 
+            entity.second->GetInstanceId(),
+            spriteRenderer->color 
+        );
+    }
+    
+    Renderer::EndScene();
+}
+void Scene::OnRenderEditor(Camera* editorCamera, editor::Selector* editorSelector)
+{
+    {
+        editorSelector->Bind();
+        Renderer::BeginScene(editorCamera);
+        Renderer::BindShader(AssetPool::GetShader("selection_shader"));
+
+        GraphicsContext::ClearBuffers(scarlet::SCARLET_BUFFER_COLOR);
+        
+        for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
+        {
+            Transform* transform = entity.second->GetComponent<Transform>();
+            SpriteRenderer* spriteRenderer = entity.second->GetComponent<SpriteRenderer>();
+
+            if(!spriteRenderer || !spriteRenderer->sprite)
+                return;
+
+            Matrix4 model = Matrix4::Transform(
+                transform->position, 
+                transform->scale, 
+                transform->rotation
+            );
+
+            Renderer::DrawSprite(
+                spriteRenderer->sprite, 
+                model, 
+                entity.second->GetInstanceId(),
+                spriteRenderer->color 
+            );
+        }
+
+        Renderer::EndScene();
+        editorSelector->UnBind();
+    }
+    
+    {
+        Renderer::BeginScene(editorCamera);
+        Renderer::BindShader(AssetPool::GetShader("default_shader"));
+    
+        for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
+        {
+            Transform* transform = entity.second->GetComponent<Transform>();
+            SpriteRenderer* spriteRenderer = entity.second->GetComponent<SpriteRenderer>();
+    
+            if(!spriteRenderer || !spriteRenderer->sprite)
+                return;
+    
+            Matrix4 model = Matrix4::Transform(
+                transform->position, 
+                transform->scale, 
+                transform->rotation
+            );
+    
+            Renderer::DrawSprite(
+                spriteRenderer->sprite, 
+                model, 
+                entity.second->GetInstanceId(),
+                spriteRenderer->color 
+            );
+        }
+        
+        Renderer::EndScene();
+    }
 }
 
-GameObject* Scene::AddGameObject()
+GameObject* Scene::AddEntity()
 {
-    return this->gameObjectManager->AddGameObject();
+    return this->registry->AddEntity();
 }
-GameObject* Scene::GetGameObject(std::string name)
+
+GameObject* Scene::GetEntityById(uint32 id)
 {
-    return this->gameObjectManager->GetGameObject(name);
+    return this->registry->GetEntityById(id);
 }
-void Scene::DestroyGameObject(std::string name)
+GameObject* Scene::GetEntityByName(std::string name)
 {
-    this->gameObjectManager->DestroyGameObject(name);
+    return this->registry->GetEntityByName(name);
+}
+
+void Scene::DestroyEntityById(uint32 id)
+{
+    this->registry->DestroyEntityById(id);
+}
+void Scene::DestroyEntityByName(std::string name)
+{
+    this->registry->DestroyEntityByName(name);
 }
 

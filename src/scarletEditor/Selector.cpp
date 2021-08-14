@@ -1,6 +1,8 @@
 #include "scarletEditor/Selector.hpp"
 using namespace scarlet::editor;
 
+#include "scarlet/system/EditorSceneManager.hpp"
+
 Selector::Selector(uint32 width, uint32 height)
 {
     this->SelectorFrameBuffer = new FrameBuffer();
@@ -35,7 +37,10 @@ void Selector::OnMousePress()
 
         int pixelVal = this->SelectorFrameBuffer->ReadPixel(GL_RED_INTEGER, GL_INT, x, y);
 
-        Logger::LogDebug("%d", pixelVal);
+        GameObject* go = EditorSceneManager::Get()->GetActiveScene()->GetEntityById(pixelVal);
+
+        if(go)
+            Logger::LogDebug("%s", go->GetName().c_str());
     }
 
     this->SelectorFrameBuffer->UnBind();

@@ -54,7 +54,7 @@ void SceneManager::SetActiveScene(int buildIndex)
     }
 
     activeScene = scene;
-    activeScene->OnEnter();
+    activeScene->OnEnterRuntime();
 }
 
 void SceneManager::UpdateActiveScene()
@@ -62,7 +62,7 @@ void SceneManager::UpdateActiveScene()
     if(activeScene == nullptr)
         Logger::LogWarning("No active scene.");
 
-    activeScene->OnUpdate();
+    activeScene->OnUpdateRuntime();
     activeScene->OnRenderRuntime();
 }
 

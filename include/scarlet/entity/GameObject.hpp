@@ -11,13 +11,14 @@
 
 namespace scarlet
 {
-    class GameObjectManager;
+    class Scene;
+    class Registry;
 
     class GameObject
     {
     private:
         std::string name;
-        uint32 instanceID;
+        uint32 instanceId;
         bool active;
 
     private:
@@ -28,10 +29,12 @@ namespace scarlet
         ~GameObject();
     
     public:
+        std::string GetName();
         bool GetActive();
-        uint32 GetInstanceID();
+        uint32 GetInstanceId();
 
     public: 
+        void SetName(std::string name);
         void SetActive(bool value);
 
     public:
@@ -78,8 +81,9 @@ namespace scarlet
     private:
         void Setup();
         void Update();
-    
-    friend GameObjectManager;
+
+    friend Scene;
+    friend Registry;
     };
 }
 

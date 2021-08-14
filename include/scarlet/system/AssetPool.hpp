@@ -14,8 +14,6 @@
 
 #include "scarlet/math/Vector2.hpp"
 
-#include "scarlet/primitives/Rect.hpp"
-
 #include "scarlet/utils/Logger.hpp"
 
 namespace scarlet
