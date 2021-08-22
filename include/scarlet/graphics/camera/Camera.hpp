@@ -19,16 +19,14 @@ namespace scarlet
         Vector3 position;
         Vector3 rotation;
 
-    private:
-        float size;
+    public:
         float rightPlane, leftPlane;
         float bottomPlane, topPlane;
         float nearPlane, farPlane;
-        
-    private:
-        Vector3 direction;
 
     private:
+        float size;
+        Vector3 direction;
         const Vector3 front = Vector3::FRONT();
 
     private:
@@ -44,12 +42,6 @@ namespace scarlet
 
     public:
         float GetSize();
-        float GetRightPlane();
-        float GetLeftPlane();
-        float GetBottomPlane();
-        float GetTopPlane();
-        float GetNearPlane();
-        float GetFarPlane();
 
     public:
         Vector3 GetDirection();

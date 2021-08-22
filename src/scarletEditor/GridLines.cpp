@@ -25,8 +25,8 @@ void GridLines::SetColor(Color color)
 
 void GridLines::OnRender()
 {   
-    float worldWidth = camera->GetRightPlane() * 2;
-    float worldHeight = camera->GetTopPlane() * 2;
+    float worldWidth = camera->rightPlane * 2;
+    float worldHeight = camera->topPlane * 2;
 
     int32 cellHorizontalCount = (worldWidth / this->cellWidth);
     int32 cellVerticalCount = (worldHeight / this->cellHeight);

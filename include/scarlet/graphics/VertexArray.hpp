@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "GL/glew.h"
+
 #include "scarlet/common/Types.hpp"
 
 #include "scarlet/debug/Assert.hpp"

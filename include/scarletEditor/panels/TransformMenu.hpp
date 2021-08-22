@@ -3,7 +3,7 @@
 
 #include "Imgui/imgui.h"
 
-#include "scarlet/imgui/ComponentMenu.hpp"
+#include "scarletEditor/panels/ComponentMenu.hpp"
 
 namespace scarlet
 {

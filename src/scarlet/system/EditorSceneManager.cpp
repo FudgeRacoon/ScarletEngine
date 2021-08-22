@@ -7,6 +7,19 @@ EditorSceneManager* EditorSceneManager::Get()
     return instance;
 }
 
+editor::Selector* EditorSceneManager::GetSelector()
+{
+    return this->selector;
+}
+editor::GridLines* EditorSceneManager::GetGridLines()
+{
+    return this->gridlines;
+}
+editor::CameraController* EditorSceneManager::GetCameraController()
+{
+    return this->cameraController;
+}
+
 void EditorSceneManager::SetCamera(Camera* camera)
 {
     this->editorCamera = camera;
@@ -90,7 +103,11 @@ void EditorSceneManager::UpdateActiveScene()
 
     this->selector->OnMousePress();
 
+    GraphicsContext::GetRenderTarget()->Bind();
+
     this->gridlines->OnRender();
+
+    GraphicsContext::GetRenderTarget()->UnBind();
 
     activeScene->OnRenderEditor(this->editorCamera, this->selector);
 }

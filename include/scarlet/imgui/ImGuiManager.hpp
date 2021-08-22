@@ -11,53 +11,28 @@
 #include "Imgui/imgui_impl_opengl3.h"
 
 #include "scarlet/core/Window.hpp"
+
+#include "scarlet/imgui/ImGuiPanel.hpp"
+
 #include "scarlet/utils/Logger.hpp"
 
 namespace scarlet
 {
-    class ImGuiWindow
-    {
-    protected:
-        std::string title;
-
-    public:
-        ImGuiWindow(std::string title);
-        virtual ~ImGuiWindow();
-
-    public:
-        std::string GetTitle()
-        {
-            return this->title;
-        }
-        
-    public:
-        void SetTitle(std::string title)
-        {
-            this->title = title;
-        }
-    
-    public:
-        virtual void OnUpdate() = 0;
-
-    };
-
     class ImGuiManager
     {
     private:
-        static std::map<std::string, ImGuiWindow*> imguiWindows;
+        static std::map<std::string, ImGuiPanel*> ImGuiPanels;
 
     public:
-        static void OnAttach();
+        static void OnInit();
         static void OnEvent(SDL_Event* event);
-        static void OnDetach();
-
-    public:
-        static ImGuiWindow* AddWindow(ImGuiWindow* window);
-        static ImGuiWindow* GetWindow(std::string title);
-        static void RemoveWindow(std::string title);
-
-    public:
         static void OnRender();
+        static void OnShutDown();
+
+    public:
+        static ImGuiPanel* AddPanel(ImGuiPanel* panel);
+        static ImGuiPanel* GetPanel(std::string title);
+        static void RemovePanel(std::string title);
     };
 }
 

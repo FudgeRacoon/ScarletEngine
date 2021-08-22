@@ -36,16 +36,16 @@ namespace scarlet
         uint32 ID;
 
     private:
-        std::vector<VertexBufferLayout> layouts;
         size_t stride;
+        std::vector<VertexBufferLayout> layouts;
 
     public:
         VertexBuffer(const void* data, size_t size, int usage);
         ~VertexBuffer();
 
     public:
-        std::vector<VertexBufferLayout> GetLayouts();
         size_t GetStride();
+        std::vector<VertexBufferLayout> GetLayouts();
 
     public:
         template<typename T>

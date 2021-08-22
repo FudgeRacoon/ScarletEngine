@@ -11,12 +11,39 @@ FrameBuffer::~FrameBuffer()
     GLCALL(glDeleteTextures(1, &this->colorAttachmentID));
 }
 
-bool FrameBuffer::CheckStatus()
+uint32 FrameBuffer::GetFrameBufferID()
 {
+    return this->frameBufferID;
+}
+uint32 FrameBuffer::GetColorAttachmentID()
+{
+    return this->colorAttachmentID;
+}
+
+void FrameBuffer::AttachColorTexture(FrameBufferSpecification& spec)
+{
+    this->spec.width = spec.width;
+    this->spec.height = spec.height;
+    this->spec.type = spec.type;
+    this->spec.format = spec.format;
+    this->spec.internalFormat = spec.internalFormat;
+
     GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, this->frameBufferID));
 
-    GLenum statusCode;
+    GLCALL(glGenTextures(1, &this->colorAttachmentID));
+    GLCALL(glBindTexture(GL_TEXTURE_2D, this->colorAttachmentID));
 
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+    
+    GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, this->spec.internalFormat, this->spec.width, this->spec.height, 0, this->spec.format, this->spec.type, nullptr));
+
+    GLCALL(glBindTexture(GL_TEXTURE_2D, 0));
+
+    GLCALL(glDrawBuffer(GL_COLOR_ATTACHMENT0));
+    GLCALL(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->colorAttachmentID, 0));
+
+    GLenum statusCode;
     if((statusCode =  glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)
     {
         char* status;
@@ -33,29 +60,40 @@ bool FrameBuffer::CheckStatus()
 
         Logger::LogError("Opengl FrameBuffer Error: %s", status);
         delete[] status;
-
-        GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
-
-        return false;
     }
-
+    
     GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
-
-    return true;
 }
-
-uint32 FrameBuffer::GetFrameBufferID()
+void FrameBuffer::AttachDepthTexture(FrameBufferSpecification& spec)
 {
-    return this->frameBufferID;
-}
-uint32 FrameBuffer::GetColorAttachmentID()
-{
-    return this->colorAttachmentID;
+    
 }
 
+void FrameBuffer::Resize(uint32 width, uint32 height)
+{
+    this->spec.width = width;
+    this->spec.height = height;
+
+    GLCALL(glDeleteTextures(1, &this->colorAttachmentID));
+    
+    GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, this->frameBufferID));
+
+    GLCALL(glGenTextures(1, &this->colorAttachmentID));
+    GLCALL(glBindTexture(GL_TEXTURE_2D, this->colorAttachmentID));
+
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+    
+    GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, this->spec.internalFormat, this->spec.width, this->spec.height, 0, this->spec.format, this->spec.type, nullptr));
+
+    GLCALL(glBindTexture(GL_TEXTURE_2D, 0));
+
+    GLCALL(glDrawBuffer(GL_COLOR_ATTACHMENT0));
+    GLCALL(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->colorAttachmentID, 0));
+}
 int FrameBuffer::ReadPixel(int32 format, int32 type, int x, int y)
 {
-    SCARLET_CORE_ASSERT((x >= 0 && x < this->width) && (y >= 0 && y < this->height), "Pixel coordinates are out of bound.");
+    SCARLET_CORE_ASSERT((x >= 0 && x < this->spec.width) && (y >= 0 && y < this->spec.height), "Pixel coordinates are out of bound.");
 
     int pixelData;
 
@@ -67,30 +105,6 @@ int FrameBuffer::ReadPixel(int32 format, int32 type, int x, int y)
     GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 
     return pixelData;
-}
-void FrameBuffer::AttachColorTexture(FrameBufferSpecification& spec)
-{
-    this->width = spec.width;
-    this->height = spec.height;
-
-    GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, this->frameBufferID));
-
-    GLCALL(glGenTextures(1, &this->colorAttachmentID));
-    GLCALL(glBindTexture(GL_TEXTURE_2D, this->colorAttachmentID));
-
-    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
-    GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
-    
-    GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, spec.internalFormat, this->width, this->height, 0, spec.format, spec.type, nullptr));
-
-    GLCALL(glBindTexture(GL_TEXTURE_2D, 0));
-
-    GLCALL(glDrawBuffer(GL_COLOR_ATTACHMENT0));
-    GLCALL(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->colorAttachmentID, 0));
-
-    GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
-
-    SCARLET_CORE_ASSERT(CheckStatus());
 }
 
 void FrameBuffer::Bind()

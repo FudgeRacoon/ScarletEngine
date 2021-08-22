@@ -9,6 +9,7 @@
 
 #include "scarlet/core/Window.hpp"
 
+#include "scarlet/graphics/FrameBuffer.hpp"
 #include "scarlet/graphics/VertexArray.hpp"
 #include "scarlet/graphics/IndexBuffer.hpp"
 
@@ -50,13 +51,16 @@ namespace scarlet
     {
     private:
         static Vector4 viewport;
+        static FrameBuffer* renderTarget;
 
     public:
         static void OnInit();
 
     public:
         static Vector4 GetViewPort();
+        static FrameBuffer* GetRenderTarget();
         static uint32 GetMaxTextureSlots();
+        static const byte* GetOpenglVersion();
 
     public:
         static void SetViewPort(uint32 x, uint32 y, uint32 width, uint32 height);
@@ -69,10 +73,6 @@ namespace scarlet
     public:
         static void ClearBuffers(Graphics_BufferType buffers);
         static void SwapBuffers();
-    
-    public:
-        static void DrawArrays(Graphics_DrawMode mode, VertexArray* vao, uint32 count);
-        static void DrawElements(Graphics_DrawMode mode, VertexArray* vao, IndexBuffer* ibo, uint32 count);
     };
 }
 

@@ -39,13 +39,11 @@ void StateManager::ChangeState(std::string name)
         return;
     }
 
-    if(currentState != nullptr)
-        currentState->OnExit();
-
     currentState = it->second;
     currentState->OnEnter();
 }
 void StateManager::UpdateState()
 {
     currentState->OnUpdate();
+    currentState->OnImGuiRender();
 }

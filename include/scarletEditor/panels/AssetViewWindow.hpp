@@ -7,7 +7,7 @@
 
 #include "scarlet/graphics/Sprite.hpp"
 
-#include "scarlet/imgui/ImGuiManager.hpp"
+#include "scarlet/imgui/ImGuiPanel.hpp"
 
 #include "scarlet/system/AssetPool.hpp"
 
@@ -17,7 +17,7 @@
 
 namespace scarlet
 {
-    class AssetViewWindow : public ImGuiWindow
+    class AssetViewWindow : public ImGuiPanel
     {
     private:
         int buttonID;
@@ -28,10 +28,10 @@ namespace scarlet
         bool showTextures;
 
     public:
-        AssetViewWindow() : ImGuiWindow("Assets") 
+        AssetViewWindow() : ImGuiPanel("Assets") 
         {
             this->buttonID = 0;
-            this->imageSize = 1.0f;
+            this->imageSize = 0.75f;
 
             this->showSprites = true;
             this->showTextures = false;

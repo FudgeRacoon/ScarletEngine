@@ -10,10 +10,29 @@ Application* Application::Get()
 }
 
 void Application::Run(int argc, char* argv[])
-{
+{   
+    Time::Start();
+
+    Logger::OnInit();
+    Logger::Configure(LoggerConfig::SCARLET_ENABLE_LOGGER);
+    
+    Window::OnInit("Scarlet Engine");
+    Window::SetVSync(true);
+    
+    GraphicsContext::OnInit();
+    GraphicsContext::SetViewPort(0, 0, Window::GetWidth(), Window::GetHeight());
+    GraphicsContext::SetBlendingFunction(Graphics_BlendFunction::SCARLET_SRC_ALPHA, Graphics_BlendFunction::SCARLET_ONE_MINUS_SRC_ALPHA);
+    GraphicsContext::SetClearColor(Color(22, 22, 22));
+    GraphicsContext::EnableBlending(true);
+
+    AssetPool::OnInit();
+    Renderer::OnInit();
+    InputManager::OnInit();
+    ImGuiManager::OnInit();
+
     this->OnInit();
     
-    while(Window::Get()->Running())
+    while(Window::IsRunning())
     {
         Time::Elapsed();
 
@@ -24,13 +43,8 @@ void Application::Run(int argc, char* argv[])
                 Logger::LogWarning("%.2fms lag has occured.", lag);
 
             InputManager::OnEvent();
-            ImGuiManager::OnEvent(InputManager::GetSDLEvent());
-
-            GraphicsContext::ClearBuffers(Graphics_BufferType::SCARLET_BUFFER_COLOR);
 
             this->OnUpdate();
-
-            ImGuiManager::OnRender();
 
             GraphicsContext::SwapBuffers();
 
@@ -42,36 +56,15 @@ void Application::Run(int argc, char* argv[])
 
     Logger::CreateLogFile();
 
-    ImGuiManager::OnDetach();
-    
+    ImGuiManager::OnShutDown();
     Renderer::OnShutDown();
-
-    Window::Get()->Release();
+    AssetPool::OnShutDown();
+    Window::OnShutDown();
+    Logger::OnShutDown();
 }
 
 void Application::OnInit()
 {   
-    Time::Start();
-
-    Window::Get()->Init("Scarlet Engine", 800, 600, true);
-    Window::Get()->EnableVSync(true);
-    
-    InputManager::OnInit();
-
-    GraphicsContext::OnInit();
-    GraphicsContext::SetViewPort(0, 0, Window::Get()->GetWidth(), Window::Get()->GetHeight());
-    GraphicsContext::SetBlendingFunction(Graphics_BlendFunction::SCARLET_SRC_ALPHA, Graphics_BlendFunction::SCARLET_ONE_MINUS_SRC_ALPHA);
-    GraphicsContext::SetClearColor(Color(22, 22, 22));
-    GraphicsContext::EnableBlending(true);
-
-    AssetPool::OnInit();
-
-    Renderer::OnInit();
-
-    ImGuiManager::OnAttach();
-
-    Logger::Configure(LoggerConfig_Flags::ENABLE_LOGGER);
-
     StateManager::AddState("Editor", new Editor());
     StateManager::AddState("Game", new Game());
     StateManager::ChangeState("Editor");

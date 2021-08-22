@@ -1,85 +1,54 @@
 #include "scarlet/core/Window.hpp"
 using namespace scarlet;
 
-#include "scarlet/utils/Logger.hpp"
+#define WINDOW_FLAGS SDL_WINDOW_MAXIMIZED\
+    | SDL_WINDOW_RESIZABLE\ 
+    | SDL_WINDOW_OPENGL
+
+std::string Window::title;
+uint32 Window::width; 
+uint32 Window::height;
+
+bool Window::running = false;
+
+SDL_Window* Window::window = nullptr;
+SDL_GLContext Window::context;
 
 std::string Window::GetTitle()
 {
-    return this->title;
+    return title;
 }
-int Window::GetWidth()
+uint32 Window::GetWidth()
 {
-    return this->width;
+    return width;
 }
-int Window::GetHeight()
+uint32 Window::GetHeight()
 {
-    return this->height;
+    return height;
 }
 SDL_Window* Window::GetSDLWindow()
 {
-    return this->window;
+    return window;
 }
 SDL_GLContext Window::GetSDLWindowContext()
 {
-    return this->context;
+    return context;
 }
 
 void Window::SetTitle(std::string value)
 {
-    this->title = value;
-    SDL_SetWindowTitle(this->window, value.c_str());
+    title = value;
+    SDL_SetWindowTitle(window, value.c_str());
 }
-
-Window* Window::Get()
+void Window::SetWidth(uint32 value)
 {
-    static Window* instance  = new Window();
-    return instance;
+    width = value;
 }
-int Window::Init(std::string title, int width, int height, bool fullscreen)
+void Window::SetHeight(uint32 value)
 {
-    Logger::LogInfo("Intitializing Window Subsystem...");
-
-    if(SDL_Init(SDL_INIT_VIDEO) != 0)
-    {
-        Logger::LogFatal("Cannot initialize SDL2 window");
-        return EXIT_FAILURE;
-    }
-
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-    if(fullscreen)
-    {
-        SDL_DisplayMode displayMode;
-        SDL_GetCurrentDisplayMode(0, &displayMode);
-        this->width = displayMode.w;
-        this->height = displayMode.h;
-    }
-    else
-    {
-        this->width = width;
-        this->height = height;
-    }
-    
-    this->window = SDL_CreateWindow
-    (
-        title.c_str(),
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        this->width, 
-        this->height,
-        fullscreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_MAXIMIZED : SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
-    );
-
-    this->context = SDL_GL_CreateContext(this->window);
-
-    this->running = true;
-    
-    return EXIT_SUCCESS;
+    height = value;
 }
-
-void Window::EnableVSync(bool value)
+void Window::SetVSync(bool value)
 {
     switch(value)
     {
@@ -88,18 +57,52 @@ void Window::EnableVSync(bool value)
     }
 }
 
-bool Window::Running()
+void Window::OnInit(std::string title)
 {
-    return this->running;
+    Logger::LogInfo("Intitializing Window Subsystem...");
+
+    if(SDL_Init(SDL_INIT_VIDEO) != 0)
+    {
+        Logger::LogFatal("Cannot initialize SDL2 window");
+        return;
+    }
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+    SDL_DisplayMode displayMode;
+    SDL_GetCurrentDisplayMode(0, &displayMode);
+    width = displayMode.w;
+    height = displayMode.h;
+   
+    window = SDL_CreateWindow
+    (
+        title.c_str(),
+        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED,
+        width, 
+        height,
+        WINDOW_FLAGS
+    );
+
+    context = SDL_GL_CreateContext(window);
+
+    running = true;
+}
+void Window::OnShutDown()
+{
+    SDL_GL_DeleteContext(context);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+}
+
+bool Window::IsRunning()
+{
+    return running;
 }
 
 void Window::Quit()
 {
-    this->running = false;
-}
-void Window::Release()
-{
-    SDL_GL_DeleteContext(this->context);
-    SDL_DestroyWindow(this->window);
-    SDL_Quit();
+    running = false;
 }

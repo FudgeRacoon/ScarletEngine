@@ -28,22 +28,22 @@ void Selector::OnMouseDrag()
 }
 void Selector::OnMousePress()
 {
-    this->SelectorFrameBuffer->Bind();
+    // this->SelectorFrameBuffer->Bind();
 
-    if(InputManager::GetMouseButton(0))
-    {
-        int x = scarlet::InputManager::GetMousePosition().x;
-        int y = scarlet::GraphicsContext::GetViewPort().w - scarlet::InputManager::GetMousePosition().y;
+    // if(InputManager::GetMouseButton(0))
+    // {
+    //     int x = scarlet::InputManager::GetMousePosition().x;
+    //     int y = scarlet::GraphicsContext::GetViewPort().w - scarlet::InputManager::GetMousePosition().y;
 
-        int pixelVal = this->SelectorFrameBuffer->ReadPixel(GL_RED_INTEGER, GL_INT, x, y);
+    //     int pixelVal = this->SelectorFrameBuffer->ReadPixel(GL_RED_INTEGER, GL_INT, x, y);
 
-        GameObject* go = EditorSceneManager::Get()->GetActiveScene()->GetEntityById(pixelVal);
+    //     GameObject* go = EditorSceneManager::Get()->GetActiveScene()->GetEntityById(pixelVal);
 
-        if(go)
-            Logger::LogDebug("%s", go->GetName().c_str());
-    }
+    //     if(go)
+    //         Logger::LogDebug("%s", go->GetName().c_str());
+    // }
 
-    this->SelectorFrameBuffer->UnBind();
+    // this->SelectorFrameBuffer->UnBind();
 }
 
 void Selector::Bind()

@@ -20,6 +20,14 @@ void CameraController::SetMouseSensitvity(float mouseSensitvity)
     this->mouseSensitvity = mouseSensitvity;
 }
 
+void CameraController::OnResize()
+{
+    this->controlledCamera->leftPlane   = -GraphicsContext::GetViewPort().z / 2; 
+    this->controlledCamera->rightPlane  =  GraphicsContext::GetViewPort().z / 2;
+    
+    this->controlledCamera->bottomPlane = -GraphicsContext::GetViewPort().w / 2; 
+    this->controlledCamera->topPlane    =  GraphicsContext::GetViewPort().w / 2;
+}
 void CameraController::OnMouseDown()
 {
     if(InputManager::GetMouseButton(1))

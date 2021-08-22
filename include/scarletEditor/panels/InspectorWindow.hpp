@@ -4,13 +4,14 @@
 #include <vector>
 
 #include "scarlet/imgui/ImGuiManager.hpp"
-#include "scarlet/imgui/ComponentMenu.hpp"
-#include "scarlet/imgui/TransformMenu.hpp"
-#include "scarlet/imgui/SpriteRendererMenu.hpp"
+
+#include "scarletEditor/panels/ComponentMenu.hpp"
+#include "scarletEditor/panels/TransformMenu.hpp"
+#include "scarletEditor/panels/SpriteRendererMenu.hpp"
 
 namespace scarlet
 {
-    class InspectorWindow : public ImGuiWindow
+    class InspectorWindow : public ImGuiPanel
     {
     private:
         std::vector<ComponentMenu*> componentMenus;

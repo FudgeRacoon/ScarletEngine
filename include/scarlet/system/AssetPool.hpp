@@ -36,6 +36,7 @@ namespace scarlet
 
     public:
         static void OnInit();
+        static void OnShutDown();
 
     public:
         static Sprite* AddSprite(std::string name, Texture* texture);

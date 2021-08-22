@@ -1,7 +1,7 @@
 #ifndef COMPONENT_HPP
 #define COMPONENT_HPP
 
-#include "scarlet/imgui/ComponentMenu.hpp"
+#include "scarletEditor/panels/ComponentMenu.hpp"
 
 namespace scarlet
 {

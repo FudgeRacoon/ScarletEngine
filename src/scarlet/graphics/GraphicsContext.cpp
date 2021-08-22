@@ -1,6 +1,7 @@
 #include "scarlet/graphics/GraphicsContext.hpp"
 using namespace scarlet;
 
+FrameBuffer* GraphicsContext::renderTarget = nullptr;
 Vector4 GraphicsContext::viewport;
 
 void GraphicsContext::OnInit()
@@ -11,19 +12,40 @@ void GraphicsContext::OnInit()
     if(glewInit() != 0)
     {
         Logger::LogFatal("Cannot Initialize Glew.");
-        Window::Get()->Quit();
+        Window::Quit();
     }
+
+    FrameBufferSpecification spec; 
+
+    spec.width = Window::GetWidth();
+    spec.height = Window::GetHeight();
+    spec.type = GL_UNSIGNED_BYTE;
+    spec.format = GL_RGBA;
+    spec.internalFormat = GL_RGBA;
+    
+    FrameBuffer* fbo = new FrameBuffer();
+    fbo->AttachColorTexture(spec);
+    
+    renderTarget = fbo;
 }
 
 Vector4 GraphicsContext::GetViewPort()
 {
     return viewport;
 }
+FrameBuffer* GraphicsContext::GetRenderTarget()
+{
+    return renderTarget;
+}
 uint32 GraphicsContext::GetMaxTextureSlots()
 {
     int maxSlots;
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxSlots);
     return maxSlots;
+}
+const byte* GraphicsContext::GetOpenglVersion()
+{
+    return glGetString(GL_VERSION);
 }
 
 void GraphicsContext::SetViewPort(uint32 x, uint32 y, uint32 width, uint32 height)
@@ -60,20 +82,5 @@ void GraphicsContext::ClearBuffers(Graphics_BufferType buffers)
 }
 void GraphicsContext::SwapBuffers()
 {
-    SDL_GL_SwapWindow(Window::Get()->GetSDLWindow());
-}
-
-void GraphicsContext::DrawArrays(Graphics_DrawMode mode, VertexArray* vao, uint32 count)
-{
-    vao->Bind();
-    GLCALL(glDrawArrays(mode, 0, count));
-    vao->UnBind();
-}
-void GraphicsContext::DrawElements(Graphics_DrawMode mode, VertexArray* vao, IndexBuffer* ibo, uint32 count)
-{
-    vao->Bind();
-    ibo->Bind();
-    GLCALL(glDrawElements(mode, count, GL_UNSIGNED_INT, 0));
-    ibo->UnBind();
-    vao->UnBind();
+    SDL_GL_SwapWindow(Window::GetSDLWindow());
 }

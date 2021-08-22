@@ -56,7 +56,11 @@ void Scene::OnUpdateRuntime()
 
 void Scene::OnRenderRuntime()
 {
+    GraphicsContext::GetRenderTarget()->Bind();
     Renderer::BeginScene(this->sceneCamera);
+    Renderer::BindShader(AssetPool::GetShader("default_shader"));
+
+    GraphicsContext::ClearBuffers(Graphics_BufferType::SCARLET_BUFFER_COLOR);
 
     for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
     {
@@ -81,6 +85,7 @@ void Scene::OnRenderRuntime()
     }
     
     Renderer::EndScene();
+    GraphicsContext::GetRenderTarget()->UnBind();
 }
 void Scene::OnRenderEditor(Camera* editorCamera, editor::Selector* editorSelector)
 {
@@ -118,9 +123,12 @@ void Scene::OnRenderEditor(Camera* editorCamera, editor::Selector* editorSelecto
     }
     
     {
+        GraphicsContext::GetRenderTarget()->Bind();
         Renderer::BeginScene(editorCamera);
         Renderer::BindShader(AssetPool::GetShader("default_shader"));
-    
+
+        GraphicsContext::ClearBuffers(Graphics_BufferType::SCARLET_BUFFER_COLOR);
+
         for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
         {
             Transform* transform = entity.second->GetComponent<Transform>();
@@ -144,6 +152,7 @@ void Scene::OnRenderEditor(Camera* editorCamera, editor::Selector* editorSelecto
         }
         
         Renderer::EndScene();
+        GraphicsContext::GetRenderTarget()->UnBind();
     }
 }
 

@@ -59,8 +59,7 @@ void SceneManager::SetActiveScene(int buildIndex)
 
 void SceneManager::UpdateActiveScene()
 {
-    if(activeScene == nullptr)
-        Logger::LogWarning("No active scene.");
+    SCARLET_CORE_ASSERT(this->activeScene != nullptr, "No active scene to update.");
 
     activeScene->OnUpdateRuntime();
     activeScene->OnRenderRuntime();

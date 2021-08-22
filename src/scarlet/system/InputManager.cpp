@@ -29,18 +29,28 @@ void InputManager::OnEvent()
     {
         switch(event.type)
         {
-        case SDL_QUIT: 
+            case SDL_QUIT: { Window::Quit(); break;}
+
+            case SDL_WINDOWEVENT:
             {
-                Window::Get()->Quit();
-            } break;
-        
-        case SDL_MOUSEWHEEL: 
+                if(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+                {
+                    Window::SetWidth(event.window.data1);
+                    Window::SetHeight(event.window.data2);
+                }
+            
+                break;
+            }
+
+            case SDL_MOUSEWHEEL: 
             {
                 if(event.wheel.y > 0)
                     mouseScrollDelta = 1;
                 else if(event.wheel.y < 0)
                     mouseScrollDelta = -1;
-            } break;
+
+                break;
+            } 
         }    
     }
 

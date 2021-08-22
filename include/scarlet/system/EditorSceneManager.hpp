@@ -38,6 +38,11 @@ namespace scarlet
         static EditorSceneManager* Get();
 
     public:
+        editor::Selector* GetSelector();
+        editor::GridLines* GetGridLines();
+        editor::CameraController* GetCameraController();
+
+    public:
         void SetCamera(Camera* camera);
         void SetActiveScene(int buildIndex) override;
 

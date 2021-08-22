@@ -32,6 +32,7 @@ namespace scarlet
             void SetMouseSensitvity(float mouseSensitvity);
     
         public:
+            void OnResize();
             void OnMouseDown();
             void OnMouseScroll();
         };

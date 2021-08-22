@@ -23,7 +23,10 @@ namespace scarlet
         uint32 month;
         uint32 year;
     };
+}
 
+namespace scarlet
+{
     class Time
     {
     private:

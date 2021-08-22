@@ -1,11 +1,11 @@
 #ifndef FRAMEBUFFER_HPP
 #define FRAMEBUFFER_HPP
 
+#include "GL/glew.h"
+
 #include "scarlet/common/Types.hpp"
 
 #include "scarlet/debug/Assert.hpp"
-
-#include "scarlet/graphics/GraphicsContext.hpp"
 
 #include "scarlet/utils/Logger.hpp"
 
@@ -25,26 +25,24 @@ namespace scarlet
     private:
         uint32 frameBufferID;
         uint32 colorAttachmentID;
-
-    private:
-        uint32 width;
-        uint32 height;
+        FrameBufferSpecification spec;
 
     public:
         FrameBuffer();
         ~FrameBuffer();
     
-    private:
-        bool CheckStatus();
-
     public:
         uint32 GetFrameBufferID();
         uint32 GetColorAttachmentID();
 
     public:
-        int ReadPixel(int32 format, int32 type, int x, int y);
         void AttachColorTexture(FrameBufferSpecification& spec);
+        void AttachDepthTexture(FrameBufferSpecification& spec);
         
+    public:
+        void Resize(uint32 width, uint32 height);
+        int ReadPixel(int32 format, int32 type, int x, int y);
+    
     public:
         void Bind();
         void UnBind();

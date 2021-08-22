@@ -1,4 +1,4 @@
-#include "scarlet/imgui/ComponentMenu.hpp"
+#include "scarletEditor/panels/ComponentMenu.hpp"
 using namespace scarlet;
 
 ComponentMenu::ComponentMenu(std::string title)

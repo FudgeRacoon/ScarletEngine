@@ -24,11 +24,11 @@ Camera::Camera(Vector3 position)
     
     this->direction   =  Vector3::FRONT();
 
-    this->leftPlane   = -Window::Get()->GetWidth() / 2; 
-    this->rightPlane  =  Window::Get()->GetWidth() / 2;
+    this->leftPlane   = -GraphicsContext::GetViewPort().z / 2; 
+    this->rightPlane  =  GraphicsContext::GetViewPort().z / 2;
     
-    this->bottomPlane = -Window::Get()->GetHeight() / 2; 
-    this->topPlane    =  Window::Get()->GetHeight() / 2;
+    this->bottomPlane = -GraphicsContext::GetViewPort().w / 2; 
+    this->topPlane    =  GraphicsContext::GetViewPort().w / 2;
     
     this->nearPlane   =  0.0f; 
     this->farPlane    = -100.0f;
@@ -36,8 +36,8 @@ Camera::Camera(Vector3 position)
 
 Vector3 Camera::ScreenToWorldPoint(Vector3 point)
 {
-    int width = Window::Get()->GetWidth();
-    int height = Window::Get()->GetHeight();
+    int width = GraphicsContext::GetViewPort().z;
+    int height = GraphicsContext::GetViewPort().w;
     
     float x = point.x / width;
     float y = (height - point.y) / height;
@@ -56,30 +56,6 @@ Vector3 Camera::ScreenToWorldPoint(Vector3 point)
 float Camera::GetSize()
 {
     return this->size;
-}
-float Camera::GetRightPlane()
-{
-    return this->rightPlane * this->size;
-}
-float Camera::GetLeftPlane()
-{
-    return this->leftPlane * this->size;
-}
-float Camera::GetBottomPlane()
-{
-    return this->bottomPlane * this->size;
-}
-float Camera::GetTopPlane()
-{
-    return this->topPlane * this->size;
-}
-float Camera::GetNearPlane()
-{
-    return this->nearPlane;
-}
-float Camera::GetFarPlane()
-{
-    return this->farPlane;
 }
 
 Vector3 Camera::GetDirection()

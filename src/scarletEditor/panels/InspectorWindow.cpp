@@ -1,7 +1,7 @@
-#include "scarlet/imgui/InspectorWindow.hpp"
+#include "scarletEditor/panels/InspectorWindow.hpp"
 using namespace scarlet;
 
-InspectorWindow::InspectorWindow() : ImGuiWindow("Inspector")
+InspectorWindow::InspectorWindow() : ImGuiPanel("Inspector")
 {
     this->componentMenus.push_back(new TransformMenu());
     this->componentMenus.push_back(new SpriteRendererMenu());

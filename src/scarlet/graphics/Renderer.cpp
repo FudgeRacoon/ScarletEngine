@@ -46,13 +46,13 @@ void Renderer::Flush()
         "uProj", rendererData.rendererCamera->GetProjectionMatrix()
     );
 
-    GraphicsContext::DrawArrays(
+    DrawArrays(
         Graphics_DrawMode::SCARLET_LINES,
         rendererData.lineVertexArray,
         rendererData.lineCount * 2
     );
 
-    GraphicsContext::DrawElements(
+    DrawElements(
         Graphics_DrawMode::SCARLET_TRIANGLES, 
         rendererData.quadVertexArray, 
         rendererData.quadIndexBuffer,
@@ -124,6 +124,21 @@ void Renderer::InitTextureSlots()
 void Renderer::InitShaders()
 {   
     rendererData.currentShader = AssetPool::GetShader("default_shader");
+}
+
+void Renderer::DrawArrays(Graphics_DrawMode mode, VertexArray* vao, uint32 count)
+{
+    vao->Bind();
+    GLCALL(glDrawArrays(mode, 0, count));
+    vao->UnBind();
+}
+void Renderer::DrawElements(Graphics_DrawMode mode, VertexArray* vao, IndexBuffer* ibo, uint32 count)
+{
+    vao->Bind();
+    ibo->Bind();
+    GLCALL(glDrawElements(mode, count, GL_UNSIGNED_INT, 0));
+    ibo->UnBind();
+    vao->UnBind();
 }
 
 void Renderer::OnInit()

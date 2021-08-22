@@ -7,46 +7,52 @@
 #include "GL/glew.h"
 #include "SDL2/SDL.h"
 
+#include "scarlet/common/Types.hpp"
+
+#include "scarlet/utils/Logger.hpp"
+
 namespace scarlet
 {
     class Window
     {
     private:
-        std::string title;
-        int width, height;
-        bool running;
+        static std::string title;
+        static uint32 width;
+        static uint32 height;
 
     private:
-        SDL_Window* window;
-        SDL_GLContext context;
+        static bool running;
 
     private:
-        Window() = default;
-        Window(const Window& window) = delete;
+        static SDL_Window*   window;
+        static SDL_GLContext context;
     
-    public:
-        std::string GetTitle();
-        int GetWidth();
-        int GetHeight();
-        SDL_Window* GetSDLWindow();
-        SDL_GLContext GetSDLWindowContext();
-    
-    public:
-        void SetTitle(std::string value);
+    private:
+        Window() = delete;
+        ~Window() = delete;
 
     public:
-        static Window* Get();
-        int Init(std::string title, int width, int height, bool fullscreen);
+        static std::string GetTitle();
+        static uint32 GetWidth();
+        static uint32 GetHeight();
+        static SDL_Window* GetSDLWindow();
+        static SDL_GLContext GetSDLWindowContext();
     
     public:
-        void EnableVSync(bool value);
+        static void SetTitle(std::string value);
+        static void SetWidth(uint32 value);
+        static void SetHeight(uint32 value);
+        static void SetVSync(bool value);
 
     public:
-        bool Running();
+        static void OnInit(std::string title);
+        static void OnShutDown();
+    
+    public:
+        static bool IsRunning();
 
     public:
-        void Quit();
-        void Release();
+        static void Quit();
     };
 }
 

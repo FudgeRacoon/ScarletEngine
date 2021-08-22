@@ -17,7 +17,7 @@ public:
         std::cout << "Game scene is being updated" << '\n';
     }
 
-    void OnExit() override
+    void OnImGuiRender() override
     {
         std::cout << "Exited the game scene" << '\n';
     }

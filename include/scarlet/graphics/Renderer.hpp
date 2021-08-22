@@ -88,6 +88,10 @@ namespace scarlet
         static void InitTextureSlots();
         static void InitShaders();
 
+    private:
+        static void DrawArrays(Graphics_DrawMode mode, VertexArray* vao, uint32 count);
+        static void DrawElements(Graphics_DrawMode mode, VertexArray* vao, IndexBuffer* ibo, uint32 count);
+
     public:
         static void OnInit();
         static void OnShutDown();

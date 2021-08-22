@@ -3,7 +3,7 @@
 
 #include "ImGui/imgui.h"
 
-#include "scarlet/imgui/ComponentMenu.hpp"
+#include "scarletEditor/panels/ComponentMenu.hpp"
 
 #include "scarlet/utils/MemoryUtils.hpp"
 

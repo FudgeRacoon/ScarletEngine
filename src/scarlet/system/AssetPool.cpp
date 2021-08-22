@@ -31,6 +31,10 @@ void AssetPool::OnInit()
 
     AddTexture("white_texture", 0xffffffff, 32, 32);
 }
+void AssetPool::OnShutDown()
+{
+    
+}
 
 Sprite* AssetPool::AddSprite(std::string name, Texture* texture)
 {
