@@ -7,7 +7,7 @@
 
 #include "scarlet/system/InputManager.hpp"
 
-#include "scarlet/utils/Logger.hpp"
+#include "scarlet/utils/logger/Logger.hpp"
 
 #include "scarlet/graphics/GraphicsContext.hpp"
 #include "scarlet/graphics/FrameBuffer.hpp"

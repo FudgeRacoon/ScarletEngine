@@ -7,6 +7,8 @@
 
 #include "scarlet/core/IState.hpp"
 
+#include "scarlet/utils/logger/Logger.hpp"
+
 namespace scarlet
 {
     class StateManager

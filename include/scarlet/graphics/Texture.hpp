@@ -14,9 +14,9 @@
 
 #include "scarlet/math/Math.hpp"
 
-#include "scarlet/utils/Logger.hpp"
 #include "scarlet/utils/MemoryUtils.hpp"
 #include "scarlet/utils/TextureUtils.hpp"
+#include "scarlet/utils/logger/Logger.hpp"
 
 namespace scarlet
 {   

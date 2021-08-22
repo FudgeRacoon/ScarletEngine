@@ -9,7 +9,7 @@
 
 #include "scarlet/common/Types.hpp"
 
-#include "scarlet/utils/Logger.hpp"
+#include "scarlet/utils/logger/Logger.hpp"
 
 namespace scarlet
 {

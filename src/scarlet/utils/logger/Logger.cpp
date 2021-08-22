@@ -1,7 +1,7 @@
-#include "scarlet/utils/Logger.hpp"
+#include "scarlet/utils/logger/Logger.hpp"
 using namespace scarlet;
 
-std::vector<Logger::LoggerEntry*> Logger::messages;
+std::vector<LoggerEntry*> Logger::messages;
 LoggerConfig Logger::configFlags = LoggerConfig::SCARLET_ENABLE_LOGGER | LoggerConfig::SCARLET_ENABLE_FILE_OUTPUT;
 
 void Logger::CreateLogFile()

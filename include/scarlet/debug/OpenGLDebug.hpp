@@ -3,7 +3,7 @@
 
 #include "GL/glew.h"
 
-#include "scarlet/utils/Logger.hpp"
+#include "scarlet/utils/logger/Logger.hpp"
 
 namespace scarlet
 {
@@ -30,7 +30,6 @@ namespace scarlet
             }
 
             Logger::LogError("OpenGL Error: %s", error);
-            delete[] error;
             return false;
         }
 

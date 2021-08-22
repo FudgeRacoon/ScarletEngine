@@ -1,5 +1,4 @@
 #include "scarlet/utils/Time.hpp"
-#include "scarlet/utils/Logger.hpp"
 using namespace scarlet;
 
 high_resolution_clock::time_point Time::startTime;
@@ -10,8 +9,6 @@ double Time::deltaTime = 0.0;
 
 void Time::Start()
 {
-    Logger::LogInfo("Intitializing Time Subsystem...");
-
     startTime = high_resolution_clock::now();
 }
 void Time::Elapsed()

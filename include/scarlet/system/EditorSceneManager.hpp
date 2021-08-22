@@ -8,7 +8,7 @@
 
 #include "scarlet/debug/Assert.hpp"
 
-#include "scarlet/utils/Logger.hpp"
+#include "scarlet/utils/logger/Logger.hpp"
 
 #include "scarlet/system/SceneManager.hpp"
 

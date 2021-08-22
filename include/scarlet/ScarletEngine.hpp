@@ -44,11 +44,11 @@
 #include "scarlet/math/Vector4.hpp"
 #include "scarlet/math/Matrix4.hpp"
 
-#include "scarlet/utils/Logger.hpp"
 #include "scarlet/utils/MemoryUtils.hpp"
 #include "scarlet/utils/StringUtils.hpp"
 #include "scarlet/utils/TextureUtils.hpp"
 #include "scarlet/utils/Time.hpp"
+#include "scarlet/utils/logger/Logger.hpp"
 
 #include "scarletEditor/CameraController.hpp"
 #include "scarletEditor/GridLines.hpp"

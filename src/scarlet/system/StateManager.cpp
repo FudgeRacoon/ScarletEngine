@@ -1,5 +1,4 @@
 #include "scarlet/system/StateManager.hpp"
-#include "scarlet/utils/Logger.hpp"
 using namespace scarlet;
 
 std::map<std::string, IState*> StateManager::states;
