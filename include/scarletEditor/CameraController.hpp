@@ -1,11 +1,11 @@
 #ifndef CAMERACONTROLLER_HPP
 #define CAMERACONTROLLER_HPP
 
-#include "scarlet/system/InputManager.hpp"
+#include "scarlet/core/math/Vector2.hpp"
+
+#include "scarlet/input/InputManager.hpp"
 
 #include "scarlet/graphics/camera/Camera.hpp"
-
-#include "scarlet/math/Vector2.hpp"
 
 namespace scarlet
 {

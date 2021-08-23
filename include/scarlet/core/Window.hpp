@@ -7,9 +7,8 @@
 #include "GL/glew.h"
 #include "SDL2/SDL.h"
 
-#include "scarlet/common/Types.hpp"
-
-#include "scarlet/utils/logger/Logger.hpp"
+#include "scarlet/core/Types.hpp"
+#include "scarlet/core/logger/Logger.hpp"
 
 namespace scarlet
 {

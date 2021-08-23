@@ -5,15 +5,14 @@
 #include <vector>
 #include <string>
 
+#include "scarlet/core/logger/Logger.hpp"
+#include "scarlet/core/math/Vector2.hpp"
+
 #include "scarlet/graphics/Sprite.hpp"
 
 #include "scarlet/imgui/ImGuiPanel.hpp"
 
-#include "scarlet/system/AssetPool.hpp"
-
-#include "scarlet/math/Vector2.hpp"
-
-#include "scarlet/utils/logger/Logger.hpp"
+#include "scarlet/system/AssetManager.hpp"
 
 namespace scarlet
 {
@@ -48,7 +47,7 @@ namespace scarlet
         {
             float windowXMax = windowPos.x + windowSize.x;
             
-            for(std::pair<std::string, Sprite*> sprite : AssetPool::GetSprites())
+            for(std::pair<std::string, Sprite*> sprite : AssetManager::GetSprites())
             {   
                 if(sprite.second->GetTexture())
                 {
@@ -82,7 +81,7 @@ namespace scarlet
         {
             float windowXMax = windowPos.x + windowSize.x;
 
-            for(std::pair<std::string, Texture*> texture : AssetPool::GetTextures())
+            for(std::pair<std::string, Texture*> texture : AssetManager::GetTextures())
             {
                 float imageWidth  = 64.0f * this->imageSize;
                 float imageHeight = 64.0f * this->imageSize;

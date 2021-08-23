@@ -3,20 +3,16 @@
 
 #include "GL/glew.h"
 
-#include "scarlet/common/Types.hpp"
-
-#include "scarlet/debug/Assert.hpp"
-
 #include "scarlet/core/Window.hpp"
+#include "scarlet/core/Types.hpp"
+#include "scarlet/core/debug/Assert.hpp"
+#include "scarlet/core/logger/Logger.hpp"
+#include "scarlet/core/math/Color.hpp"
+#include "scarlet/core/math/Vector4.hpp"
 
 #include "scarlet/graphics/FrameBuffer.hpp"
 #include "scarlet/graphics/VertexArray.hpp"
 #include "scarlet/graphics/IndexBuffer.hpp"
-
-#include "scarlet/math/Color.hpp"
-#include "scarlet/math/Vector4.hpp"
-
-#include "scarlet/utils/logger/Logger.hpp"
 
 namespace scarlet
 {   

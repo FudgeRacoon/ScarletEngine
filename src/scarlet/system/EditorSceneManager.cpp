@@ -112,12 +112,3 @@ void EditorSceneManager::UpdateActiveScene()
     activeScene->OnRenderEditor(this->editorCamera, this->selector);
 }
 
-void EditorSceneManager::LoadScenes()
-{
-
-}
-void EditorSceneManager::SaveScenes()
-{
-
-}
-

@@ -5,9 +5,8 @@
 
 #include "GL/glew.h"
 
-#include "scarlet/debug/Assert.hpp"
-
-#include "scarlet/math/Math.hpp"
+#include "scarlet/core/debug/Assert.hpp"
+#include "scarlet/core/math/Math.hpp"
 
 namespace scarlet
 {

@@ -8,19 +8,17 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 
-#include "scarlet/common/Types.hpp"
-
-#include "scarlet/debug/Assert.hpp"
-
-#include "scarlet/math/Math.hpp"
+#include "scarlet/core/Types.hpp"
+#include "scarlet/core/logger/Logger.hpp"
+#include "scarlet/core/debug/Assert.hpp"
+#include "scarlet/core/math/Math.hpp"
 
 #include "scarlet/utils/MemoryUtils.hpp"
 #include "scarlet/utils/TextureUtils.hpp"
-#include "scarlet/utils/logger/Logger.hpp"
 
 namespace scarlet
 {   
-    class AssetPool;
+    class AssetManager;
 
     class Texture
     {
@@ -49,7 +47,7 @@ namespace scarlet
         void Bind(uint32 slot = 0) const;
         void UnBind() const;
 
-    friend AssetPool;
+    friend AssetManager;
     };
 }
 

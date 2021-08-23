@@ -11,7 +11,7 @@ Application* Application::Get()
 
 void Application::Run(int argc, char* argv[])
 {   
-    Time::Start();
+    Time::OnInit();
 
     Logger::OnInit();
     Logger::Configure(LoggerConfig::SCARLET_ENABLE_LOGGER);
@@ -25,7 +25,7 @@ void Application::Run(int argc, char* argv[])
     GraphicsContext::SetClearColor(Color(22, 22, 22));
     GraphicsContext::EnableBlending(true);
 
-    AssetPool::OnInit();
+    AssetManager::OnInit();
     Renderer::OnInit();
     InputManager::OnInit();
     ImGuiManager::OnInit();
@@ -34,13 +34,13 @@ void Application::Run(int argc, char* argv[])
     
     while(Window::IsRunning())
     {
-        Time::Elapsed();
+        Time::OnUpdate();
 
-        if(Time::GetDeltaTime() >= (1000.0 / Time::FRAME_RATE_TARGET))
+        if(Time::GetDeltaTime() >= (1.0 / 240.0))
         {
-            double lag = Time::GetDeltaTime() - (1000.0 / Time::FRAME_RATE_TARGET);
-            if(lag >= 4.0)
-                Logger::LogWarning("%.2fms lag has occured.", lag);
+            double lag = Time::GetDeltaTime() - (1.0 / 240.0);
+            if(lag >= 0.004)
+                Logger::LogWarning("%.2fms lag has occured.", lag * 1000.0);
 
             InputManager::OnEvent();
 
@@ -49,8 +49,8 @@ void Application::Run(int argc, char* argv[])
             GraphicsContext::SwapBuffers();
 
             InputManager::OnFrameEnd();
-
-            Time::Reset();
+            
+            Time::OnFrameEnd();
         }
     }
 
@@ -58,7 +58,7 @@ void Application::Run(int argc, char* argv[])
 
     ImGuiManager::OnShutDown();
     Renderer::OnShutDown();
-    AssetPool::OnShutDown();
+    AssetManager::OnShutDown();
     Window::OnShutDown();
     Logger::OnShutDown();
 }

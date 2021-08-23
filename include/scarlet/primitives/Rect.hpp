@@ -3,11 +3,11 @@
 
 #include <vector>
 
-#include "scarlet/common/Types.hpp"
+#include "scarlet/core/Types.hpp"
 
-#include "scarlet/math/Math.hpp"
-#include "scarlet/math/Vector2.hpp"
-#include "scarlet/math/Vector3.hpp"
+#include "scarlet/core/math/Math.hpp"
+#include "scarlet/core/math/Vector2.hpp"
+#include "scarlet/core/math/Vector3.hpp"
 
 namespace scarlet
 {

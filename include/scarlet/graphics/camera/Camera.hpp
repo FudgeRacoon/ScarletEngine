@@ -2,14 +2,13 @@
 #define CAMERA_HPP
 
 #include "scarlet/core/Window.hpp"
+#include "scarlet/core/math/Math.hpp"
+#include "scarlet/core/math/Vector3.hpp"
+#include "scarlet/core/math/Matrix4.hpp"
 
 #include "scarlet/graphics/GraphicsContext.hpp"
 
-#include "scarlet/system/InputManager.hpp"
-
-#include "scarlet/math/Math.hpp"
-#include "scarlet/math/Vector3.hpp"
-#include "scarlet/math/Matrix4.hpp"
+#include "scarlet/input/InputManager.hpp"
 
 namespace scarlet
 {   

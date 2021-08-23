@@ -11,10 +11,9 @@
 #include "Imgui/imgui_impl_opengl3.h"
 
 #include "scarlet/core/Window.hpp"
+#include "scarlet/core/logger/Logger.hpp"
 
 #include "scarlet/imgui/ImGuiPanel.hpp"
-
-#include "scarlet/utils/logger/Logger.hpp"
 
 namespace scarlet
 {

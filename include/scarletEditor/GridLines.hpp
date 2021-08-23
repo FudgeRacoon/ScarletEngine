@@ -1,7 +1,7 @@
 #ifndef GRIDLINES_HPP
 #define GRIDLINES_HPP
 
-#include "scarlet/math/Math.hpp"
+#include "scarlet/core/math/Math.hpp"
 
 #include "scarlet/graphics/GraphicsContext.hpp"
 #include "scarlet/graphics/Renderer.hpp"

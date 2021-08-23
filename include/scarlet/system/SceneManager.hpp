@@ -1,9 +1,9 @@
 #ifndef SCENEMANAGER_HPP
 #define SCENEMANAGER_HPP
 
-#include "scarlet/common/Types.hpp"
+#include "scarlet/core/Types.hpp"
 
-#include "scarlet/core/Scene.hpp"
+#include "scarlet/scene/Scene.hpp"
 
 namespace scarlet
 {

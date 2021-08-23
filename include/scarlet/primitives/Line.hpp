@@ -1,7 +1,7 @@
 #ifndef LINE_HPP
 #define LINE_HPP
 
-#include "scarlet/math/Vector3.hpp"
+#include "scarlet/core/math/Vector3.hpp"
 
 namespace scarlet
 {

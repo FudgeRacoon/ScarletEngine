@@ -6,8 +6,7 @@
 #include <map>
 
 #include "scarlet/core/IState.hpp"
-
-#include "scarlet/utils/logger/Logger.hpp"
+#include "scarlet/core/logger/Logger.hpp"
 
 namespace scarlet
 {

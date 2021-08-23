@@ -1,9 +1,12 @@
 #ifndef RENDERER_HPP
 #define RENDERER_HPP
 
-#include "scarlet/common/Types.hpp"
-
-#include "scarlet/debug/Assert.hpp"
+#include "scarlet/core/Types.hpp"
+#include "scarlet/core/debug/Assert.hpp"
+#include "scarlet/core/math/Color.hpp"
+#include "scarlet/core/math/Vector3.hpp"
+#include "scarlet/core/math/Vector4.hpp"
+#include "scarlet/core/math/Matrix4.hpp"
 
 #include "scarlet/graphics/GraphicsContext.hpp"
 #include "scarlet/graphics/VertexBuffer.hpp"
@@ -13,12 +16,7 @@
 #include "scarlet/graphics/Texture.hpp"
 #include "scarlet/graphics/camera/Camera.hpp"
 
-#include "scarlet/system/AssetPool.hpp"
-
-#include "scarlet/math/Color.hpp"
-#include "scarlet/math/Vector3.hpp"
-#include "scarlet/math/Vector4.hpp"
-#include "scarlet/math/Matrix4.hpp"
+#include "scarlet/system/AssetManager.hpp"
 
 #include "scarlet/primitives/Line.hpp"
 #include "scarlet/primitives/Rect.hpp"

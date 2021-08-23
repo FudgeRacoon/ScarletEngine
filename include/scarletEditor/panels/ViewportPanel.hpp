@@ -3,17 +3,15 @@
 
 #include "imgui/imgui.h"
 
-#include "scarlet/common/Types.hpp"
+#include "scarlet/core/Types.hpp"
+#include "scarlet/core/logger/Logger.hpp"
+#include "scarlet/core/math/Vector4.hpp"
 
 #include "scarlet/graphics/GraphicsContext.hpp"
 
 #include "scarlet/imgui/ImGuiPanel.hpp"
 
-#include "scarlet/math/Vector4.hpp"
-
 #include "scarlet/system/EditorSceneManager.hpp"
-
-#include "scarlet/utils/logger/Logger.hpp"
 
 namespace scarlet
 {

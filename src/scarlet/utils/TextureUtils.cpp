@@ -1,7 +1,7 @@
 #include "scarlet/utils/TextureUtils.hpp"
 #include "scarlet/graphics/Texture.hpp"
 #include "scarlet/graphics/Sprite.hpp"
-#include "scarlet/system/AssetPool.hpp"
+#include "scarlet/system/AssetManager.hpp"
 using namespace scarlet;
 
 void TextureUtils::FlipTextureX(Texture* texture)
@@ -72,7 +72,7 @@ std::vector<Sprite*> TextureUtils::SliceSprite(Sprite* sprite, int spriteWidth, 
             std::string name = sprite->GetName();
             name.append("_" + std::to_string(counter));
 
-            Sprite* newSprite = AssetPool::AddSprite(name, sprite->GetTexture(), uv);
+            Sprite* newSprite = AssetManager::AddSprite(name, sprite->GetTexture(), uv);
 
             sprites[counter++] = newSprite;
         }

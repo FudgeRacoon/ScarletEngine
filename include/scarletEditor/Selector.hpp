@@ -1,16 +1,15 @@
 #ifndef Selector_HPP
 #define Selector_HPP
 
-#include "scarlet/common/Types.hpp"
+#include "scarlet/core/Types.hpp"
+#include "scarlet/core/logger/Logger.hpp"
 
-#include "scarlet/entity/GameObject.hpp"
-
-#include "scarlet/system/InputManager.hpp"
-
-#include "scarlet/utils/logger/Logger.hpp"
+#include "scarlet/scene/GameObject.hpp"
 
 #include "scarlet/graphics/GraphicsContext.hpp"
 #include "scarlet/graphics/FrameBuffer.hpp"
+
+#include "scarlet/input/InputManager.hpp"
 
 namespace scarlet
 {

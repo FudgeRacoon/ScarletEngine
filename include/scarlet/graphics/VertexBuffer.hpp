@@ -7,9 +7,8 @@
 
 #include "GL/glew.h"
 
-#include "scarlet/common/Types.hpp"
-
-#include "scarlet/debug/Assert.hpp"
+#include "scarlet/core/Types.hpp"
+#include "scarlet/core/debug/Assert.hpp"
 
 namespace scarlet
 {   

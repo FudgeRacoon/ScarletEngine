@@ -5,9 +5,8 @@
 #include <string>
 #include <cstring>
 
-#include "scarlet/common/Types.hpp"
-
-#include "scarlet/math/Vector2.hpp"
+#include "scarlet/core/Types.hpp"
+#include "scarlet/core/math/Vector2.hpp"
 
 #include "scarlet/utils/MemoryUtils.hpp"
 
@@ -15,7 +14,7 @@ namespace scarlet
 {
     class Texture;
     class Sprite;
-    class AssetPool;
+    class AssetManager;
 
     class TextureUtils
     {

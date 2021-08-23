@@ -8,15 +8,13 @@
 
 #include "GL/glew.h"
 
-#include "scarlet/debug/Assert.hpp"
-
-#include "scarlet/math/Matrix4.hpp"
-
-#include "scarlet/utils/logger/Logger.hpp"
+#include "scarlet/core/debug/Assert.hpp"
+#include "scarlet/core/logger/Logger.hpp"
+#include "scarlet/core/math/Matrix4.hpp"
 
 namespace scarlet
 {
-    class AssetPool;
+    class AssetManager;
 
     class Shader
     {
@@ -45,7 +43,7 @@ namespace scarlet
         void Bind() const;
         void UnBind() const;
     
-    friend AssetPool;
+    friend AssetManager;
     };
 }
 

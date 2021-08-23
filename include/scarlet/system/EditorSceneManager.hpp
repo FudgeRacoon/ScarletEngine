@@ -4,11 +4,10 @@
 #include <string>
 #include <vector>
 
-#include "scarlet/core/Scene.hpp"
+#include "scarlet/core/debug/Assert.hpp"
+#include "scarlet/core/logger/Logger.hpp"
 
-#include "scarlet/debug/Assert.hpp"
-
-#include "scarlet/utils/logger/Logger.hpp"
+#include "scarlet/scene/Scene.hpp"
 
 #include "scarlet/system/SceneManager.hpp"
 
@@ -57,10 +56,6 @@ namespace scarlet
 
     public:
         void UpdateActiveScene() override;
-    
-    public:
-        void LoadScenes();
-        void SaveScenes();
     };
 }
 

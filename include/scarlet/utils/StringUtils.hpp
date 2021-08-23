@@ -4,7 +4,7 @@
 #include <math.h>
 #include <string>
 
-#include "scarlet/common/Types.hpp"
+#include "scarlet/core/Types.hpp"
 
 namespace scarlet
 {

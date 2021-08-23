@@ -5,13 +5,11 @@
 
 #include "GL/glew.h"
 
-#include "scarlet/common/Types.hpp"
-
-#include "scarlet/debug/Assert.hpp"
+#include "scarlet/core/Types.hpp"
+#include "scarlet/core/debug/Assert.hpp"
+#include "scarlet/core/logger/Logger.hpp"
 
 #include "scarlet/graphics/VertexBuffer.hpp"
-
-#include "scarlet/utils/logger/Logger.hpp"
 
 namespace scarlet
 {

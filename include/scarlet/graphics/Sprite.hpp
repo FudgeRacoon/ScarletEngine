@@ -4,15 +4,15 @@
 #include <vector>
 #include <string>
 
-#include "scarlet/graphics/Texture.hpp"
+#include "scarlet/core/math/Vector2.hpp"
 
-#include <scarlet/math/Vector2.hpp>
+#include "scarlet/graphics/Texture.hpp"
 
 #include "scarlet/primitives/Rect.hpp"
 
 namespace scarlet
 {
-    class AssetPool;
+    class AssetManager;
 
     class Sprite
     {
@@ -41,7 +41,7 @@ namespace scarlet
         void SetRect(Rect rect);
         void SetUV(std::vector<Vector2> uv);
 
-    friend AssetPool;
+    friend AssetManager;
     };
 }
 

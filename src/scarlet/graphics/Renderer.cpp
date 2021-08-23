@@ -117,13 +117,13 @@ void Renderer::InitBuffers()
 }
 void Renderer::InitTextureSlots()
 {
-    rendererData.whiteTexture = AssetPool::GetTexture("white_texture");
+    rendererData.whiteTexture = AssetManager::GetTexture("white_texture");
     rendererData.textureSlots = new Texture*[GraphicsContext::GetMaxTextureSlots()];
     rendererData.textureSlots[0] = rendererData.whiteTexture;
 }
 void Renderer::InitShaders()
 {   
-    rendererData.currentShader = AssetPool::GetShader("default_shader");
+    rendererData.currentShader = AssetManager::GetShader("default_shader");
 }
 
 void Renderer::DrawArrays(Graphics_DrawMode mode, VertexArray* vao, uint32 count)

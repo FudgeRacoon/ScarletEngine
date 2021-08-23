@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#include "scarlet/common/Types.hpp"
+#include "scarlet/core/Types.hpp"
 
 namespace scarlet
 {
