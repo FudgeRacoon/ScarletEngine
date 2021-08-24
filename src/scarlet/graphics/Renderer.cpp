@@ -47,13 +47,13 @@ void Renderer::Flush()
     );
 
     DrawArrays(
-        Graphics_DrawMode::SCARLET_LINES,
+        GraphicsDrawMode::SCARLET_LINES,
         rendererData.lineVertexArray,
         rendererData.lineCount * 2
     );
 
     DrawElements(
-        Graphics_DrawMode::SCARLET_TRIANGLES, 
+        GraphicsDrawMode::SCARLET_TRIANGLES, 
         rendererData.quadVertexArray, 
         rendererData.quadIndexBuffer,
         rendererData.quadCount * 6
@@ -126,13 +126,13 @@ void Renderer::InitShaders()
     rendererData.currentShader = AssetManager::GetShader("default_shader");
 }
 
-void Renderer::DrawArrays(Graphics_DrawMode mode, VertexArray* vao, uint32 count)
+void Renderer::DrawArrays(GraphicsDrawMode mode, VertexArray* vao, uint32 count)
 {
     vao->Bind();
     GLCALL(glDrawArrays(mode, 0, count));
     vao->UnBind();
 }
-void Renderer::DrawElements(Graphics_DrawMode mode, VertexArray* vao, IndexBuffer* ibo, uint32 count)
+void Renderer::DrawElements(GraphicsDrawMode mode, VertexArray* vao, IndexBuffer* ibo, uint32 count)
 {
     vao->Bind();
     ibo->Bind();
@@ -368,7 +368,7 @@ void Renderer::DrawSprite(Sprite* sprite, Matrix4 model, uint32 id, Color color)
         textureIndex = rendererData.currentTextureIndex;
 
         for(int i = 0; i < rendererData.currentTextureIndex; i++)
-            if(rendererData.textureSlots[i]->GetID() == sprite->GetTexture()->GetID())
+            if(rendererData.textureSlots[i]->GetId() == sprite->GetTexture()->GetId())
             {
                 textureExists = true;
                 textureIndex = i;

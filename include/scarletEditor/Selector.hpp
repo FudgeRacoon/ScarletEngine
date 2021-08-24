@@ -6,8 +6,8 @@
 
 #include "scarlet/scene/GameObject.hpp"
 
+#include "scarlet/graphics/buffer/FrameBuffer.hpp"
 #include "scarlet/graphics/GraphicsContext.hpp"
-#include "scarlet/graphics/FrameBuffer.hpp"
 
 #include "scarlet/input/InputManager.hpp"
 

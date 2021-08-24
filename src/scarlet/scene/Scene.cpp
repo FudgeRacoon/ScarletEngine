@@ -60,7 +60,7 @@ void Scene::OnRenderRuntime()
     Renderer::BeginScene(this->sceneCamera);
     Renderer::BindShader(AssetManager::GetShader("default_shader"));
 
-    GraphicsContext::ClearBuffers(Graphics_BufferType::SCARLET_BUFFER_COLOR);
+    GraphicsContext::ClearBuffers(GraphicsBufferType::SCARLET_BUFFER_COLOR);
 
     for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
     {
@@ -94,7 +94,7 @@ void Scene::OnRenderEditor(Camera* editorCamera, editor::Selector* editorSelecto
         Renderer::BeginScene(editorCamera);
         Renderer::BindShader(AssetManager::GetShader("selection_shader"));
 
-        GraphicsContext::ClearBuffers(scarlet::SCARLET_BUFFER_COLOR);
+        GraphicsContext::ClearBuffers(GraphicsBufferType::SCARLET_BUFFER_COLOR);
         
         for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
         {
@@ -127,7 +127,7 @@ void Scene::OnRenderEditor(Camera* editorCamera, editor::Selector* editorSelecto
         Renderer::BeginScene(editorCamera);
         Renderer::BindShader(AssetManager::GetShader("default_shader"));
 
-        GraphicsContext::ClearBuffers(Graphics_BufferType::SCARLET_BUFFER_COLOR);
+        GraphicsContext::ClearBuffers(GraphicsBufferType::SCARLET_BUFFER_COLOR);
 
         for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
         {

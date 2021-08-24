@@ -1,27 +1,23 @@
-#ifndef TEXTUREUTILS_HPP
-#define TEXTUREUTILS_HPP
+#ifndef SPRITEUTILS_HPP
+#define SPRITEUTILS_HPP
 
 #include <vector>
 #include <string>
-#include <cstring>
 
 #include "scarlet/core/Types.hpp"
 #include "scarlet/core/math/Vector2.hpp"
 
-#include "scarlet/utils/MemoryUtils.hpp"
-
 namespace scarlet
 {
-    class Texture;
     class Sprite;
     class AssetManager;
 
-    class TextureUtils
+    class SpriteUtils
     {
     public:
-        static void FlipTextureX(Texture* texutre);
-        static void FlipTextureY(Texture* texture);
-    
+        static void FlipSpriteX(Sprite* sprite);
+        static void FlipSpriteY(Sprite* sprite);
+
     public:
         static std::vector<Sprite*> SliceSprite(Sprite* sprite, int spriteWidth, int spriteHeight);
     };

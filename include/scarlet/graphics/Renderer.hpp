@@ -8,10 +8,10 @@
 #include "scarlet/core/math/Vector4.hpp"
 #include "scarlet/core/math/Matrix4.hpp"
 
+#include "scarlet/graphics/buffer/VertexBuffer.hpp"
+#include "scarlet/graphics/buffer/IndexBuffer.hpp"
 #include "scarlet/graphics/GraphicsContext.hpp"
-#include "scarlet/graphics/VertexBuffer.hpp"
 #include "scarlet/graphics/VertexArray.hpp"
-#include "scarlet/graphics/IndexBuffer.hpp"
 #include "scarlet/graphics/Shader.hpp"
 #include "scarlet/graphics/Texture.hpp"
 #include "scarlet/graphics/camera/Camera.hpp"
@@ -87,8 +87,8 @@ namespace scarlet
         static void InitShaders();
 
     private:
-        static void DrawArrays(Graphics_DrawMode mode, VertexArray* vao, uint32 count);
-        static void DrawElements(Graphics_DrawMode mode, VertexArray* vao, IndexBuffer* ibo, uint32 count);
+        static void DrawArrays(GraphicsDrawMode mode, VertexArray* vao, uint32 count);
+        static void DrawElements(GraphicsDrawMode mode, VertexArray* vao, IndexBuffer* ibo, uint32 count);
 
     public:
         static void OnInit();

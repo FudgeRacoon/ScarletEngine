@@ -21,8 +21,9 @@ namespace scarlet
     class FrameBuffer
     {
     private:
-        uint32 frameBufferID;
-        uint32 colorAttachmentID;
+        uint32 frameBufferId;
+        uint32 colorAttachmentId;
+        uint32 depthAttachmentId;
         FrameBufferSpecification spec;
 
     public:
@@ -30,16 +31,19 @@ namespace scarlet
         ~FrameBuffer();
     
     public:
-        uint32 GetFrameBufferID();
-        uint32 GetColorAttachmentID();
+        uint32 GetFrameBufferId();
+        uint32 GetColorAttachmentId();
+        uint32 GetDepthAttachmentId();
+
+    public:
+        void Resize(uint32 width, uint32 height);
 
     public:
         void AttachColorTexture(FrameBufferSpecification& spec);
         void AttachDepthTexture(FrameBufferSpecification& spec);
         
     public:
-        void Resize(uint32 width, uint32 height);
-        int ReadPixel(int32 format, int32 type, int x, int y);
+        int ReadPixel(uint32 format, uint32 type, int x, int y);
     
     public:
         void Bind();

@@ -16,6 +16,8 @@ uint32 SceneManager::GetSceneCount()
 }
 Scene* SceneManager::GetActiveScene()
 {
+    SCARLET_CORE_ASSERT(this->activeScene != nullptr, "No active scene set.");
+
     return activeScene;
 }
 Scene* SceneManager::GetSceneAt(int buildIndex)

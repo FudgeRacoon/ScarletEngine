@@ -30,6 +30,14 @@ namespace scarlet
         LocalTimeDate(tm rawTimeInfo, uint32 year, uint32 month, uint32 day, uint32 hours, uint32 minutes, uint32 seconds);
     
     public:
+        uint32 GetSeconds();
+        uint32 GetMinutes();
+        uint32 GetHours();
+        uint32 GetDay();
+        uint32 GetMonth();
+        uint32 GetYear();
+
+    public:
         static LocalTimeDate GetCurrentDate();
         static LocalTimeDate GetCustomDate(uint32 year, uint32 month, uint32 day);
         static LocalTimeDate GetCustomDate(uint32 year, uint32 month, uint32 day, uint32 hours);

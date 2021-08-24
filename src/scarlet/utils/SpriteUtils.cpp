@@ -1,45 +1,35 @@
-#include "scarlet/utils/TextureUtils.hpp"
+#include "scarlet/utils/SpriteUtils.hpp"
 #include "scarlet/graphics/Texture.hpp"
 #include "scarlet/graphics/Sprite.hpp"
 #include "scarlet/system/AssetManager.hpp"
 using namespace scarlet;
 
-void TextureUtils::FlipTextureX(Texture* texture)
+void SpriteUtils::FlipSpriteX(Sprite* sprite)
 {
-    int width = texture->GetWidth();
-    int height = texture->GetHeight();
-    int bytesPerPixel = texture->GetBytesPerPixel();
-    byte* pixels = texture->GetPixels();
-
-    int pitch = width * bytesPerPixel;
-
-    byte* topPixels = pixels;
-    byte* bottomPixels = pixels + ((height - 1) * pitch);
-
-    for(int y = 0; y < height / 2; y++)
-    {
-        byte* tempTopBuffer = new byte[pitch];
-        byte* tempBottomBuffer = new byte[pitch];
-
-        MemoryUtils::MemoryCopy(tempTopBuffer, topPixels, pitch);
-        MemoryUtils::MemoryCopy(tempBottomBuffer, bottomPixels, pitch);
-
-        MemoryUtils::MemoryCopy(topPixels, tempBottomBuffer, pitch);
-        MemoryUtils::MemoryCopy(bottomPixels, tempTopBuffer, pitch);
-
-        topPixels += pitch;
-        bottomPixels -= pitch;
-
-        delete[] tempTopBuffer;
-        delete[] tempBottomBuffer;
-    }
-}
-void TextureUtils::FlipTextureY(Texture* texture)
-{
+    std::vector<Vector2> newUv(4);
+    std::vector<Vector2> oldUv = sprite->GetUV();
     
+    newUv[0] = oldUv[2];
+    newUv[1] = oldUv[3];
+    newUv[2] = oldUv[0];
+    newUv[3] = oldUv[1];
+
+    sprite->SetUV(newUv);
+}
+void SpriteUtils::FlipSpriteY(Sprite* sprite)
+{
+    std::vector<Vector2> newUv(4);
+    std::vector<Vector2> oldUv = sprite->GetUV();
+
+    newUv[0] = oldUv[1];
+    newUv[1] = oldUv[0];
+    newUv[2] = oldUv[3];
+    newUv[3] = oldUv[2];
+
+    sprite->SetUV(newUv);
 }
 
-std::vector<Sprite*> TextureUtils::SliceSprite(Sprite* sprite, int spriteWidth, int spriteHeight)
+std::vector<Sprite*> SpriteUtils::SliceSprite(Sprite* sprite, int spriteWidth, int spriteHeight)
 {
     int counter = 0;
 

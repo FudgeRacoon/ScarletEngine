@@ -1,12 +1,12 @@
 #include "scarlet/graphics/Sprite.hpp"
-#include "scarlet/graphics/Texture.hpp"
 using namespace scarlet;
 
 Sprite::Sprite(std::string name, Texture* texture)
 {
     this->name = name;
-    this->texture = texture;
+
     this->rect = Rect(-32.0f, 32.0f, 64.0f, 64.0f);
+    this->texture = texture;
     this->uv.push_back(Vector2(0.0f, 0.0f));
     this->uv.push_back(Vector2(1.0f, 0.0f));
     this->uv.push_back(Vector2(1.0f, 1.0f));
@@ -15,8 +15,9 @@ Sprite::Sprite(std::string name, Texture* texture)
 Sprite::Sprite(std::string name, Texture* texture, std::vector<Vector2> uv)
 {
     this->name = name;
-    this->texture = texture;
+    
     this->rect = Rect(-32.0f, 32.0f, 64.0f, 64.0f);
+    this->texture = texture;
     this->uv = uv;
 }
 Sprite::~Sprite()

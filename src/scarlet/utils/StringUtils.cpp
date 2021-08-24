@@ -4,7 +4,7 @@ using namespace scarlet;
 uint64 StringUtils::HashCode(std::string string)
 {
     uint32 p = 69;
-    uint64 m = 1e12 + 9;
+    uint64 m = 1e+9;
 
     uint32 exponent = 1;
     uint64 powerOfP = 1;

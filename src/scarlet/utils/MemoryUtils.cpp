@@ -32,14 +32,14 @@ void MemoryUtils::IntToBytes(void* dst, uint32 value)
     }
 }
 
-void MemoryUtils::MemorySet(void* dst, int value, size_t bytes)
+void MemoryUtils::MemorySet(void* dst, int value, size bytes)
 {
     byte* dstPtr = (byte*)dst;
 
     for(int i = 0; i < bytes; i++)
         *(dstPtr + i) = (byte)value;
 }
-void MemoryUtils::MemoryCopy(void* dst, void* src, size_t bytes)
+void MemoryUtils::MemoryCopy(void* dst, void* src, size bytes)
 {
     byte* dstPtr = (byte*)dst;
     byte* srcPtr = (byte*)src;

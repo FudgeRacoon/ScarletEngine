@@ -19,7 +19,7 @@ void ViewportPanel::OnUpdate()
         EditorSceneManager::Get()->GetCameraController()->OnResize();
     }
     
-    uint32 renderTargetId = GraphicsContext::GetRenderTarget()->GetColorAttachmentID();
+    uint32 renderTargetId = GraphicsContext::GetRenderTarget()->GetColorAttachmentId();
     ImGui::Image((void*)renderTargetId, ImVec2(viewportPanelSize.x, viewportPanelSize.y), ImVec2(0, 1), ImVec2(1, 0));
 
     ImGui::End();

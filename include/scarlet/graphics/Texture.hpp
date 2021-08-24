@@ -14,7 +14,6 @@
 #include "scarlet/core/math/Math.hpp"
 
 #include "scarlet/utils/MemoryUtils.hpp"
-#include "scarlet/utils/TextureUtils.hpp"
 
 namespace scarlet
 {   
@@ -23,8 +22,7 @@ namespace scarlet
     class Texture
     {
     private:
-        uint32 ID;
-        byte* pixels;
+        uint32 textureId;
 
     private:
         int width, height;
@@ -37,8 +35,7 @@ namespace scarlet
         ~Texture();
 
     public:
-        uint32 GetID();
-        byte* GetPixels();
+        uint32 GetId();
         int GetWidth();
         int GetHeight();
         int GetBytesPerPixel();

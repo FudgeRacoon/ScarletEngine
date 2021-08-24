@@ -6,8 +6,6 @@ Vector4 GraphicsContext::viewport;
 
 void GraphicsContext::OnInit()
 {
-    Logger::LogInfo("Intitializing Graphics Context Subsystem...");
-
     glewExperimental = true;
     if(glewInit() != 0)
     {
@@ -43,17 +41,19 @@ uint32 GraphicsContext::GetMaxTextureSlots()
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxSlots);
     return maxSlots;
 }
-const byte* GraphicsContext::GetOpenglVersion()
+const byte* GraphicsContext::GetGlVersion()
 {
     return glGetString(GL_VERSION);
 }
 
 void GraphicsContext::SetViewPort(uint32 x, uint32 y, uint32 width, uint32 height)
 {
+    SCARLET_CORE_ASSERT((x >= 0 && y >= 0), "Viewport origin must be positive.");
+
     viewport = Vector4(x, y, width, height);
     glViewport(x, y, width, height);
 }
-void GraphicsContext::SetBlendingFunction(Graphics_BlendFunction sFactor, Graphics_BlendFunction dFactor)
+void GraphicsContext::SetBlendingFunction(GraphicsBlendFunction sFactor, GraphicsBlendFunction dFactor)
 {
     glBlendFunc(sFactor, dFactor);
 }
@@ -76,7 +76,7 @@ void GraphicsContext::EnableBlending(bool enable)
     }
 }
 
-void GraphicsContext::ClearBuffers(Graphics_BufferType buffers)
+void GraphicsContext::ClearBuffers(GraphicsBufferType buffers)
 {
     glClear(buffers);
 }

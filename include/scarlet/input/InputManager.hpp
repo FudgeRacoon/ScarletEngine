@@ -52,8 +52,10 @@ namespace scarlet
         static bool GetMouseButton(int button);
         static bool GetMouseButtonDown(int button);
         static bool GetMouseButtonUp(int button);
-        static Vector2 GetMousePosition();
         static int GetMouseScrollDelta();
+        static Vector2 GetMousePosition();
+
+    public:
         static bool MouseMoved();
     };
 }

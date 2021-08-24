@@ -22,6 +22,31 @@ LocalTimeDate::LocalTimeDate(tm rawTimeInfo, uint32 year, uint32 month, uint32 d
 LocalTimeDate::LocalTimeDate(tm rawTimeInfo, uint32 year, uint32 month, uint32 day, uint32 hours, uint32 minutes, uint32 seconds)
     :rawTimeInfo(rawTimeInfo), year(year), month(month), day(day), hours(hours), minutes(minutes), seconds(seconds) {}
 
+uint32 LocalTimeDate::GetSeconds()
+{
+    return this->seconds;
+}
+uint32 LocalTimeDate::GetMinutes()
+{
+    return this->minutes;
+}
+uint32 LocalTimeDate::GetHours()
+{
+    return this->hours;
+}
+uint32 LocalTimeDate::GetDay()
+{
+    return this->day;
+}
+uint32 LocalTimeDate::GetMonth()
+{
+    return this->month;
+}
+uint32 LocalTimeDate::GetYear()
+{
+    return this->year;
+}
+
 LocalTimeDate LocalTimeDate::GetCurrentDate()
 {
     time_t rawTime;

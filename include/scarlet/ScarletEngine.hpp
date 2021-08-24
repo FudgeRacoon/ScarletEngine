@@ -1,15 +1,16 @@
 #include "scarlet/core/ScarletCore.hpp"
 
+#include "scarlet/graphics/buffer/FrameBuffer.hpp"
+#include "scarlet/graphics/buffer/IndexBuffer.hpp"
+#include "scarlet/graphics/buffer/VertexBuffer.hpp"
+#include "scarlet/graphics/buffer/VertexBufferLayout.hpp"
 #include "scarlet/graphics/camera/Camera.hpp"
 #include "scarlet/graphics/GraphicsContext.hpp"
 #include "scarlet/graphics/Renderer.hpp"
-#include "scarlet/graphics/FrameBuffer.hpp"
-#include "scarlet/graphics/VertexArray.hpp"
-#include "scarlet/graphics/VertexBuffer.hpp"
-#include "scarlet/graphics/IndexBuffer.hpp"
 #include "scarlet/graphics/Shader.hpp"
-#include "scarlet/graphics/Texture.hpp"
 #include "scarlet/graphics/Sprite.hpp"
+#include "scarlet/graphics/Texture.hpp"
+#include "scarlet/graphics/VertexArray.hpp"
 
 #include "scarlet/imgui/ImGuiManager.hpp"
 #include "scarlet/imgui/ImGuiPanel.hpp"
@@ -32,8 +33,8 @@
 #include "scarlet/system/StateManager.hpp"
 
 #include "scarlet/utils/MemoryUtils.hpp"
+#include "scarlet/utils/SpriteUtils.hpp"
 #include "scarlet/utils/StringUtils.hpp"
-#include "scarlet/utils/TextureUtils.hpp"
 
 #include "scarletEditor/CameraController.hpp"
 #include "scarletEditor/GridLines.hpp"

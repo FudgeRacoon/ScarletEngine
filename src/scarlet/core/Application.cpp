@@ -21,7 +21,7 @@ void Application::Run(int argc, char* argv[])
     
     GraphicsContext::OnInit();
     GraphicsContext::SetViewPort(0, 0, Window::GetWidth(), Window::GetHeight());
-    GraphicsContext::SetBlendingFunction(Graphics_BlendFunction::SCARLET_SRC_ALPHA, Graphics_BlendFunction::SCARLET_ONE_MINUS_SRC_ALPHA);
+    GraphicsContext::SetBlendingFunction(GraphicsBlendFunction::SCARLET_SRC_ALPHA, GraphicsBlendFunction::SCARLET_ONE_MINUS_SRC_ALPHA);
     GraphicsContext::SetClearColor(Color(22, 22, 22));
     GraphicsContext::EnableBlending(true);
 

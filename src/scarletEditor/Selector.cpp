@@ -37,10 +37,7 @@ void Selector::OnMousePress()
 
     //     int pixelVal = this->SelectorFrameBuffer->ReadPixel(GL_RED_INTEGER, GL_INT, x, y);
 
-    //     GameObject* go = EditorSceneManager::Get()->GetActiveScene()->GetEntityById(pixelVal);
-
-    //     if(go)
-    //         Logger::LogDebug("%s", go->GetName().c_str());
+    //     Logger::LogDebug("%d", pixelVal);    
     // }
 
     // this->SelectorFrameBuffer->UnBind();

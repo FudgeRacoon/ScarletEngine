@@ -50,7 +50,7 @@ Sprite* AssetManager::AddSprite(std::string name, Texture* texture)
         )
     );
     
-    auto textureUsersIterator = textureUsers.find(texture->GetID());
+    auto textureUsersIterator = textureUsers.find(texture->GetId());
     textureUsersIterator->second.push_back(sprite);
 
     return sprite;
@@ -72,7 +72,7 @@ Sprite* AssetManager::AddSprite(std::string name, Texture* texture, std::vector<
         )
     );
     
-    auto textureUsersIterator = textureUsers.find(texture->GetID());
+    auto textureUsersIterator = textureUsers.find(texture->GetId());
     textureUsersIterator->second.push_back(sprite);
 
     return sprite;
@@ -117,7 +117,7 @@ Texture* AssetManager::AddTexture(std::string name, const char* filepath)
 
     textureUsers.insert(
         std::make_pair(
-            texture->GetID(),
+            texture->GetId(),
             std::vector<Sprite*>()
         )
     );
@@ -143,7 +143,7 @@ Texture* AssetManager::AddTexture(std::string name, uint32 color, uint32 width, 
 
     textureUsers.insert(
         std::make_pair(
-            texture->GetID(),
+            texture->GetId(),
             std::vector<Sprite*>()
         )
     );
@@ -169,7 +169,7 @@ Texture* AssetManager::AddTexture(std::string name, void* pixels, uint32 width, 
 
     textureUsers.insert(
         std::make_pair(
-            texture->GetID(),
+            texture->GetId(),
             std::vector<Sprite*>()
         )
     );
@@ -216,7 +216,7 @@ void AssetManager::RemoveTexture(std::string name)
     auto textureIterator = textures.find(name);
     if(textureIterator != textures.end())
     {
-        auto textureUsersIterator = textureUsers.find(textureIterator->second->GetID());
+        auto textureUsersIterator = textureUsers.find(textureIterator->second->GetId());
         for(Sprite* sprite : textureUsersIterator->second)
             sprite->SetTexture(nullptr);
 

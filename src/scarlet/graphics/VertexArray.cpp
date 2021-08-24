@@ -3,43 +3,44 @@ using namespace scarlet;
 
 VertexArray::VertexArray()
 {
-    GLCALL(glGenVertexArrays(1, &this->ID));
+    GLCALL(glGenVertexArrays(1, &this->vertexArrayId));
     GLCALL(glBindVertexArray(0));
 }
 VertexArray::~VertexArray()
 {
-    GLCALL(glDeleteVertexArrays(1, &this->ID));
+    GLCALL(glDeleteVertexArrays(1, &this->vertexArrayId));
 }
 
 void VertexArray::AddBuffer(VertexBuffer* vertexBuffer) const
 {
-    this->Bind();
+    uint32 offset = 0;
+    std::vector<VertexBufferLayout> layouts = vertexBuffer->GetLayouts();
+    
     vertexBuffer->Bind();
 
-    uint32 offset = 0;
-
-    auto layouts = vertexBuffer->GetLayouts();
+    GLCALL(glBindVertexArray(this->vertexArrayId));
 
     if(layouts.empty())
-    {
         Logger::LogError("Failed to add buffer. Must specify a layout.");
-    } 
     else
         for(uint32 index = 0; index < layouts.size(); index++)
         {
-            auto& layout = layouts[index];
+            VertexBufferLayout layout = layouts[index];
+
             GLCALL(glEnableVertexAttribArray(index));
             GLCALL(glVertexAttribPointer(index, layout.format, layout.type, layout.normalized, vertexBuffer->GetStride(), (const void*)offset));
+            
             offset += layout.format * VertexBufferLayout::GetSizeOfType(layout.type);
         }
     
+    GLCALL(glBindVertexArray(0));
+    
     vertexBuffer->UnBind();
-    this->UnBind();
 }
 
 void VertexArray::Bind() const
 {
-    GLCALL(glBindVertexArray(this->ID));
+    GLCALL(glBindVertexArray(this->vertexArrayId));
 }
 void VertexArray::UnBind() const
 {

@@ -10,40 +10,25 @@
 #include "scarlet/core/Types.hpp"
 #include "scarlet/core/debug/Assert.hpp"
 
+#include "VertexBufferLayout.hpp"
+
 namespace scarlet
 {   
-    struct VertexBufferLayout
-    {
-        uint32 type;
-        uint32 format;
-        bool normalized;
-
-        static size_t GetSizeOfType(uint32 type)
-        {
-            switch (type)
-            {
-                case GL_FLOAT: return sizeof(float); break;
-                case GL_UNSIGNED_INT: return sizeof(unsigned int); break;
-                case GL_UNSIGNED_BYTE: return sizeof(unsigned char); break;
-            }
-        }
-    };
-
     class VertexBuffer
     {
     private:
-        uint32 ID;
+        uint32 vertexBufferId;
 
     private:
-        size_t stride;
+        size stride;
         std::vector<VertexBufferLayout> layouts;
 
     public:
-        VertexBuffer(const void* data, size_t size, int usage);
+        VertexBuffer(const void* data, size bytes, int usage);
         ~VertexBuffer();
 
     public:
-        size_t GetStride();
+        size GetStride();
         std::vector<VertexBufferLayout> GetLayouts();
 
     public:
@@ -91,7 +76,7 @@ namespace scarlet
         }
 
     public:
-        void UpdateBufferData(size_t offset, size_t size, const void* data);
+        void UpdateBufferData(size offsetBytes, size bytes, const void* data);
 
     public:
         void Bind();

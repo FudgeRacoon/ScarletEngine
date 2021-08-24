@@ -37,7 +37,7 @@ namespace scarlet
         }
 
     private:
-        void ResetID()
+        void ResetId()
         {
             this->buttonID = 0;
         }
@@ -54,7 +54,7 @@ namespace scarlet
                     float imageWidth        = 64.0f * this->imageSize;
                     float imageHeight       = 64.0f * this->imageSize;
                     std::vector<Vector2> uv = sprite.second->GetUV();
-                    int textureID           = sprite.second->GetTexture()->GetID();
+                    int textureID           = sprite.second->GetTexture()->GetId();
 
                     ImGui::PushID(this->buttonID++);
 
@@ -85,7 +85,7 @@ namespace scarlet
             {
                 float imageWidth  = 64.0f * this->imageSize;
                 float imageHeight = 64.0f * this->imageSize;
-                int textureID     = texture.second->GetID();
+                int textureID     = texture.second->GetId();
 
                 ImGui::PushID(this->buttonID++);
 
@@ -136,7 +136,7 @@ namespace scarlet
             else if(this->showTextures)
                 ShowTextures(windowPos, windowSize, itemSpacing);
 
-            ResetID();
+            ResetId();
                 
             ImGui::EndTabBar();
 

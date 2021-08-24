@@ -10,26 +10,39 @@
 #include "scarlet/core/math/Color.hpp"
 #include "scarlet/core/math/Vector4.hpp"
 
-#include "scarlet/graphics/FrameBuffer.hpp"
+#include "scarlet/graphics/buffer/FrameBuffer.hpp"
+#include "scarlet/graphics/buffer/IndexBuffer.hpp"
 #include "scarlet/graphics/VertexArray.hpp"
-#include "scarlet/graphics/IndexBuffer.hpp"
 
 namespace scarlet
 {   
-    enum Graphics_BlendFunction
+    enum GraphicsBlendFunction
     {
-        SCARLET_SRC_ALPHA = 0x0302,
-        SCARLET_ONE_MINUS_SRC_ALPHA = 0x0303
+        SCARLET_ZERO                     = 0, 
+        SCARLET_ONE                      = 1, 
+        SCARLET_SRC_COLOR                = 0x0300, 
+        SCARLET_ONE_MINUS_SRC_COLOR      = 0x0301,  
+        SCARLET_SRC_ALPHA                = 0x0302,
+        SCARLET_ONE_MINUS_SRC_ALPHA      = 0x0303,
+        SCARLET_DST_ALPHA                = 0x0304,
+        SCARLET_ONE_MINUS_DST_ALPHA      = 0x0305, 
+        SCARLET_DST_COLOR                = 0x0306, 
+        SCARLET_ONE_MINUS_DST_COLOR      = 0x0307, 
+        SCARLET_CONSTANT_COLOR           = 0x8001, 
+        SCARLET_ONE_MINUS_CONSTANT_COLOR = 0x8002, 
+        SCARLET_CONSTANT_ALPHA           = 0x8003, 
+        SCARLET_ONE_MINUS_CONSTANT_ALPHA = 0x8004,
+        SCARLET_SRC_ALPHA_SATURATE       = 0x0308,
     };
 
-    enum Graphics_BufferType
+    enum GraphicsBufferType
     {
         SCARLET_BUFFER_DEPTH   = 0x00000100,
         SCARLET_BUFFER_STENCIL = 0x00000400,
         SCARLET_BUFFER_COLOR   = 0x00004000
     };
 
-    enum Graphics_DrawMode
+    enum GraphicsDrawMode
     {
         SCARLET_LINES                    = 0x0001, 
         SCARLET_LINE_LOOP                = 0x0002, 
@@ -56,18 +69,18 @@ namespace scarlet
         static Vector4 GetViewPort();
         static FrameBuffer* GetRenderTarget();
         static uint32 GetMaxTextureSlots();
-        static const byte* GetOpenglVersion();
+        static const byte* GetGlVersion();
 
     public:
         static void SetViewPort(uint32 x, uint32 y, uint32 width, uint32 height);
-        static void SetBlendingFunction(Graphics_BlendFunction sFactor, Graphics_BlendFunction dFactor);
+        static void SetBlendingFunction(GraphicsBlendFunction sFactor, GraphicsBlendFunction dFactor);
         static void SetClearColor(Color color);
 
     public:
         static void EnableBlending(bool enable);
 
     public:
-        static void ClearBuffers(Graphics_BufferType buffers);
+        static void ClearBuffers(GraphicsBufferType buffers);
         static void SwapBuffers();
     };
 }

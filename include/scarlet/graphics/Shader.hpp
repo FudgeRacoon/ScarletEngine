@@ -19,15 +19,15 @@ namespace scarlet
     class Shader
     {
     private:
-        uint32_t programID;
+        uint32_t programId;
 
     private:
         Shader(const char* vertexShader, const char* fragmentShader);
         ~Shader();
 
     private:
-        void CreateShaderInternal(const char* filepath, int shaderType);
-        std::string ParseShaderInternal(const char* filepath);
+        std::string ParseShader(const char* filepath);
+        void CreateShader(const char* filepath, int shaderType);
 
     public:
         void SetBool(std::string varName, int value) const;
