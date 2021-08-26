@@ -9,13 +9,3 @@ ImGuiPanel::~ImGuiPanel()
 {
     
 }
-
-std::string ImGuiPanel::GetTitle()
-{
-    return this->title;
-}
-
-void ImGuiPanel::SetTitle(std::string title)
-{
-    this->title = title;
-}

@@ -4,9 +4,9 @@
 #include "scarlet/core/Types.hpp"
 #include "scarlet/core/math/Color.hpp"
 
-#include "scarlet/scene/Component.hpp"
-
 #include "scarlet/graphics/Sprite.hpp"
+
+#include "scarlet/scene/components/Component.hpp"
 
 namespace scarlet
 {
@@ -24,7 +24,6 @@ namespace scarlet
     public:
         void Setup() override;
         void Update() override;
-        void GuiUpdate() override;
     };
 }
 

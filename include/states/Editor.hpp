@@ -4,7 +4,8 @@
 #include "../scarlet/ScarletEngine.hpp"
 
 #include "../scarletEditor/panels/ViewportPanel.hpp"
-#include "../scarletEditor/panels/AssetViewWindow.hpp"
+#include "../scarletEditor/panels/AssetViewPanel.hpp"
+#include "../scarletEditor/panels/SceneHierarchyPanel.hpp"
 
 class Editor : public IState
 {
@@ -25,7 +26,8 @@ public:
         scarlet::EditorSceneManager::Get()->ActivateCameraController();
 
         scarlet::ImGuiManager::AddPanel(new scarlet::ViewportPanel());
-        scarlet::ImGuiManager::AddPanel(new scarlet::AssetViewWindow());
+        scarlet::ImGuiManager::AddPanel(new scarlet::AssetViewPanel());
+        scarlet::ImGuiManager::AddPanel(new scarlet::SceneHierarchyPanel());
         
         scarlet::AssetManager::AddTexture("mario_sprite_sheet_texture", "assets\\textures\\MarioSpriteSheet.png");
         scarlet::AssetManager::AddSprite("mairo_sprite_sheet", scarlet::AssetManager::GetTexture("mario_sprite_sheet_texture"));

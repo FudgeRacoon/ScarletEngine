@@ -19,10 +19,6 @@ uint32 Scene::GetBuildIndex()
 {
     return this->buildIndex;
 }
-uint32 Scene::GetEntityCount()
-{
-    return this->registry->GetEntityCount();
-}
 Camera* Scene::GetCamera()
 {
     return this->sceneCamera;
@@ -168,6 +164,15 @@ GameObject* Scene::GetEntityById(uint32 id)
 GameObject* Scene::GetEntityByName(std::string name)
 {
     return this->registry->GetEntityByName(name);
+}
+
+uint32 Scene::GetEntityCount()
+{
+    return this->registry->GetEntityCount();
+}
+Registry::EntityTreeMap Scene::GetEntities()
+{
+    return this->registry->GetEntities();
 }
 
 void Scene::DestroyEntityById(uint32 id)

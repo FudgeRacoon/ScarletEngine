@@ -3,8 +3,12 @@
 
 #include <string>
 
+#include "imgui/imgui.h"
+
 namespace scarlet
 {
+    class ImGuiManager;
+
     class ImGuiPanel
     {
     protected:
@@ -15,13 +19,9 @@ namespace scarlet
         virtual ~ImGuiPanel();
 
     public:
-        std::string GetTitle();
-        
-    public:
-        void SetTitle(std::string title);
-
-    public:
         virtual void OnUpdate() = 0;
+
+    friend ImGuiManager;
     };
 }
 

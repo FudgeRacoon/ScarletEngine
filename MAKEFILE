@@ -3,11 +3,11 @@ CC_FLAGS = -std=c++17 -w -O0
 
 SRC_DIR = src/*.cpp
 
-SCARLET_SRC_DIR += src/scarlet/core/*.cpp src/scarlet/core/logger/*.cpp src/scarlet/core/time/*.cpp src/scarlet/scene/*.cpp  
+SCARLET_SRC_DIR += src/scarlet/core/*.cpp src/scarlet/core/logger/*.cpp src/scarlet/core/time/*.cpp src/scarlet/scene/*.cpp src/scarlet/scene/components/*.cpp
 SCARLET_SRC_DIR += src/scarlet/graphics/*.cpp src/scarlet/graphics/buffer/*.cpp src/scarlet/graphics/camera/*.cpp 
 SCARLET_SRC_DIR += src/scarlet/imgui/*.cpp src/scarlet/input/*.cpp src/scarlet/primitives/*.cpp src/scarlet/system/*.cpp src/scarlet/utils/*.cpp
 
-SCARLET_EDITOR_SRC_DIR = src/scarletEditor/panels/*.cpp src/scarletEditor/*.cpp
+SCARLET_EDITOR_SRC_DIR = src/scarletEditor/panels/*.cpp src/scarletEditor/panels/components/*.cpp src/scarletEditor/*.cpp
 
 VENDOR_SRC_DIR = vendor/Imgui/*.cpp
 

@@ -12,15 +12,15 @@
 
 #include "scarlet/scene/GameObject.hpp"
 
-
 namespace scarlet
 {   
     class Registry
     {
-    using EntityTreeMap = std::map<std::string, GameObject*>;
-    using EntityHashMap = std::unordered_map<uint32, GameObject*>;
-    using EntitySetupQueue = std::queue<GameObject*>;
-    using EntityDestroyQueue = std::queue<GameObject*>;
+    public:
+        using EntityTreeMap = std::map<std::string, GameObject*>;
+        using EntityHashMap = std::unordered_map<uint32, GameObject*>;
+        using EntitySetupQueue = std::queue<GameObject*>;
+        using EntityDestroyQueue = std::queue<GameObject*>;
 
     private:
         uint32 entityCount;

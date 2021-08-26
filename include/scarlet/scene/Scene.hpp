@@ -8,8 +8,8 @@
 
 #include "scarlet/scene/Registry.hpp"
 #include "scarlet/scene/GameObject.hpp"
-#include "scarlet/scene/Transform.hpp"
-#include "scarlet/scene/SpriteRenderer.hpp"
+#include "scarlet/scene/components/Transform.hpp"
+#include "scarlet/scene/components/SpriteRenderer.hpp"
 
 #include "scarlet/system/AssetManager.hpp"
 
@@ -42,7 +42,6 @@ namespace scarlet
     public:
         std::string GetName();
         uint32 GetBuildIndex();
-        uint32 GetEntityCount();
         Camera* GetCamera();
         
     public:
@@ -68,6 +67,10 @@ namespace scarlet
         {
             return this->registry->GetEntitiesOfType<T>();
         }
+
+    public:
+        uint32 GetEntityCount();
+        Registry::EntityTreeMap GetEntities();
 
     public:
         void DestroyEntityById(uint32 id);

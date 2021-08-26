@@ -1,12 +1,14 @@
 #include "scarlet/scene/GameObject.hpp"
 using namespace scarlet;
 
-GameObject::GameObject(std::string name, uint32 instanceId)
+GameObject::GameObject(std::string& name, uint32 instanceId)
 {
-    this->name = name;
     this->instanceId = instanceId;
     this->active = true;
     
+    this->AddComponent<Tag>();
+    this->GetComponent<Tag>()->tag = name;
+
     this->AddComponent<Transform>();
 }
 GameObject::~GameObject()
@@ -17,23 +19,15 @@ GameObject::~GameObject()
     this->components.clear();
 }
 
-std::string GameObject::GetName()
+uint32 GameObject::GetInstanceId()
 {
-    return this->name;
+    return this->instanceId;
 }
 bool GameObject::GetActive()
 {
     return this->active;
 }
-uint32 GameObject::GetInstanceId()
-{
-    return this->instanceId;
-}
 
-void GameObject::SetName(std::string name)
-{
-    this->name = name;
-}
 void GameObject::SetActive(bool value)
 {
     this->active = value;

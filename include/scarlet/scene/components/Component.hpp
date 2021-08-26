@@ -1,17 +1,12 @@
 #ifndef COMPONENT_HPP
 #define COMPONENT_HPP
 
-#include "scarletEditor/panels/ComponentMenu.hpp"
-
 namespace scarlet
 {
     class GameObject;
 
     class Component
     {
-    public:
-        ComponentMenu* componentMenu;
-
     public:
         GameObject* gameObject = nullptr;
 
@@ -22,7 +17,6 @@ namespace scarlet
     public:
         virtual void Setup() = 0;
         virtual void Update() = 0;
-        virtual void GuiUpdate() = 0;
     };
 }
 

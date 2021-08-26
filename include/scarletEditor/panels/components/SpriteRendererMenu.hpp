@@ -3,13 +3,13 @@
 
 #include "ImGui/imgui.h"
 
-#include "scarletEditor/panels/ComponentMenu.hpp"
+#include "scarletEditor/panels/components/ComponentUI.hpp"
 
 #include "scarlet/utils/MemoryUtils.hpp"
 
 namespace scarlet
 {
-    class SpriteRendererMenu : public ComponentMenu
+    class SpriteRendererMenu : public ComponentUI
     {
     public:
         char*       spriteName;
@@ -18,7 +18,7 @@ namespace scarlet
         int         sortingOrder;
     
     public:
-        SpriteRendererMenu() : ComponentMenu("SpriteRenderer")
+        SpriteRendererMenu() : ComponentUI("SpriteRenderer")
         {
             this->spriteName = new char[16];
             this->spriteName[15] = '\0';
@@ -38,18 +38,18 @@ namespace scarlet
         }
 
     public:
-        void Update() override
+        void OnUpdate() override
         {
             if(ImGui::CollapsingHeader(this->title.c_str(), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
             {   
                 //Sprite
                 {
-                    ImGui::SetCursorPosX(this->START_POS);
+                    ImGui::SetCursorPosX(10.0f);
 
                     ImGui::Text("Sprite");
                     ImGui::SameLine();
 
-                    ImGui::SetCursorPosX(this->SPACING);
+                    ImGui::SetCursorPosX(150.0f);
 
                     ImGui::PushItemWidth(360.0f);
 
@@ -65,12 +65,12 @@ namespace scarlet
 
                 //Color
                 {
-                    ImGui::SetCursorPosX(this->START_POS);
+                    ImGui::SetCursorPosX(10.0f);
 
                     ImGui::Text("Color");
                     ImGui::SameLine();
 
-                    ImGui::SetCursorPosX(this->SPACING);
+                    ImGui::SetCursorPosX(150.0f);
 
                     ImGui::PushItemWidth(360.0f);
                     
@@ -81,12 +81,12 @@ namespace scarlet
 
                 //Flip
                 {
-                    ImGui::SetCursorPosX(this->START_POS);
+                    ImGui::SetCursorPosX(10.0f);
 
                     ImGui::Text("Flip");
                     ImGui::SameLine();
                     
-                    ImGui::SetCursorPosX(this->SPACING);
+                    ImGui::SetCursorPosX(150.0f);
 
                     ImGui::Checkbox("X", &this->flipX);
                     ImGui::SameLine();
@@ -95,12 +95,12 @@ namespace scarlet
 
                 //Sorting Order
                 {   
-                    ImGui::SetCursorPosX(this->START_POS);
+                    ImGui::SetCursorPosX(10.0f);
 
                     ImGui::Text("Sorting Order");
                     ImGui::SameLine();
 
-                    ImGui::SetCursorPosX(this->SPACING);
+                    ImGui::SetCursorPosX(150.0f);
 
                     ImGui::PushItemWidth(360.0f);
 

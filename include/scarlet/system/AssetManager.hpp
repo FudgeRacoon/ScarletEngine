@@ -8,7 +8,7 @@
 #include "scarlet/core/math/Vector2.hpp"
 #include "scarlet/core/logger/Logger.hpp"
 
-#include "scarlet/scene/SpriteRenderer.hpp"
+#include "scarlet/scene/components/SpriteRenderer.hpp"
 
 #include "scarlet/graphics/GraphicsContext.hpp"
 #include "scarlet/graphics/Texture.hpp"

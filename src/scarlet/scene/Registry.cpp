@@ -33,8 +33,8 @@ GameObject* Registry::AddEntity()
 
     GameObject* entity = new GameObject(name, entityCount);
 
-    this->entitiesId.insert(std::make_pair(this->entityCount, entity));
     this->entities.insert(std::make_pair(name, entity));
+    this->entitiesId.insert(std::make_pair(this->entityCount, entity));
 
     this->setupQueue.push(entity);
     return entity;
@@ -71,9 +71,10 @@ void Registry::DestroyEntityById(uint32 id)
     {
         this->destroyQueue.push(entityIdIt->second);
 
-        auto entityStringIt = this->entities.find(entityIdIt->second->GetName());
-        this->entities.erase(entityStringIt);
+        std::string key(entityIdIt->second->GetComponent<Tag>()->tag);
+        auto entityStringIt = this->entities.find(key);
 
+        this->entities.erase(entityStringIt);
         this->entitiesId.erase(entityIdIt);
         return;
     }
@@ -89,8 +90,8 @@ void Registry::DestroyEntityByName(std::string name)
         this->destroyQueue.push(entityStringIt->second);
 
         auto entityIdIt = this->entitiesId.find(entityStringIt->second->GetInstanceId());
-        this->entitiesId.erase(entityIdIt);
 
+        this->entitiesId.erase(entityIdIt);
         this->entities.erase(entityStringIt);
         return;
     }

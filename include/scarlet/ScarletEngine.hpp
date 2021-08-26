@@ -21,11 +21,12 @@
 #include "scarlet/primitives/Line.hpp"
 #include "scarlet/primitives/Rect.hpp"
 
+#include "scarlet/scene/components/Component.hpp"
+#include "scarlet/scene/components/SpriteRenderer.hpp"
+#include "scarlet/scene/components/Tag.hpp"
+#include "scarlet/scene/components/Transform.hpp"
 #include "scarlet/scene/GameObject.hpp"
 #include "scarlet/scene/Registry.hpp"
-#include "scarlet/scene/Component.hpp"
-#include "scarlet/scene/Transform.hpp"
-#include "scarlet/scene/SpriteRenderer.hpp"
 
 #include "scarlet/system/AssetManager.hpp"
 #include "scarlet/system/SceneManager.hpp"

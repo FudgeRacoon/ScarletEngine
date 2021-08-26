@@ -106,7 +106,7 @@ void ImGuiManager::OnShutDown()
 
 ImGuiPanel* ImGuiManager::AddPanel(ImGuiPanel* panel)
 {
-    ImGuiPanels.insert(std::make_pair(panel->GetTitle(), panel));
+    ImGuiPanels.insert(std::make_pair(panel->title, panel));
     return panel;
 }
 ImGuiPanel* ImGuiManager::GetPanel(std::string title)

@@ -6,8 +6,9 @@
 
 #include "scarlet/core/logger/Logger.hpp"
 
-#include "scarlet/scene/Component.hpp"
-#include "scarlet/scene/Transform.hpp"
+#include "scarlet/scene/components/Component.hpp"
+#include "scarlet/scene/components/Tag.hpp"
+#include "scarlet/scene/components/Transform.hpp"
 
 namespace scarlet
 {
@@ -17,24 +18,23 @@ namespace scarlet
     class GameObject
     {
     private:
-        std::string name;
         uint32 instanceId;
+
+    private:
         bool active;
 
     private:
         std::vector<Component*> components;
 
     private:
-        GameObject(std::string name, uint32 instanceID);
+        GameObject(std::string& name, uint32 instanceID);
         ~GameObject();
     
     public:
-        std::string GetName();
         bool GetActive();
         uint32 GetInstanceId();
 
     public: 
-        void SetName(std::string name);
         void SetActive(bool value);
 
     public:
