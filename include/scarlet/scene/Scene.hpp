@@ -61,16 +61,17 @@ namespace scarlet
         GameObject* AddEntity();
 
     public:
+        uint32 GetEntityCount();
+        Registry::EntityTreeMap GetEntities();
         GameObject* GetEntityById(uint32 id);
         GameObject* GetEntityByName(std::string name);
-        template <typename T> std::vector<GameObject*> GetEntitiesOfType()
+
+    public:
+        template <typename T> 
+        std::vector<GameObject*> GetEntitiesOfType()
         {
             return this->registry->GetEntitiesOfType<T>();
         }
-
-    public:
-        uint32 GetEntityCount();
-        Registry::EntityTreeMap GetEntities();
 
     public:
         void DestroyEntityById(uint32 id);

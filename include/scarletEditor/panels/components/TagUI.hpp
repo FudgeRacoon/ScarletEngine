@@ -1,40 +1,38 @@
-#ifndef TransformUI_HPP
-#define TransformUI_HPP
+#ifndef TAGUI_HPP
+#define TAGUI_HPP
 
-#include "Imgui/imgui.h"
+#include <string>
 
 #include "scarlet/imgui/ImGuiManager.hpp"
 
+#include "scarlet/utils/MemoryUtils.hpp"
+
 #include "scarlet/scene/GameObject.hpp"
-#include "scarlet/scene/components/Transform.hpp"
+#include "scarlet/scene/components/Tag.hpp"
 
 #include "scarletEditor/panels/SceneHierarchyPanel.hpp"
 #include "scarletEditor/panels/components/ComponentUI.hpp"
 
 namespace scarlet
 {
-    class TransformUI : public ComponentUI
+    class TagUI : public ComponentUI
     {
     private:
-        float* position;
+        char* buffer;
+        const size bufferSize = 256;
 
     private:
-        Transform* transformComponent;
+        Tag* tagComponent;
         SceneHierarchyPanel* hierarchyPanel;
 
     public:
-        TransformUI();
-        ~TransformUI();
-
-    private:
-        void DrawPositionField();
-        void DrawRotationField();
-        void DrawScaleField();
+        TagUI();
+        ~TagUI();
 
     private:
         void OnCheck() override;
         void OnUpdate() override;
     };
-}   
+}
 
 #endif

@@ -20,7 +20,7 @@ namespace scarlet
     public:
         ViewportPanel();
 
-    public:
+    private:
         void OnUpdate() override;
     };
 }

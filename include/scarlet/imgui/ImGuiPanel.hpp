@@ -18,7 +18,7 @@ namespace scarlet
         ImGuiPanel(std::string title);
         virtual ~ImGuiPanel();
 
-    public:
+    protected:
         virtual void OnUpdate() = 0;
 
     friend ImGuiManager;

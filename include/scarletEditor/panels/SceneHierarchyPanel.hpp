@@ -6,11 +6,14 @@
 
 #include "scarlet/imgui/ImGuiPanel.hpp"
 
+#include "scarlet/input/InputManager.hpp"
+
 #include "scarlet/system/EditorSceneManager.hpp"
 
 #include "scarlet/scene/Registry.hpp"
 #include "scarlet/scene/GameObject.hpp"
 #include "scarlet/scene/components/Tag.hpp"
+
 
 namespace scarlet
 {
@@ -22,10 +25,13 @@ namespace scarlet
     public:
         SceneHierarchyPanel();
 
+    public:
+        GameObject* GetSelectedContext();
+
     private:
         void DrawEntityNode(GameObject* entity);
 
-    public:
+    private:
         void OnUpdate() override;
     };
 }

@@ -4,6 +4,7 @@
 #include "../scarlet/ScarletEngine.hpp"
 
 #include "../scarletEditor/panels/ViewportPanel.hpp"
+#include "../scarletEditor/panels/InspectorPanel.hpp"
 #include "../scarletEditor/panels/AssetViewPanel.hpp"
 #include "../scarletEditor/panels/SceneHierarchyPanel.hpp"
 
@@ -26,8 +27,9 @@ public:
         scarlet::EditorSceneManager::Get()->ActivateCameraController();
 
         scarlet::ImGuiManager::AddPanel(new scarlet::ViewportPanel());
-        scarlet::ImGuiManager::AddPanel(new scarlet::AssetViewPanel());
         scarlet::ImGuiManager::AddPanel(new scarlet::SceneHierarchyPanel());
+        scarlet::ImGuiManager::AddPanel(new scarlet::InspectorPanel());
+        scarlet::ImGuiManager::AddPanel(new scarlet::AssetViewPanel());
         
         scarlet::AssetManager::AddTexture("mario_sprite_sheet_texture", "assets\\textures\\MarioSpriteSheet.png");
         scarlet::AssetManager::AddSprite("mairo_sprite_sheet", scarlet::AssetManager::GetTexture("mario_sprite_sheet_texture"));
@@ -44,7 +46,6 @@ public:
             scarlet::GameObject* go = scarlet::EditorSceneManager::Get()->GetActiveScene()->AddEntity();
             go->AddComponent<scarlet::SpriteRenderer>();
             go->GetComponent<scarlet::SpriteRenderer>()->sprite = scarlet::AssetManager::GetSprite("mairo_sprite_sheet_0");
-            go->GetComponent<scarlet::Transform>()->position = scarlet::Vector3(rand.NextFloat(-960.0f, 960.0f), rand.NextFloat(-540.0f, 540.0f), 0.0f);
         }
 
         scarlet::EditorSceneManager::Get()->UpdateActiveScene();

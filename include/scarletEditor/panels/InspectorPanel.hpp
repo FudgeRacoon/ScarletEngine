@@ -6,6 +6,7 @@
 #include "scarlet/imgui/ImGuiManager.hpp"
 
 #include "scarletEditor/panels/components/ComponentUI.hpp"
+#include "scarletEditor/panels/components/TagUI.hpp"
 #include "scarletEditor/panels/components/TransformUI.hpp"
 #include "scarletEditor/panels/components/SpriteRendererMenu.hpp"
 
@@ -23,7 +24,7 @@ namespace scarlet
     public:
         ComponentUI* GetComponentUI(std::string title);
 
-    public:
+    private:
         void OnUpdate() override;
     };
 }

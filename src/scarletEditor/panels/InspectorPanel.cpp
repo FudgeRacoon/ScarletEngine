@@ -3,6 +3,7 @@ using namespace scarlet;
 
 InspectorPanel::InspectorPanel() : ImGuiPanel("Inspector")
 {
+    this->components.push_back(new TagUI());
     this->components.push_back(new TransformUI());
     this->components.push_back(new SpriteRendererMenu());
 }
@@ -28,6 +29,8 @@ void InspectorPanel::OnUpdate()
             
     for(ComponentUI* component : components)
     {
+        component->OnCheck();
+
         if(component->active)
             component->OnUpdate();
     }

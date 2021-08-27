@@ -44,7 +44,7 @@ void Scene::OnEnterRuntime()
 }
 void Scene::OnUpdateRuntime()
 {
-    for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
+    for(auto entity : this->registry->GetEntities())
         entity.second->Update();
 
     this->registry->PollDestroyQueue();
@@ -58,7 +58,7 @@ void Scene::OnRenderRuntime()
 
     GraphicsContext::ClearBuffers(GraphicsBufferType::SCARLET_BUFFER_COLOR);
 
-    for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
+    for(auto entity : this->registry->GetEntities())
     {
         Transform* transform = entity.second->GetComponent<Transform>();
         SpriteRenderer* spriteRenderer = entity.second->GetComponent<SpriteRenderer>();
@@ -92,7 +92,7 @@ void Scene::OnRenderEditor(Camera* editorCamera, editor::Selector* editorSelecto
 
         GraphicsContext::ClearBuffers(GraphicsBufferType::SCARLET_BUFFER_COLOR);
         
-        for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
+        for(auto entity : this->registry->GetEntities())
         {
             Transform* transform = entity.second->GetComponent<Transform>();
             SpriteRenderer* spriteRenderer = entity.second->GetComponent<SpriteRenderer>();
@@ -125,7 +125,7 @@ void Scene::OnRenderEditor(Camera* editorCamera, editor::Selector* editorSelecto
 
         GraphicsContext::ClearBuffers(GraphicsBufferType::SCARLET_BUFFER_COLOR);
 
-        for(std::pair<std::string, GameObject*> entity : this->registry->GetEntities())
+        for(auto entity : this->registry->GetEntities())
         {
             Transform* transform = entity.second->GetComponent<Transform>();
             SpriteRenderer* spriteRenderer = entity.second->GetComponent<SpriteRenderer>();
@@ -157,15 +157,6 @@ GameObject* Scene::AddEntity()
     return this->registry->AddEntity();
 }
 
-GameObject* Scene::GetEntityById(uint32 id)
-{
-    return this->registry->GetEntityById(id);
-}
-GameObject* Scene::GetEntityByName(std::string name)
-{
-    return this->registry->GetEntityByName(name);
-}
-
 uint32 Scene::GetEntityCount()
 {
     return this->registry->GetEntityCount();
@@ -173,6 +164,14 @@ uint32 Scene::GetEntityCount()
 Registry::EntityTreeMap Scene::GetEntities()
 {
     return this->registry->GetEntities();
+}
+GameObject* Scene::GetEntityById(uint32 id)
+{
+    return this->registry->GetEntityById(id);
+}
+GameObject* Scene::GetEntityByName(std::string name)
+{
+    return this->registry->GetEntityByName(name);
 }
 
 void Scene::DestroyEntityById(uint32 id)

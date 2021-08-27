@@ -2,7 +2,6 @@
 #define Registry_HPP
 
 #include <map>
-#include <unordered_map>
 #include <queue>
 #include <vector>
 #include <string>
@@ -17,8 +16,7 @@ namespace scarlet
     class Registry
     {
     public:
-        using EntityTreeMap = std::map<std::string, GameObject*>;
-        using EntityHashMap = std::unordered_map<uint32, GameObject*>;
+        using EntityTreeMap = std::map<uint32, GameObject*>;
         using EntitySetupQueue = std::queue<GameObject*>;
         using EntityDestroyQueue = std::queue<GameObject*>;
 
@@ -27,7 +25,6 @@ namespace scarlet
 
     private:
         EntityTreeMap entities;
-        EntityHashMap entitiesId;
 
     private:
         EntitySetupQueue setupQueue;
@@ -41,9 +38,14 @@ namespace scarlet
         GameObject* AddEntity();
 
     public:
+        uint32 GetEntityCount();
+        EntityTreeMap GetEntities();
         GameObject* GetEntityById(uint32 id);
         GameObject* GetEntityByName(std::string name);
-        template<typename T> std::vector<GameObject*> GetEntitiesOfType()
+        
+    public:
+        template<typename T> 
+        std::vector<GameObject*> GetEntitiesOfType()
         {
             std::vector<GameObject*> entitiesOfType;
 
@@ -54,10 +56,6 @@ namespace scarlet
             return entitiesOfType;
         }
         
-    public:
-        uint32 GetEntityCount();
-        EntityTreeMap GetEntities();
-
     public:
         void DestroyEntityById(uint32 id);
         void DestroyEntityByName(std::string name);

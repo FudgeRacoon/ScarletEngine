@@ -3,6 +3,10 @@
 
 #include <string>
 
+#include "scarlet/imgui/ImGuiManager.hpp"
+
+#include "scarletEditor/panels/SceneHierarchyPanel.hpp"
+
 namespace scarlet
 {
     class InspectorPanel;
@@ -11,6 +15,8 @@ namespace scarlet
     {
     protected:
         std::string title;
+
+    protected:
         bool active;
 
     public:
@@ -18,6 +24,7 @@ namespace scarlet
         virtual ~ComponentUI();
 
     protected:        
+        virtual void OnCheck() = 0;
         virtual void OnUpdate() = 0;
 
     friend InspectorPanel;

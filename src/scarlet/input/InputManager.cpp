@@ -105,7 +105,7 @@ bool InputManager::GetMouseButtonDown(int button)
         case 2: mask = SDL_BUTTON_RMASK; break;
     }
 
-    return !(mask & prevMouseState) && (mask && mouseState);
+    return !(mask & prevMouseState) && (mask & mouseState);
 }
 bool InputManager::GetMouseButtonUp(int button)
 {
