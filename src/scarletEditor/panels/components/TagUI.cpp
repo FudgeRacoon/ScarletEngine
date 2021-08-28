@@ -12,6 +12,28 @@ TagUI::~TagUI()
     delete[] this->buffer;
 }
 
+void TagUI::DrawTextControl(std::string label, char* value, size bytes, float columnWidth)
+{
+    ImGui::PushID(label.c_str());
+
+    ImGui::Columns(2, nullptr, false);
+    ImGui::SetColumnWidth(0, columnWidth);
+
+    ImGui::Text(label.c_str());
+    ImGui::NextColumn();
+
+    ImGui::PushItemWidth(ImGui::CalcItemWidth());
+    
+    if(ImGui::InputText("##tag", value, bytes, ImGuiInputTextFlags_::ImGuiInputTextFlags_EnterReturnsTrue))
+        this->tagComponent->tag = std::string(value);
+
+    ImGui::PopItemWidth();
+
+    ImGui::Columns(1, nullptr, false);
+
+    ImGui::PopID();
+}
+
 void TagUI::OnCheck()
 {
     GameObject* entity = this->hierarchyPanel->GetSelectedContext();
@@ -39,7 +61,6 @@ void TagUI::OnUpdate()
         for(int i = 0; i < tag.size(); i++)
             this->buffer[i] = tag[i];
 
-        if(ImGui::InputText("Tag", this->buffer, this->bufferSize))
-            this->tagComponent->tag = std::string(this->buffer);
+        DrawTextControl("Tag", this->buffer, this->bufferSize);
     }
 }

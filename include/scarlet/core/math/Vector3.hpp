@@ -67,6 +67,16 @@ namespace scarlet
         {
             return this->x != v.x && this->y != v.y && this->z != v.z;
         }
+        
+    public:
+        Vector3 operator =(Vector3 v)
+        {
+            this->x = v.x;
+            this->y = v.y;
+            this->z = v.z;
+
+            *this;
+        }
         operator Vector2()
         {
             return Vector2(this->x, this->y);

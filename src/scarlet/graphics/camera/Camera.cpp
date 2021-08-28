@@ -13,7 +13,7 @@ Camera::Camera()
     this->bottomPlane = -GraphicsContext::GetViewPort().w / 2; 
     this->topPlane    =  GraphicsContext::GetViewPort().w / 2;
     
-    this->nearPlane   =  0.0f; 
+    this->nearPlane   =  100.0f; 
     this->farPlane    = -100.0f;
 }
 Camera::Camera(Vector3 position)
@@ -30,7 +30,7 @@ Camera::Camera(Vector3 position)
     this->bottomPlane = -GraphicsContext::GetViewPort().w / 2; 
     this->topPlane    =  GraphicsContext::GetViewPort().w / 2;
     
-    this->nearPlane   =  0.0f; 
+    this->nearPlane   =  100.0f; 
     this->farPlane    = -100.0f;
 }
 

@@ -11,7 +11,6 @@
 class Editor : public IState
 {
 private:
-    scarlet::Random rand;
     scarlet::Camera* editorCamera = nullptr;
     scarlet::GameObject* go;
 
@@ -20,23 +19,22 @@ public:
     {
         editorCamera = new scarlet::Camera();
        
-        scarlet::EditorSceneManager::Get()->SetCamera(editorCamera);
-
-        scarlet::EditorSceneManager::Get()->ActivateSelector();
-        scarlet::EditorSceneManager::Get()->ActivateGridLines();
-        scarlet::EditorSceneManager::Get()->ActivateCameraController();
-
         scarlet::ImGuiManager::AddPanel(new scarlet::ViewportPanel());
         scarlet::ImGuiManager::AddPanel(new scarlet::SceneHierarchyPanel());
         scarlet::ImGuiManager::AddPanel(new scarlet::InspectorPanel());
         scarlet::ImGuiManager::AddPanel(new scarlet::AssetViewPanel());
+
+        scarlet::EditorSceneManager::Get()->SetCamera(editorCamera);
+        scarlet::EditorSceneManager::Get()->ActivateSelector();
+        scarlet::EditorSceneManager::Get()->ActivateGridLines();
+        scarlet::EditorSceneManager::Get()->ActivateCameraController();
+        
+        scarlet::EditorSceneManager::Get()->CreateScene("Scene_1");
+        scarlet::EditorSceneManager::Get()->SetActiveScene(0);
         
         scarlet::AssetManager::AddTexture("mario_sprite_sheet_texture", "assets\\textures\\MarioSpriteSheet.png");
         scarlet::AssetManager::AddSprite("mairo_sprite_sheet", scarlet::AssetManager::GetTexture("mario_sprite_sheet_texture"));
         scarlet::SpriteUtils::SliceSprite(scarlet::AssetManager::GetSprite("mairo_sprite_sheet"), 64, 64);
-        
-        scarlet::EditorSceneManager::Get()->CreateScene("Scene_1");
-        scarlet::EditorSceneManager::Get()->SetActiveScene(0);
     }
     
     void OnUpdate() override

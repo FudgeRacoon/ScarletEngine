@@ -5,6 +5,8 @@
 
 #include "scarlet/imgui/ImGuiManager.hpp"
 
+#include "scarlet/input/InputManager.hpp"
+
 #include "scarlet/utils/MemoryUtils.hpp"
 
 #include "scarlet/scene/GameObject.hpp"
@@ -28,6 +30,9 @@ namespace scarlet
     public:
         TagUI();
         ~TagUI();
+
+    private:
+        void DrawTextControl(std::string label, char* buffer, size bytes, float columnWidth = 125.0f);
 
     private:
         void OnCheck() override;

@@ -1,7 +1,13 @@
 #ifndef TransformUI_HPP
 #define TransformUI_HPP
 
+#include <string>
+
 #include "Imgui/imgui.h"
+#include "Imgui/imgui_internal.h"
+
+#include "scarlet/core/math/Math.hpp"
+#include "scarlet/core/math/Vector3.hpp"
 
 #include "scarlet/imgui/ImGuiManager.hpp"
 
@@ -16,20 +22,15 @@ namespace scarlet
     class TransformUI : public ComponentUI
     {
     private:
-        float* position;
-
-    private:
         Transform* transformComponent;
         SceneHierarchyPanel* hierarchyPanel;
 
     public:
         TransformUI();
-        ~TransformUI();
-
+        
     private:
-        void DrawPositionField();
-        void DrawRotationField();
-        void DrawScaleField();
+        void AddVerticalSpacing(float height);
+        void DrawVector3Control(std::string label, Vector3& value, float resetValue = 0.0f, float columnWidth = 125.0f);
 
     private:
         void OnCheck() override;

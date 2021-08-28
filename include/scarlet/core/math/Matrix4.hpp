@@ -210,11 +210,11 @@ namespace scarlet
         {
             Matrix4 m = Identity();
 
-            m = m * Scale(scale);
             m = m * Transalte(translate);
             m = m * Rotate(rotation.x, Vector3::RIGHT());
             m = m * Rotate(rotation.y, Vector3::UP());
             m = m * Rotate(rotation.z, Vector3::FRONT());
+            m = m * Scale(scale);
 
             return m;
         }

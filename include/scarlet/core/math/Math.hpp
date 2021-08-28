@@ -14,8 +14,8 @@ namespace scarlet
     class Math
     {
     public:
-        static constexpr float PI = 3.14159265359;
-        static constexpr float Epsilon = std::numeric_limits<float>::epsilon();
+        static constexpr double PI = 3.14159265359;
+        static constexpr double Epsilon = std::numeric_limits<double>::epsilon();
         static constexpr uint64 Infinity = std::numeric_limits<uint64>::infinity();
     
     public:

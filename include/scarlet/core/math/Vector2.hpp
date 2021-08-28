@@ -61,7 +61,16 @@ namespace scarlet
         {
             return this->x != v.x && this->y != v.y;
         }
-        
+
+    public:
+        Vector2 operator =(Vector2 v)
+        {
+            this->x = v.x;
+            this->y = v.y;
+
+            *this;
+        }
+
     public:
         static float Magnitude(Vector2 v)
         {
