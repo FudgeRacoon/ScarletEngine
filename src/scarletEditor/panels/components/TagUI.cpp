@@ -24,8 +24,8 @@ void TagUI::DrawTextControl(std::string label, char* value, size bytes, float co
 
     ImGui::PushItemWidth(ImGui::CalcItemWidth());
     
-    if(ImGui::InputText("##tag", value, bytes, ImGuiInputTextFlags_::ImGuiInputTextFlags_EnterReturnsTrue))
-        this->tagComponent->tag = std::string(value);
+    if(ImGui::InputText("##name", value, bytes, ImGuiInputTextFlags_::ImGuiInputTextFlags_EnterReturnsTrue))
+        this->tagComponent->name = std::string(value);
 
     ImGui::PopItemWidth();
 
@@ -54,13 +54,13 @@ void TagUI::OnUpdate()
 {
     if(ImGui::CollapsingHeader(this->title.c_str(), ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_DefaultOpen))
     {
-        std::string& tag = this->tagComponent->tag;
+        std::string& name = this->tagComponent->name;
         
         MemoryUtils::MemorySet(this->buffer, 0, this->bufferSize);
         
-        for(int i = 0; i < tag.size(); i++)
-            this->buffer[i] = tag[i];
+        for(int i = 0; i < name.size(); i++)
+            this->buffer[i] = name[i];
 
-        DrawTextControl("Tag", this->buffer, this->bufferSize);
+        DrawTextControl("Name", this->buffer, this->bufferSize);
     }
 }

@@ -16,7 +16,7 @@ uint32 SceneManager::GetSceneCount()
 }
 Scene* SceneManager::GetActiveScene()
 {
-    SCARLET_CORE_ASSERT(this->activeScene != nullptr, "No active scene set.");
+    SCARLET_CORE_ASSERT_LOG(this->activeScene != nullptr, "No active scene set.");
 
     return activeScene;
 }
@@ -61,7 +61,7 @@ void SceneManager::SetActiveScene(int buildIndex)
 
 void SceneManager::UpdateActiveScene()
 {
-    SCARLET_CORE_ASSERT(this->activeScene != nullptr, "No active scene to update.");
+    SCARLET_CORE_ASSERT_LOG(this->activeScene != nullptr, "No active scene to update.");
 
     activeScene->OnUpdateRuntime();
     activeScene->OnRenderRuntime();

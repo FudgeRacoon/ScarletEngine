@@ -8,10 +8,10 @@ Selector::Selector(uint32 width, uint32 height)
     this->SelectorFrameBuffer = new FrameBuffer();
 
     FrameBufferSpecification spec = {
-        .width = width, 
-        .height = height, 
-        .type = GL_INT, 
-        .format = GL_RED_INTEGER, 
+        .width          = width, 
+        .height         = height, 
+        .type           = GL_INT, 
+        .format         = GL_RED_INTEGER, 
         .internalFormat = GL_R32I
     };
 
@@ -22,6 +22,10 @@ Selector::~Selector()
     delete this->SelectorFrameBuffer;
 }
 
+void Selector::OnResize()
+{
+    
+}
 void Selector::OnMouseDrag()
 {
 

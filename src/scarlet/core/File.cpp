@@ -7,7 +7,7 @@ const char* File::GetName()
 }
 size File::GetSize()
 {
-    SCARLET_CORE_ASSERT(this->fileStream.is_open() == true, "No file to do operations on.");
+    SCARLET_CORE_ASSERT_LOG(this->fileStream.is_open() == true, "No file to do operations on.");
 
 }
 
@@ -39,13 +39,13 @@ void File::Create(const char* fileName)
 }
 void File::Close()
 {
-    SCARLET_CORE_ASSERT(this->fileStream.is_open(), "No file to do operations on.");
+    SCARLET_CORE_ASSERT_LOG(this->fileStream.is_open(), "No file to do operations on.");
 
     this->fileStream.close();
 }
 void File::Delete()
 {
-    SCARLET_CORE_ASSERT(this->fileStream.is_open(), "No file to do operations on.");
+    SCARLET_CORE_ASSERT_LOG(this->fileStream.is_open(), "No file to do operations on.");
 
     remove(this->fileName);
 }

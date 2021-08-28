@@ -38,5 +38,4 @@
 #include "scarlet/utils/StringUtils.hpp"
 
 #include "scarletEditor/CameraController.hpp"
-#include "scarletEditor/GridLines.hpp"
 #include "scarletEditor/Selector.hpp"

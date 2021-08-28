@@ -98,7 +98,7 @@ void FrameBuffer::AttachDepthTexture(FrameBufferSpecification& spec)
 
 int FrameBuffer::ReadPixel(uint32 format, uint32 type, int x, int y)
 {
-    SCARLET_CORE_ASSERT((x >= 0 && x < this->spec.width) && (y >= 0 && y < this->spec.height), "Pixel coordinates are out of bound.");
+    SCARLET_CORE_ASSERT_LOG((x >= 0 && x < this->spec.width) && (y >= 0 && y < this->spec.height), "Pixel coordinates are out of bound.");
 
     int pixelData;
 

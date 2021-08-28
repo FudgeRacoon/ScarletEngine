@@ -28,6 +28,7 @@ namespace scarlet
             ~Selector();
 
         public:
+            void OnResize();
             void OnMouseDrag();
             void OnMousePress();
 

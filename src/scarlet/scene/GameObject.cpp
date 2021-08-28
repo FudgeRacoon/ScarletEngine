@@ -7,7 +7,7 @@ GameObject::GameObject(std::string& name, uint32 instanceId)
     this->active = true;
     
     this->AddComponent<Tag>();
-    this->GetComponent<Tag>()->tag = name;
+    this->GetComponent<Tag>()->name = name;
 
     this->AddComponent<Transform>();
 }

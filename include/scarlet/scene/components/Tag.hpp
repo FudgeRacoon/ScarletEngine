@@ -10,7 +10,7 @@ namespace scarlet
     class Tag : public Component
     {
     public:
-        std::string tag;
+        std::string name;
 
     public:
         Tag() = default;

@@ -48,7 +48,7 @@ const byte* GraphicsContext::GetGlVersion()
 
 void GraphicsContext::SetViewPort(uint32 x, uint32 y, uint32 width, uint32 height)
 {
-    SCARLET_CORE_ASSERT((x >= 0 && y >= 0), "Viewport origin must be positive.");
+    SCARLET_CORE_ASSERT_LOG((x >= 0 && y >= 0), "Viewport origin must be positive.");
 
     viewport = Vector4(x, y, width, height);
     glViewport(x, y, width, height);

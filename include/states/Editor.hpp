@@ -11,24 +11,16 @@
 class Editor : public IState
 {
 private:
-    scarlet::Camera* editorCamera = nullptr;
     scarlet::GameObject* go;
 
 public:
     void OnEnter() override
     {
-        editorCamera = new scarlet::Camera();
-       
         scarlet::ImGuiManager::AddPanel(new scarlet::ViewportPanel());
         scarlet::ImGuiManager::AddPanel(new scarlet::SceneHierarchyPanel());
         scarlet::ImGuiManager::AddPanel(new scarlet::InspectorPanel());
         scarlet::ImGuiManager::AddPanel(new scarlet::AssetViewPanel());
 
-        scarlet::EditorSceneManager::Get()->SetCamera(editorCamera);
-        scarlet::EditorSceneManager::Get()->ActivateSelector();
-        scarlet::EditorSceneManager::Get()->ActivateGridLines();
-        scarlet::EditorSceneManager::Get()->ActivateCameraController();
-        
         scarlet::EditorSceneManager::Get()->CreateScene("Scene_1");
         scarlet::EditorSceneManager::Get()->SetActiveScene(0);
         

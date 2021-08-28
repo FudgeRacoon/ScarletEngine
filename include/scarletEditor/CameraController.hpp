@@ -13,7 +13,7 @@ namespace scarlet
     {
         class CameraController
         {    
-        public:
+        private:
             Camera* controlledCamera;
     
         private:

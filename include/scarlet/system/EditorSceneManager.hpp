@@ -13,7 +13,6 @@
 
 #include "scarlet/graphics/camera/Camera.hpp"
 
-#include "scarletEditor/GridLines.hpp"
 #include "scarletEditor/Selector.hpp"
 #include "scarletEditor/CameraController.hpp"
 
@@ -26,11 +25,10 @@ namespace scarlet
 
     private:
         editor::Selector* selector = nullptr;
-        editor::GridLines* gridlines = nullptr;
         editor::CameraController* cameraController = nullptr;
 
     private:
-        EditorSceneManager() = default;
+        EditorSceneManager();
         EditorSceneManager(const EditorSceneManager& editorSceneManager) = delete;
 
     public:
@@ -38,17 +36,13 @@ namespace scarlet
 
     public:
         editor::Selector* GetSelector();
-        editor::GridLines* GetGridLines();
         editor::CameraController* GetCameraController();
 
     public:
-        void SetCamera(Camera* camera);
         void SetActiveScene(int buildIndex) override;
 
     public:
-        void ActivateSelector();
-        void ActivateGridLines();        
-        void ActivateCameraController();
+        void OnResize();
 
     public:
         void CreateScene(std::string name);

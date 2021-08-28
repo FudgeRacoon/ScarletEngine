@@ -65,7 +65,7 @@ namespace scarlet
         public:
             T& operator [](int index)
             {
-                SCARLET_CORE_ASSERT(index < capacity, "Index out of bounds.");
+                SCARLET_CORE_ASSERT_LOG(index < capacity, "Index out of bounds.");
                 return *(this->data + index);
             }
             Vector<T>& operator =(const Vector<T>& other)

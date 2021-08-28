@@ -16,7 +16,7 @@ void ViewportPanel::OnUpdate()
     {
         GraphicsContext::SetViewPort(0, 0, viewportPanelSize.x, viewportPanelSize.y);
         GraphicsContext::GetRenderTarget()->Resize(viewportPanelSize.x, viewportPanelSize.y);
-        EditorSceneManager::Get()->GetCameraController()->OnResize();
+        EditorSceneManager::Get()->OnResize();
     }
     
     uint32 renderTargetId = GraphicsContext::GetRenderTarget()->GetColorAttachmentId();

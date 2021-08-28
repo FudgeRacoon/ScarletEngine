@@ -15,10 +15,10 @@ GameObject* SceneHierarchyPanel::GetSelectedContext()
 
 void SceneHierarchyPanel::DrawEntityNode(GameObject* entity)
 {
-    std::string& tag = entity->GetComponent<Tag>()->tag;
+    std::string& name = entity->GetComponent<Tag>()->name;
     ImGuiTreeNodeFlags flags = ((this->selectedContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
     
-    bool opened = ImGui::TreeNodeEx((void*)entity->GetInstanceId(), flags, tag.c_str());
+    bool opened = ImGui::TreeNodeEx((void*)entity->GetInstanceId(), flags, name.c_str());
     
     if(ImGui::IsItemClicked())
         this->selectedContext = entity;
